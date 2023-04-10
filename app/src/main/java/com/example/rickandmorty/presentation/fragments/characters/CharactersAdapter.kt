@@ -33,7 +33,7 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharacterViewHo
 			.into(holder.binding.imageCharacter)
 	}
 
-	fun addCharacter(characters: List<Character>) {
+	fun setCharacter(characters: List<Character>) {
 		charactersList = characters
 		notifyDataSetChanged()
 	}

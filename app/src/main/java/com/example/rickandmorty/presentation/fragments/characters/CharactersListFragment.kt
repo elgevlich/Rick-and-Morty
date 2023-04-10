@@ -28,10 +28,9 @@ class CharactersListFragment : Fragment() {
 
 		val viewModel = ViewModelProvider(requireActivity())[CharactersViewModel::class.java]
 		viewModel.getCharacters(1)
-		viewModel.charactersList.observe(viewLifecycleOwner) { response ->
-			if (response.isSuccessful) {
-				adapter.addCharacter(response.body()!!.results)
-			}
+
+		viewModel.charactersList.observe(viewLifecycleOwner) {
+			adapter.setCharacter(it)
 		}
 	}
 }
