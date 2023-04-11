@@ -1,6 +1,5 @@
 package com.example.rickandmorty.presentation.fragments.characters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 import com.example.rickandmorty.data.model.Character
 
-class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
+class CharactersAdapter() : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder>() {
 
 	private var charactersList = emptyList<Character>()
 

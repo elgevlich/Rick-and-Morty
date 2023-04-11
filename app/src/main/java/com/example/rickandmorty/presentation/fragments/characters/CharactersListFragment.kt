@@ -11,7 +11,7 @@ import com.example.rickandmorty.databinding.FragmentCharactersListBinding
 class CharactersListFragment : Fragment() {
 
 	private lateinit var binding: FragmentCharactersListBinding
-	private val adapter = CharactersAdapter()
+	private lateinit var adapter: CharactersAdapter
 
 
 	override fun onCreateView(
@@ -27,7 +27,7 @@ class CharactersListFragment : Fragment() {
 		binding.charactersList.adapter = adapter
 
 		val viewModel = ViewModelProvider(requireActivity())[CharactersViewModel::class.java]
-		viewModel.getCharacters(1)
+		viewModel.getCharacters()
 
 		viewModel.charactersList.observe(viewLifecycleOwner) {
 			adapter.setCharacter(it)
