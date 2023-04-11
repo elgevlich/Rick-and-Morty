@@ -1,38 +1,38 @@
 package com.example.rickandmorty.data.network
 
 
+import android.net.Uri
 import androidx.paging.PagingSource
-import com.bumptech.glide.load.HttpException
-import com.example.rickandmorty.data.Repository.Companion.DEFAULT_PAGE_INDEX
-import java.io.IOException
+import androidx.paging.PagingState
 import com.example.rickandmorty.data.model.Character
 
 
-class CharactersPagingSource(private val api: ApiService) :
-	PagingSource<Int, Character>() {
+class CharactersPagingSource(private val service: CharacterApi) :
+    PagingSource<Int, Character>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
+        val pageNumber = params.key ?: 1
+        return try {
+            val response = service.getAllCharacters(pageNumber)
+            val pagedResponse = response.body()
+            val data = pagedResponse?.results
 
-	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
-		val page = params.key ?: DEFAULT_PAGE_INDEX
-		return try {
-			val response = api.load(page)
+            var nextPageNumber: Int? = null
+            if (pagedResponse?.pageInfo?.next != null) {
+                val uri = Uri.parse(pagedResponse.pageInfo.next)
+                val nextPageQuery = uri.getQueryParameter("page")
+                nextPageNumber = nextPageQuery?.toInt()
+            }
 
+            LoadResult.Page(
+                data = data.orEmpty(),
+                prevKey = null,
+                nextKey = nextPageNumber
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
 
-			val responseData = mutableListOf<Character>()
-			val data = response.body()?.results ?: emptyList()
-			responseData.addAll(data)
-
-
-			return LoadResult.Page(
-				responseData, prevKey = if (page == DEFAULT_PAGE_INDEX) null else page - 1,
-				nextKey = if (responseData.isEmpty()) null else page + 1
-			)
-
-		} catch (exception: IOException) {
-			return LoadResult.Error(exception)
-		} catch (exception: HttpException) {
-			return LoadResult.Error(exception)
-		}
-	}
-
+    override fun getRefreshKey(state: PagingState<Int, Character>): Int = 1
 
 }

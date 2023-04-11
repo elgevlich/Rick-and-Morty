@@ -6,32 +6,46 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
+import kotlinx.coroutines.flow.collectLatest
+
+
 
 class CharactersListFragment : Fragment() {
 
-	private lateinit var binding: FragmentCharactersListBinding
-	private lateinit var adapter: CharactersAdapter
+    private lateinit var binding: FragmentCharactersListBinding
+    private val characterAdapter = CharacterAdapter()
 
 
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		binding = FragmentCharactersListBinding.inflate(inflater)
-		return binding.root
-	}
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentCharactersListBinding.inflate(inflater)
+        return binding.root
+    }
 
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		binding.charactersList.adapter = adapter
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-		val viewModel = ViewModelProvider(requireActivity())[CharactersViewModel::class.java]
-		viewModel.getCharacters()
 
-		viewModel.charactersList.observe(viewLifecycleOwner) {
-			adapter.setCharacter(it)
-		}
-	}
+        val viewModel = ViewModelProvider(requireActivity())[CharactersViewModel::class.java]
+
+        binding.charactersList.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = characterAdapter
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.charactersFlow.collectLatest { pagingData ->
+                characterAdapter.submitData(pagingData)
+            }
+
+
+        }
+
+    }
 }
 

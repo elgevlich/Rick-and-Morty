@@ -7,12 +7,12 @@ object RetrofitInstance {
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/")
+            .baseUrl("https://rickandmortyapi.com/api")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    val api: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
+    val service: CharacterApi by lazy {
+        retrofit.create(CharacterApi::class.java)
     }
 }

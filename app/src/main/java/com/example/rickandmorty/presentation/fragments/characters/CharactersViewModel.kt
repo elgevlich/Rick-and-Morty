@@ -2,33 +2,23 @@ package com.example.rickandmorty.presentation.fragments.characters
 
 import androidx.lifecycle.*
 import androidx.paging.PagingData
-import com.example.rickandmorty.data.Repository
+
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+
+import androidx.paging.cachedIn
 import com.example.rickandmorty.data.model.Character
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
-class CharactersViewModel( private val repository: Repository = Repository.getInstance()) : ViewModel() {
-
-
-	var charactersList: MutableLiveData<List<Character>> = MutableLiveData()
+import com.example.rickandmorty.data.network.CharacterApi
+import com.example.rickandmorty.data.network.CharactersPagingSource
 
 
-	fun fetchDoggoImages(): Flow<PagingData<String>> {
-		return repository.letDoggoImagesFlow()
-			.map { it.map { it.url } }
-			.cachedIn(viewModelScope)
-	}
+class CharactersViewModel(val api: CharacterApi) : ViewModel() {
 
-	fun getCharacters(): LiveData<PagingData<String>> {
-		return repository.letDoggoImagesLiveData()
-			.map { it.map { it.url } }
-			.cachedIn(viewModelScope)
-	}
-
-	fun getCharactes() {
-		viewModelScope.launch {
-			val characters = repository.getCharacters()
-			charactersList.value = characters.results
-
-		}
-	}
+    val charactersFlow: Flow<PagingData<Character>> =
+        Pager(config = PagingConfig(pageSize = 20, prefetchDistance = 2),
+            pagingSourceFactory = { CharactersPagingSource(api) }
+        ).flow.cachedIn(viewModelScope)
 }
