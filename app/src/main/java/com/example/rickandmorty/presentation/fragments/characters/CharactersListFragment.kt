@@ -37,7 +37,6 @@ class CharactersListFragment : Fragment() {
 
 		binding.charactersList.adapter = adapter
 
-
 		val viewModel =
 			ViewModelProvider(
 				this,
