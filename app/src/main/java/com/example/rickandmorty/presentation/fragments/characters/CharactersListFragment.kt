@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+
 import com.example.rickandmorty.data.network.CharacterApi
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -17,12 +22,12 @@ class CharactersListFragment : Fragment() {
 
 	private lateinit var binding: FragmentCharactersListBinding
 	private val adapter = CharacterAdapter()
-
+	private var isPull = false
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		binding = FragmentCharactersListBinding.inflate(inflater)
 		return binding.root
 	}
@@ -32,16 +37,40 @@ class CharactersListFragment : Fragment() {
 
 		binding.charactersList.adapter = adapter
 
+
 		val viewModel =
 			ViewModelProvider(
 				this,
 				CharacterViewModelFactory(CharacterApi.api)
 			)[CharactersViewModel::class.java]
 
+		binding.swipeRefresh.setOnRefreshListener {
+			isPull = true
+			adapter.refresh() }
 
-		lifecycleScope.launch {
-			viewModel.characters.collectLatest { pagingData ->
-				adapter.submitData(pagingData)
+		with(viewModel) {
+			lifecycleScope.launch {
+				viewModel.characters.collectLatest { pagingData ->
+					adapter.submitData(pagingData)
+				}
+			}
+			lifecycleScope.launch {
+				viewModel.characters.collectLatest {
+					binding.swipeRefresh.isRefreshing = false
+				}
+
+			}
+		}
+
+		adapter.withLoadStateHeaderAndFooter(
+			header = CharacterLoadingStateAdapter(),
+			footer = CharacterLoadingStateAdapter()
+		)
+
+		adapter.addLoadStateListener { state: CombinedLoadStates ->
+			if (!isPull) {
+				binding.charactersList.isVisible = state.refresh != LoadState.Loading
+				binding.progress.isVisible = state.refresh == LoadState.Loading
 			}
 		}
 
