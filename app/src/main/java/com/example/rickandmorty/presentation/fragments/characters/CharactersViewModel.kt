@@ -17,7 +17,7 @@ import com.example.rickandmorty.data.network.CharactersPagingSource
 
 class CharactersViewModel(private val api: CharacterApi) : ViewModel() {
 
-    val characters = Pager(PagingConfig(pageSize = 20)) {
+    val characters: Flow<PagingData<Character>>  = Pager(PagingConfig(pageSize = 20, prefetchDistance = 2)) {
         CharactersPagingSource(api)
     }.flow.cachedIn(viewModelScope)
 
