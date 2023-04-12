@@ -1,25 +1,24 @@
 package com.example.rickandmorty.presentation.fragments.characters
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
+import androidx.paging.PagingData
+
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmorty.data.Repository
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+
+import androidx.paging.cachedIn
 import com.example.rickandmorty.data.model.Character
-import com.example.rickandmorty.data.model.CharacterList
-import kotlinx.coroutines.launch
-import retrofit2.Response
+import kotlinx.coroutines.flow.Flow
 
-class CharactersViewModel(application: Application) : AndroidViewModel(application) {
+import com.example.rickandmorty.data.network.CharacterApi
+import com.example.rickandmorty.data.network.CharactersPagingSource
 
-	private val repository = Repository()
-	var charactersList: MutableLiveData<List<Character>> = MutableLiveData()
 
-	fun getCharacters(page: Int) {
-		viewModelScope.launch {
-			val characters = repository.getCharacters(page)
-			charactersList.value = characters.results
+class CharactersViewModel(private val api: CharacterApi) : ViewModel() {
 
-		}
-	}
+    val characters: Flow<PagingData<Character>>  = Pager(PagingConfig(pageSize = 20, prefetchDistance = 2)) {
+        CharactersPagingSource(api)
+    }.flow.cachedIn(viewModelScope)
+
 }

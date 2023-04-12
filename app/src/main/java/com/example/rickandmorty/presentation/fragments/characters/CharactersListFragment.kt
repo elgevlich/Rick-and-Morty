@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.rickandmorty.data.network.CharacterApi
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
 
 class CharactersListFragment : Fragment() {
 
 	private lateinit var binding: FragmentCharactersListBinding
-	private val adapter = CharactersAdapter()
+	private val adapter = CharacterAdapter()
 
 
 	override fun onCreateView(
@@ -24,14 +29,25 @@ class CharactersListFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+
 		binding.charactersList.adapter = adapter
 
-		val viewModel = ViewModelProvider(requireActivity())[CharactersViewModel::class.java]
-		viewModel.getCharacters(1)
+		val viewModel =
+			ViewModelProvider(
+				this,
+				CharacterViewModelFactory(CharacterApi.api)
+			)[CharactersViewModel::class.java]
 
-		viewModel.charactersList.observe(viewLifecycleOwner) {
-			adapter.setCharacter(it)
+
+		lifecycleScope.launch {
+			viewModel.characters.collectLatest { pagingData ->
+				adapter.submitData(pagingData)
+			}
 		}
+
 	}
+
 }
+
+
 
