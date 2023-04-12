@@ -33,4 +33,5 @@ class CharactersPagingSource(private val service: CharacterApi) :
 		}
 	}
 
+
 }
