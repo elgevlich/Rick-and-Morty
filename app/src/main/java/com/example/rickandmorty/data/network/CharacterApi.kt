@@ -1,31 +1,26 @@
 package com.example.rickandmorty.data.network
 
-import com.example.rickandmorty.data.model.PagedResponse
-import retrofit2.Response
+import com.example.rickandmorty.data.model.CharacterList
 import retrofit2.http.GET
 import retrofit2.http.Query
-import com.example.rickandmorty.data.model.Character
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 interface CharacterApi {
 
     @GET("api/character")
-    suspend fun getAllCharacters(@Query("page") page: Int): Response<PagedResponse<Character>>
+    suspend fun getCharacters(@Query("page") page : Int): CharacterList
 
+    @GET("api/character")
+    suspend fun getCharactersByName(@Query("name") name : String): CharacterList
 
-    companion object {
+    @GET("api/character")
+    suspend fun getCharactersByStatusAndGender(@Query("status") status : String,
+                                               @Query("gender") gender : String,
+                                               @Query("page") page : Int): CharacterList
 
-        private val retrofit by lazy {
-            Retrofit.Builder()
-                .baseUrl("https://rickandmortyapi.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        }
+    @GET("api/character")
+    suspend fun getCharactersByStatus(@Query("status") status : String, @Query("page") page : Int): CharacterList
 
-        val api: CharacterApi by lazy {
-            retrofit.create(CharacterApi::class.java)
-        }
-    }
+    @GET("api/character")
+    suspend fun getCharactersByGender( @Query("gender") gender : String, @Query("page") page : Int): CharacterList
 }

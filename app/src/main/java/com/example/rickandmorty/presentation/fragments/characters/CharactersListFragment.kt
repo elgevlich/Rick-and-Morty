@@ -4,76 +4,90 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+
 import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.activityViewModels
+
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 
-import com.example.rickandmorty.data.network.CharacterApi
-import com.example.rickandmorty.databinding.FragmentCharactersListBinding
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
+import com.example.rickandmorty.data.network.Repository
+import com.example.rickandmorty.databinding.FragmentCharactersListBinding
 
 class CharactersListFragment : Fragment() {
 
-	private lateinit var binding: FragmentCharactersListBinding
-	private val adapter = CharacterAdapter()
-	private var isPull = false
+    private lateinit var binding: FragmentCharactersListBinding
+    private val adapter = CharacterAdapter()
 
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		binding = FragmentCharactersListBinding.inflate(inflater)
-		return binding.root
-	}
+    private val viewModel: CharactersViewModel by activityViewModels {
+        CharacterViewModelFactory(
+            Repository()
+        )
+    }
 
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
+//    private var isPull = false
 
-		binding.charactersList.adapter = adapter
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentCharactersListBinding.inflate(inflater)
+        return binding.root
+    }
 
-		val viewModel =
-			ViewModelProvider(
-				this,
-				CharacterViewModelFactory(CharacterApi.api)
-			)[CharactersViewModel::class.java]
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-		binding.swipeRefresh.setOnRefreshListener {
-			isPull = true
-			adapter.refresh() }
+        binding.charactersList.adapter = adapter
 
-		with(viewModel) {
-			lifecycleScope.launch {
-				viewModel.characters.collectLatest { pagingData ->
-					adapter.submitData(pagingData)
-				}
-			}
-			lifecycleScope.launch {
-				viewModel.characters.collectLatest {
-					binding.swipeRefresh.isRefreshing = false
-				}
+//        binding.swipeRefresh.setOnRefreshListener {
+//            isPull = true
+//            adapter.refresh()
+//        }
 
-			}
-		}
 
-		adapter.withLoadStateHeaderAndFooter(
-			header = CharacterLoadingStateAdapter(),
-			footer = CharacterLoadingStateAdapter()
-		)
+        viewModel.getCharacters(1)
 
-		adapter.addLoadStateListener { state: CombinedLoadStates ->
-			if (!isPull) {
-				binding.charactersList.isVisible = state.refresh != LoadState.Loading
-				binding.progress.isVisible = state.refresh == LoadState.Loading
-			}
-		}
+        viewModel.listCharactersInEpisode.observe(viewLifecycleOwner) {
+            adapter.setCharacters(it)
+        }
 
-	}
+        getNameSearchView()
+
+
+//        adapter.withLoadStateHeaderAndFooter(
+//            header = CharacterLoadingStateAdapter(),
+//            footer = CharacterLoadingStateAdapter()
+//        )
+//
+//        adapter.addLoadStateListener { state: CombinedLoadStates ->
+//            if (!isPull) {
+//                binding.charactersList.isVisible = state.refresh != LoadState.Loading
+//                binding.progress.isVisible = state.refresh == LoadState.Loading
+//            }
+//        }
+
+
+    }
+
+    private fun getNameSearchView() {
+        binding.characterSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.getByName(query.toString())
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
+    }
+
 
 }
 
