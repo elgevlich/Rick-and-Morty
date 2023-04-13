@@ -12,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import com.example.rickandmorty.R
 
 
-import com.example.rickandmorty.data.network.RepositoryCharacters
 import com.example.rickandmorty.data.network.RepositoryEpisodes
 import com.example.rickandmorty.databinding.FragmentEpisodesListBinding
 import com.example.rickandmorty.presentation.fragments.adapters.EpisodeAdapter
@@ -42,7 +41,6 @@ class EpisodesListFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 		showBottomNav()
 		binding.charactersList.adapter = adapter
-
 
 		getNameSearchView()
 
