@@ -9,6 +9,9 @@
     <dimen name="space_small_2x">4dp</dimen>
     <dimen name="space_small_3x">2dp</dimen>
 
-    <dimen name="font_size_small">16sp</dimen>
+    <dimen name="font_size_small_x">16sp</dimen>
+    <dimen name="font_size_small">18sp</dimen>
     <dimen name="font_size_medium">24sp</dimen>
+
+    <dimen name="elevation">8dp</dimen>
 </resources>

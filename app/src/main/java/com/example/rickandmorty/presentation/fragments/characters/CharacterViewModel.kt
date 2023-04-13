@@ -6,12 +6,13 @@ import androidx.lifecycle.viewModelScope
 
 import com.example.rickandmorty.data.model.Character
 
-import com.example.rickandmorty.data.network.Repository
+import com.example.rickandmorty.data.network.RepositoryCharacters
 import kotlinx.coroutines.launch
 
 
-class CharactersViewModel(private val repository: Repository) : ViewModel() {
+class CharacterViewModel(private val repository: RepositoryCharacters) : ViewModel() {
 
+    val dataCharacter = MutableLiveData<Character>()
     var listCharactersInEpisode = MutableLiveData<List<Character>>()
     var filterValue = MutableLiveData<Array<Int>>()
     var isFilter = MutableLiveData<Boolean>()

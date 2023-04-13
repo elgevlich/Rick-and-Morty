@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="@dimen/space_small"
+	>
+	<TextView
+		android:id="@+id/filter"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/space_small"
+		android:text="@string/title_filter"
+		android:textAlignment="center"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_medium"
+		android:textStyle="bold"
+		/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:orientation="vertical"
+		>
+
+		<TextView
+			android:id="@+id/status_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/title_status"
+			android:textSize="@dimen/font_size_small_x"
+			android:textStyle="bold"
+			tools:textColor="@color/jeans_blue"
+			/>
+
+		<com.google.android.material.chip.ChipGroup
+			android:id="@+id/chipgroup_status"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/space_small"
+			android:orientation="horizontal"
+			app:singleSelection="true"
+			>
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_alive"
+				style="@style/CustomChip"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/txt_chip_alive"
+				android:textSize="@dimen/font_size_small_x"
+				android:background="@drawable/status_selector"
+				/>
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_dead"
+				style="@style/CustomChip"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/txt_chip_dead"
+				android:textSize="@dimen/font_size_small_x"
+				/>
+
+			<com.google.android.material.chip.Chip
+				android:id="@+id/chip_unknown"
+				style="@style/CustomChip"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/txt_chip_unknown"
+				android:textSize="@dimen/font_size_small_x"
+				/>
+
+		</com.google.android.material.chip.ChipGroup>
+
+		<TextView
+			android:id="@+id/gender_txt"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:text="@string/title_gender"
+			android:textSize="@dimen/font_size_small_x"
+			android:textStyle="bold"
+			tools:textColor="@color/jeans_blue"
+			/>
+
+		<RadioGroup
+			android:id="@+id/radiogroup_gender"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/space_small"
+			android:orientation="horizontal"
+			>
+
+			<RadioButton
+				android:id="@+id/checkbox_female"
+				style="@style/CustomRadioButton"
+				android:background="@drawable/checkbox_female_selector"
+				android:text="@string/txt_checkbox_female"
+				/>
+
+			<RadioButton
+				android:id="@+id/checkbox_male"
+				style="@style/CustomRadioButton"
+				android:background="@drawable/checkbox_male_selector"
+				android:text="@string/txt_checkbox_male"
+				/>
+
+			<RadioButton
+				android:id="@+id/checkbox_genderless"
+				style="@style/CustomRadioButton"
+				android:background="@drawable/checkbox_genderless_selector"
+				android:text="@string/txt_checkbox_genderless"
+				/>
+
+			<RadioButton
+				android:id="@+id/checkbox_unknown"
+				style="@style/CustomRadioButton"
+				android:background="@drawable/checkbox_unknown_selector"
+				android:text="@string/txt_checkbox_unknown"
+				/>
+
+		</RadioGroup>
+	</LinearLayout>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/btn_make_filter"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_margin="@dimen/space_medium"
+		android:background="@drawable/background_blue"
+		android:text="@string/title_btn_apply"
+		android:textColor="@color/quite_white"
+		app:backgroundTint="@null"
+		/>
+</LinearLayout>

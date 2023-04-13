@@ -7,7 +7,8 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
 import com.example.rickandmorty.presentation.fragments.characters.CharactersListFragment
 import com.example.rickandmorty.presentation.fragments.episodes.EpisodesListFragment
-import com.example.rickandmorty.presentation.fragments.locations.LocationsListFragment
+import com.example.rickandmorty.presentation.fragments.locations.LocationListFragment
+import com.example.rickandmorty.presentation.fragments.locations.LocationViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,17 +22,20 @@ class MainActivity : AppCompatActivity() {
 		initBottomNav()
 	}
 
+
+
 	private fun initBottomNav() {
 		replaceFragment(CharactersListFragment())
-		binding.bottomNavigationView.setOnItemSelectedListener { item ->
+		binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
 			when (item.itemId) {
 				R.id.characters -> replaceFragment(CharactersListFragment())
-				R.id.locations -> replaceFragment(LocationsListFragment())
+				R.id.locations -> replaceFragment(LocationListFragment())
 				R.id.episodes -> replaceFragment(EpisodesListFragment())
 			}
 			true
 		}
 	}
+
 
 
 	private fun replaceFragment(fragment: Fragment) {

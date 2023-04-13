@@ -9,28 +9,18 @@
 	>
 
 	<androidx.appcompat.widget.SearchView
-		android:id="@+id/character_search"
-		android:layout_width="0dp"
+		android:id="@+id/episodes_search"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginEnd="@dimen/space_small_x"
-		android:background="@drawable/background_yellow"
+		android:background="@drawable/background_blue"
 		android:elevation="@dimen/elevation"
 		android:textCursorDrawable="@null"
 		app:iconifiedByDefault="false"
-		app:layout_constraintEnd_toStartOf="@+id/btn_filter"
+		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:queryBackground="@null"
 		app:queryHint="@string/search_hint"
-		/>
-	<ImageButton
-		android:id="@+id/btn_filter"
-		android:layout_width="50dp"
-		android:layout_height="50dp"
-		android:background="@drawable/background_blue"
-		android:src="@drawable/ic_filter_button"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
 		/>
 
 	<TextView
@@ -43,7 +33,7 @@
 		android:visibility="invisible"
 		app:layout_constraintBottom_toTopOf="@+id/characters_list"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/character_search"
+		app:layout_constraintTop_toBottomOf="@+id/episodes_search"
 		app:layout_constraintVertical_bias="0.65"
 		/>
 
@@ -58,9 +48,9 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/character_search"
+		app:layout_constraintTop_toBottomOf="@id/episodes_search"
 		app:spanCount="2"
-		tools:listitem="@layout/item_character"
+		tools:listitem="@layout/item_episode"
 
 		/>
 
