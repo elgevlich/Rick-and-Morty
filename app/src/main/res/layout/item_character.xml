@@ -7,77 +7,80 @@
 	android:layout_margin="@dimen/space_small_2x"
 	android:background="@drawable/background_pink"
 	android:elevation="@dimen/elevation"
-	android:clipChildren="true"
 	>
 
 	<ImageView
-		android:clipToOutline="true"
 		android:id="@+id/image_character"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/space_large"
-		android:scaleType="centerCrop"
-		android:src="@drawable/ic_baseline_face_24"
-		app:layout_constraintBottom_toTopOf="@id/character_info"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:strokeColor="@color/jeans_blue"
+		app:srcCompat="@drawable/ic_baseline_face_24"
 		/>
 
-	<LinearLayout
-		android:id="@+id/character_info"
+	<TextView
+		android:id="@+id/name"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/space_small"
-		android:orientation="vertical"
+		android:layout_marginStart="@dimen/space_small_x"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/image_character"
+		tools:text="Name"
+		/>
+
+	<TextView
+		android:id="@+id/species"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small_x"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_2x"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/name"
+		tools:text="Species"
+
+		/>
+
+	<TextView
+		android:id="@+id/gender"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small_x"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_2x"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/species"
+		tools:text="Gender"
+		/>
+
+	<TextView
+		android:id="@+id/status"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end"
+		android:layout_margin="@dimen/space_small_x"
+		android:textAlignment="viewEnd"
+		android:textColor="@color/yellow"
+		android:textSize="@dimen/font_size_small_2x"
+		android:textStyle="bold"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintEnd_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/image_character"
-		>
-
-		<TextView
-			android:id="@+id/name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginEnd="@dimen/space_small_2x"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small"
-			android:textStyle="bold"
-			tools:text="Name"
-			/>
-
-		<TextView
-			android:id="@+id/species"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small_x"
-			tools:text="Species"
-
-			/>
-
-		<TextView
-			android:id="@+id/gender"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/space_small_3x"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small_x"
-			tools:text="Gender"
-			/>
-
-		<TextView
-			android:id="@+id/status"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="end"
-			android:textColor="@color/yellow"
-			android:textSize="@dimen/font_size_small_x"
-			android:textStyle="bold"
-			tools:text="Status"
-			/>
-
-	</LinearLayout>
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/gender"
+		tools:text="Status"
+		/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

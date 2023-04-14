@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="space_large_3x">360dp</dimen>
-    <dimen name="space_large_2x">240dp</dimen>
-    <dimen name="space_large">160dp</dimen>
-    <dimen name="space_medium">48dp</dimen>
-    <dimen name="space_small">16dp</dimen>
-    <dimen name="space_small_x">8dp</dimen>
-    <dimen name="space_small_2x">4dp</dimen>
-    <dimen name="space_small_3x">2dp</dimen>
+	<dimen name="space_large_3x">360dp</dimen>
+	<dimen name="space_large_2x">240dp</dimen>
+	<dimen name="space_large">160dp</dimen>
+	<dimen name="space_medium_x">64dp</dimen>
+	<dimen name="space_medium">48dp</dimen>
+	<dimen name="space_small">16dp</dimen>
+	<dimen name="space_small_x">8dp</dimen>
+	<dimen name="space_small_2x">4dp</dimen>
+	<dimen name="space_small_3x">2dp</dimen>
 
-    <dimen name="font_size_small_x">16sp</dimen>
-    <dimen name="font_size_small">18sp</dimen>
-    <dimen name="font_size_medium">24sp</dimen>
+	<dimen name="font_size_small_2x">12sp</dimen>
+	<dimen name="font_size_small_x">16sp</dimen>
+	<dimen name="font_size_small">18sp</dimen>
+	<dimen name="font_size_medium">24sp</dimen>
 
-    <dimen name="elevation">8dp</dimen>
+	<dimen name="elevation">8dp</dimen>
 </resources>

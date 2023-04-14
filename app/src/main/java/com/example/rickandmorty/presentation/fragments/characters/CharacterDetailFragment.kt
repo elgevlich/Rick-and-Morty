@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.characters.filter
+package com.example.rickandmorty.presentation.fragments.characters
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,21 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-
-import com.example.rickandmorty.databinding.FragmentCharacterFilterBinding
+import com.example.rickandmorty.databinding.FragmentCharacterDetailsBinding
 import com.example.rickandmorty.presentation.Navigator
 
+class CharacterDetailFragment : Fragment() {
 
-class CharacterFilterFragment : Fragment() {
-
-	private lateinit var binding: FragmentCharacterFilterBinding
+	private lateinit var binding: FragmentCharacterDetailsBinding
 
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		binding = FragmentCharacterFilterBinding.inflate(inflater)
+		binding = FragmentCharacterDetailsBinding.inflate(inflater)
 		return binding.root
 	}
 
@@ -41,6 +39,6 @@ class CharacterFilterFragment : Fragment() {
 	companion object {
 
 		@JvmStatic
-		fun newInstance() = CharacterFilterFragment()
+		fun newInstance() = CharacterDetailFragment()
 	}
 }

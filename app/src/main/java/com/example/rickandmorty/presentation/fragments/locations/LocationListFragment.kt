@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.rickandmorty.R
+
 import com.example.rickandmorty.data.network.RepositoryLocations
 import com.example.rickandmorty.databinding.FragmentLocationListBinding
 import com.example.rickandmorty.presentation.fragments.adapters.LocationAdapter
 
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class LocationListFragment : Fragment() {
 
@@ -36,7 +35,6 @@ class LocationListFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		showBottomNav()
 		binding.locationList.adapter = adapter
 
 
@@ -77,9 +75,12 @@ class LocationListFragment : Fragment() {
 		})
 	}
 
-	private fun showBottomNav(){
-		val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-		bottomNavigationView.visibility = View.VISIBLE
+
+	companion object {
+
+		@JvmStatic
+		fun newInstance() = LocationListFragment()
+		const val TAG = "Locations"
 	}
 
 

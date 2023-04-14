@@ -9,13 +9,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 
-import com.example.rickandmorty.R
-
 
 import com.example.rickandmorty.data.network.RepositoryEpisodes
 import com.example.rickandmorty.databinding.FragmentEpisodesListBinding
 import com.example.rickandmorty.presentation.fragments.adapters.EpisodeAdapter
-import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class EpisodesListFragment : Fragment() {
 
@@ -39,7 +37,7 @@ class EpisodesListFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		showBottomNav()
+
 		binding.charactersList.adapter = adapter
 
 		getNameSearchView()
@@ -79,12 +77,13 @@ class EpisodesListFragment : Fragment() {
 		})
 	}
 
-	private fun showBottomNav(){
-		val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-		bottomNavigationView.visibility = View.VISIBLE
+
+	companion object {
+
+		@JvmStatic
+		fun newInstance() = EpisodesListFragment()
+		const val TAG = "Episodes"
 	}
-
-
 }
 
 

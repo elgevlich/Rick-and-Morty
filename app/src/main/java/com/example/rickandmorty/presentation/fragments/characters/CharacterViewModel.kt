@@ -17,11 +17,10 @@ import kotlinx.coroutines.flow.Flow
 
 class CharacterViewModel(private val api: CharacterApi) : ViewModel() {
 
-
-    val characters: Flow<PagingData<Character>> =
-        Pager(PagingConfig(pageSize = 20, prefetchDistance = 2)) {
-            CharacterPagingSource(api)
-        }.flow.cachedIn(viewModelScope)
-
+	val dataCharacter = MutableLiveData<Character>()
+	val characters: Flow<PagingData<Character>> =
+		Pager(PagingConfig(pageSize = 20, prefetchDistance = 2)) {
+			CharacterPagingSource(api)
+		}.flow.cachedIn(viewModelScope)
 
 }
