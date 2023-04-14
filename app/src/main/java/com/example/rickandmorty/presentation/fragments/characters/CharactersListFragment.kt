@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
@@ -35,6 +36,21 @@ class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
 	private val adapter = CharacterAdapter(this)
 	private var isPull = false
 
+	private var status = ""
+	private var gender = ""
+
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setFragmentResultListener("requestKey") { _, bundle ->
+			status = bundle.getString("status") ?: ""
+			gender = bundle.getString("gender") ?: ""
+			lifecycleScope.launch {
+				viewModel.load(name, status, gender)
+				viewModel.characterFlow.collectLatest(adapter::submitData)
+			}
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,

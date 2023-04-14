@@ -6,26 +6,21 @@ import androidx.paging.PagingData
 import com.example.rickandmorty.data.model.Character
 import com.example.rickandmorty.data.model.CharacterPagedResponse
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
-class CharacterRepositoryImpl(
-    private val service: CharacterApi,
-) : CharacterRepository {
+interface CharacterRepositoryImpl: CharacterRepository {
 
-    override suspend fun getCharacters(): Flow<PagingData<Character>> = Pager(
-        config = PagingConfig(pageSize = 20, prefetchDistance = 2),
-        pagingSourceFactory = { CharacterPagingSource(service) }
-    ).flow
+    private val apiService = RetrofitInstance.Api
 
-    override suspend fun getSingleCharacter(id: Int) = service.getSingleCharacter(id)
-
-    override suspend fun getMultipleCharacters(ids: List<Int>) = service.getMultipleCharacters(ids)
-
-    override suspend fun filterCharacters(
+    override suspend fun getCharacters(
+        page: Int,
         name: String,
         status: String,
-        species: String,
-        type: String,
         gender: String
-    ) = service.filterCharacters(name, status, species, type, gender)
+    ): Character {
+        val character = apiService.getCharacters(page, status, gender)
+        return Response
+    }
+
 
 }
