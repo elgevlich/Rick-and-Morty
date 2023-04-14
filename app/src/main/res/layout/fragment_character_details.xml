@@ -1,94 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/quite_white"
-    android:padding="@dimen/space_medium">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/quite_white"
+	android:padding="@dimen/space_small"
+	>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_character"
-        android:layout_width="@dimen/space_large_2x"
-        android:layout_height="@dimen/space_large_2x"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_baseline_face_24"
-        app:layout_constraintBottom_toTopOf="@id/character_info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-        app:strokeColor="@color/jeans_blue"
-        app:strokeWidth="@dimen/space_small_3x" />
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/image_character"
+		android:layout_width="@dimen/space_large_2x"
+		android:layout_height="@dimen/space_large_2x"
+		android:scaleType="centerCrop"
+		android:src="@drawable/ic_baseline_face_24"
+		app:layout_constraintBottom_toTopOf="@id/character_info"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+		app:strokeColor="@color/jeans_blue"
+		app:strokeWidth="@dimen/space_small_3x"
+		/>
 
+	<LinearLayout
+		android:id="@+id/character_info"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/space_small_2x"
+		android:gravity="center"
+		android:orientation="vertical"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/image_character"
+		>
 
-    <LinearLayout
-        android:id="@+id/character_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_small_2x"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_character">
+		<TextView
+			android:id="@+id/status"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/yellow"
+			android:textSize="@dimen/font_size_small_x"
+			android:textStyle="bold"
+			tools:text="Status"
+			/>
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/yellow"
-            android:textSize="@dimen/font_size_small"
-            android:textStyle="bold"
-            tools:text="Status" />
+		<TextView
+			android:id="@+id/name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/space_small_x"
+			android:textColor="@color/jeans_blue"
+			android:textSize="@dimen/font_size_medium"
+			android:textStyle="bold"
+			tools:text="Name"
+			/>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_small_x"
-            android:textColor="@color/jeans_blue"
-            android:textSize="@dimen/font_size_medium"
-            android:textStyle="bold"
-            tools:text="Name" />
+		<TextView
+			android:id="@+id/species"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/jeans_blue"
+			android:textSize="@dimen/font_size_medium"
+			tools:text="Species"
 
-        <TextView
-            android:id="@+id/species"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/jeans_blue"
-            android:textSize="@dimen/font_size_medium"
-            tools:text="Species"
+			/>
 
-            />
+		<TextView
+			android:id="@+id/gender"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/space_small_2x"
+			android:textColor="@color/jeans_blue"
+			android:textSize="@dimen/font_size_medium"
+			tools:text="Gender"
+			/>
 
+		<TextView
+			android:id="@+id/origin"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/jeans_blue"
+			android:textSize="@dimen/font_size_medium"
+			android:textStyle="bold"
+			tools:text="Origin"
+			/>
 
-        <TextView
-            android:id="@+id/gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_small_2x"
-            android:textColor="@color/jeans_blue"
-            android:textSize="@dimen/font_size_medium"
-            tools:text="Gender" />
+	</LinearLayout>
 
-        <TextView
-            android:id="@+id/origin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/jeans_blue"
-            android:textSize="@dimen/font_size_medium"
-            android:textStyle="bold"
-            tools:text="Origin" />
-
-    </LinearLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/episodes_list"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/character_info"
-        android:background="@drawable/bottom_navigation_view"/>
-
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/episodes_list"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/space_medium"
+		android:background="@drawable/background_blue"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/character_info"
+		/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

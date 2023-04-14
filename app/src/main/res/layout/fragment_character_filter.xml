@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="@dimen/space_small"
+	>
+	<TextView
+		android:id="@+id/filter"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/title_filter"
+		android:textAlignment="center"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_medium"
+		android:textStyle="bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+
+		/>
+
+	<TextView
+		android:id="@+id/status_txt"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_medium"
+		android:layout_marginTop="@dimen/space_medium"
+		android:text="@string/title_status"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/filter"
+		tools:textColor="@color/jeans_blue"
+		/>
+
+	<com.google.android.material.chip.ChipGroup
+		android:id="@+id/chipgroup_status"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_medium"
+		android:layout_marginTop="@dimen/space_small"
+		android:orientation="horizontal"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/status_txt"
+		app:singleSelection="true"
+		>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_alive"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_alive"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_dead"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_dead"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_unknown"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_unknown"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+	</com.google.android.material.chip.ChipGroup>
+
+	<TextView
+		android:id="@+id/gender_txt"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_medium"
+		android:layout_marginTop="@dimen/space_medium"
+		android:text="@string/title_gender"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/chipgroup_status"
+		tools:textColor="@color/jeans_blue"
+		/>
+
+	<com.google.android.material.chip.ChipGroup
+		android:id="@+id/chipgroup_gender"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_medium"
+		android:layout_marginTop="@dimen/space_small"
+		android:orientation="horizontal"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/gender_txt"
+		app:singleSelection="true"
+		>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_female"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_alive"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_male"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_dead"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_genderless"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_unknown"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+		<com.google.android.material.chip.Chip
+			android:id="@+id/chip_unknownGender"
+			style="@style/Widget.MaterialComponents.Chip.Choice"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/txt_chip_unknown"
+			android:textSize="@dimen/font_size_small_x"
+			/>
+
+	</com.google.android.material.chip.ChipGroup>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/btn_make_filter"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_margin="@dimen/space_medium"
+		android:background="@drawable/background_blue"
+		android:text="@string/title_btn_apply"
+		android:textColor="@color/quite_white"
+		app:backgroundTint="@null"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/chipgroup_gender"
+		/>
+</androidx.constraintlayout.widget.ConstraintLayout>

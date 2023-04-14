@@ -1,28 +1,26 @@
-package com.example.rickandmorty.presentation.fragments.episodes
+package com.example.rickandmorty.presentation.fragments.locations
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 
+import com.example.rickandmorty.data.network.RepositoryLocations
+import com.example.rickandmorty.databinding.FragmentLocationListBinding
+import com.example.rickandmorty.presentation.fragments.adapters.LocationAdapter
 
-import com.example.rickandmorty.data.network.RepositoryEpisodes
-import com.example.rickandmorty.databinding.FragmentEpisodesListBinding
-import com.example.rickandmorty.presentation.fragments.adapters.EpisodeAdapter
 
+class LocationListFragment : Fragment() {
 
-class EpisodesListFragment : Fragment() {
+	private lateinit var binding: FragmentLocationListBinding
+	private val adapter = LocationAdapter()
 
-	private lateinit var binding: FragmentEpisodesListBinding
-	private val adapter = EpisodeAdapter()
-
-	private val viewModel: EpisodeViewModel by activityViewModels {
-		EpisodeViewModelFactory(
-			RepositoryEpisodes()
+	private val viewModel: LocationViewModel by activityViewModels {
+		LocationViewModelFactory(
+			RepositoryLocations()
 		)
 	}
 
@@ -31,14 +29,14 @@ class EpisodesListFragment : Fragment() {
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		binding = FragmentEpisodesListBinding.inflate(inflater)
+		binding = FragmentLocationListBinding.inflate(inflater)
 		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		binding.locationList.adapter = adapter
 
-		binding.charactersList.adapter = adapter
 
 		getNameSearchView()
 
@@ -47,15 +45,15 @@ class EpisodesListFragment : Fragment() {
 		}
 
 		binding.txtReset.setOnClickListener {
-			viewModel.getEpisodes(1)
+			viewModel.getLocations(1)
 			viewModel.filterValue.value = arrayOf(0, 0)
 		}
 
 
-		viewModel.getEpisodes(1)
+		viewModel.getLocations(1)
 
-		viewModel.listEpisodes.observe(viewLifecycleOwner) {
-			adapter.setEpisodes(it)
+		viewModel.listLocations.observe(viewLifecycleOwner) {
+			adapter.setLocations(it)
 		}
 
 		getNameSearchView()
@@ -64,10 +62,10 @@ class EpisodesListFragment : Fragment() {
 
 	private fun getNameSearchView() {
 
-		binding.episodesSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+		binding.locationSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
 			override fun onQueryTextSubmit(query: String?): Boolean {
-				viewModel.getEpisodesByName(query.toString())
+				viewModel.getLocationsByName(query.toString())
 				return true
 			}
 
@@ -81,10 +79,9 @@ class EpisodesListFragment : Fragment() {
 	companion object {
 
 		@JvmStatic
-		fun newInstance() = EpisodesListFragment()
-		const val TAG = "Episodes"
+		fun newInstance() = LocationListFragment()
+		const val TAG = "Locations"
 	}
+
+
 }
-
-
-

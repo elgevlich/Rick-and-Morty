@@ -1,21 +1,13 @@
 package com.example.rickandmorty.data.network
 
-import com.example.rickandmorty.data.model.CharacterPagedResponse
+import androidx.paging.PagingData
 import com.example.rickandmorty.data.model.Character
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
+import kotlinx.coroutines.flow.Flow
 
-
-interface CharacterApi {
-
-    @GET("api/character/")
-    suspend fun getCharacters(@Query("page") page: Int): Response<CharacterPagedResponse<Character>>
-
+interface CharacterRepository {
+    suspend fun getCharacters(): Flow<PagingData<Character>>
     suspend fun getSingleCharacter(id: Int)
-
     suspend fun getMultipleCharacters(ids: List<Int>)
-
     suspend fun filterCharacters(
         name: String,
         status: String,
@@ -23,5 +15,4 @@ interface CharacterApi {
         type: String,
         gender: String
     )
-
 }

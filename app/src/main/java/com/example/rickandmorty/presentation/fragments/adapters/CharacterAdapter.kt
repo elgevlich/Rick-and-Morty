@@ -1,4 +1,5 @@
-package com.example.rickandmorty.presentation.fragments.characters
+package com.example.rickandmorty.presentation.fragments.adapters
+
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 import com.example.rickandmorty.data.model.Character
 
-class CharacterAdapter : PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator) {
+class CharacterAdapter(private val listener: Listener) :
+	PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator) {
 
 
 	class CharacterViewHolder(val binding: ItemCharacterBinding) :
@@ -31,7 +33,11 @@ class CharacterAdapter : PagingDataAdapter<Character, CharacterAdapter.Character
 			holder.binding.species.text = characterPosition.species
 			Glide.with(holder.binding.imageCharacter)
 				.load(characterPosition.image)
+				.centerCrop()
 				.into(holder.binding.imageCharacter)
+			holder.itemView.rootView.setOnClickListener {
+				listener.onClick(characterPosition)
+			}
 
 		}
 	}
@@ -45,6 +51,11 @@ class CharacterAdapter : PagingDataAdapter<Character, CharacterAdapter.Character
 		override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
 			return oldItem == newItem
 		}
+	}
+
+	interface Listener {
+
+		fun onClick(character: Character)
 	}
 
 }
