@@ -77,7 +77,7 @@ class CharacterFilterFragment : Fragment() {
                     putString("status", status)
                 }
             )
-            navigator.popUpToBackStack("Character")
+            navigator.popUpToBackStack("Characters")
         }
     }
 

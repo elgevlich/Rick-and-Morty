@@ -9,13 +9,14 @@
 	android:elevation="@dimen/elevation"
 	>
 
-	<ImageView
+	<com.google.android.material.imageview.ShapeableImageView
 		android:id="@+id/image_character"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/space_large"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
 		app:srcCompat="@drawable/ic_baseline_face_24"
 		/>
 

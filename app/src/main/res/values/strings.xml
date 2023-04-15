@@ -1,23 +1,21 @@
 <resources>
-	<string name="app_name">Rick and Morty</string>
-	<string name="Characters">Characters</string>
-	<string name="search_hint">Search here…</string>
-	<string name="locations_nav_bar">Locations</string>
-	<string name="episodes_nav_bar">Episodes</string>
-	<string name="characters_nav_bar">Characters</string>
-	<string name="title_filter">Choose your fighter:</string>
-	<string name="title_status">Status</string>
-	<string name="title_name">Name</string>
-	<string name="txt_chip_alive">Alive</string>
-	<string name="txt_chip_dead">Dead</string>
-	<string name="txt_chip_unknown">Unknown</string>
-	<string name="title_gender">Gender</string>
-	<string name="txt_chip_female">Female</string>
-	<string name="txt_chip_genderless">Genderless</string>
-	<string name="txt_chip_male">Male</string>
-	<string name="txt_checkbox_unknown">Unknown</string>
-	<string name="search">Search by name...</string>
-
-	<string name="title_btn_apply">Apply</string>
-	<string name="title_reset">Reset</string>
+    <string name="app_name">Rick and Morty</string>
+    <string name="Characters">Characters</string>
+    <string name="locations_nav_bar">Locations</string>
+    <string name="episodes_nav_bar">Episodes</string>
+    <string name="characters_nav_bar">Characters</string>
+    <string name="title_filter">Choose your fighter:</string>
+    <string name="title_status">Status</string>
+    <string name="title_name">Name</string>
+    <string name="txt_chip_alive">Alive</string>
+    <string name="txt_chip_dead">Dead</string>
+    <string name="txt_chip_unknown">Unknown</string>
+    <string name="title_gender">Gender</string>
+    <string name="txt_chip_female">Female</string>
+    <string name="txt_chip_genderless">Genderless</string>
+    <string name="txt_chip_male">Male</string>
+    <string name="txt_checkbox_unknown">Unknown</string>
+    <string name="search">Search by name…</string>
+    <string name="title_btn_apply">Apply</string>
+    <string name="title_reset">Reset</string>
 </resources>

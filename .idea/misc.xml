@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/bottom_navigation_view.xml" value="0.1445" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/ic_baseline_format_list_numbered_24.xml" value="0.222" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.222" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/ic_filter_button.xml" value="0.222" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/drawable/search_24.xml" value="0.118" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/activity_main.xml" value="0.20697463768115942" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_character_details.xml" value="0.20697463768115942" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_character_filter.xml" value="0.19157608695652173" />
-        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_characters_list.xml" value="0.152" />
-        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/item_character.xml" value="0.20697463768115942" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_characters_list.xml" value="0.264" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/item_character.xml" value="1.6" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/menu/nav_bar_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
