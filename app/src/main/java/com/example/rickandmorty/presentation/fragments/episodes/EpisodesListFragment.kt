@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 
 
-import com.example.rickandmorty.data.network.RepositoryEpisodes
+import com.example.rickandmorty.domain.repository.RepositoryEpisodes
 import com.example.rickandmorty.databinding.FragmentEpisodesListBinding
 import com.example.rickandmorty.presentation.fragments.adapters.EpisodeAdapter
 

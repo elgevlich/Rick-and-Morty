@@ -2,7 +2,7 @@ package com.example.rickandmorty.presentation.fragments.characters
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.rickandmorty.data.network.CharacterApi
+import com.example.rickandmorty.data.api.CharacterApi
 
 
 class CharacterViewModelFactory(private val api: CharacterApi) :

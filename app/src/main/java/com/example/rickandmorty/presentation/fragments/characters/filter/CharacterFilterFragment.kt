@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-
 import com.example.rickandmorty.databinding.FragmentCharacterFilterBinding
 import com.example.rickandmorty.presentation.Navigator
 
@@ -15,7 +14,16 @@ import com.example.rickandmorty.presentation.Navigator
 class CharacterFilterFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterFilterBinding
+    var name = ""
+    var status = ""
+    var gender = ""
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        name = arguments?.getString("name") ?: ""
+        status = arguments?.getString("status") ?: ""
+        gender = arguments?.getString("gender") ?: ""
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +32,6 @@ class CharacterFilterFragment : Fragment() {
         binding = FragmentCharacterFilterBinding.inflate(inflater)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,10 +43,24 @@ class CharacterFilterFragment : Fragment() {
         }
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
+        if (name.isNotEmpty()) binding.search.setText(name)
+        when (status) {
+            "Alive" -> binding.chipAlive.isChecked = true
+            "Dead" -> binding.chipDead.isChecked = true
+            "unknown" -> binding.chipUnknown.isChecked = true
+        }
+
+        when (gender) {
+            "Male" -> binding.chipMale.isChecked = true
+            "Female" -> binding.chipFemale.isChecked = true
+            "Genderless" -> binding.chipGenderless.isChecked = true
+            "unknown" -> binding.chipUnknownGender.isChecked = true
+        }
+
         binding.btnMakeFilter.setOnClickListener {
-            var name = ""
-            var status = ""
-            var gender = ""
+            name = ""
+            status = ""
+            gender = ""
             name = binding.search.text.toString()
             if (binding.chipAlive.isChecked) status = "Alive"
             if (binding.chipDead.isChecked) status = "Dead"
@@ -61,8 +82,15 @@ class CharacterFilterFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
-        fun newInstance() = CharacterFilterFragment()
+        fun newInstance(name: String, status: String, gender: String): CharacterFilterFragment {
+            return CharacterFilterFragment().apply {
+                arguments = Bundle().apply {
+                    putString("name", name)
+                    putString("status", status)
+                    putString("gender", gender)
+                }
+            }
+        }
     }
 }

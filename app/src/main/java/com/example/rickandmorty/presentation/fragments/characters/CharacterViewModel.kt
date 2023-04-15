@@ -8,9 +8,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 
-import com.example.rickandmorty.data.model.Character
-import com.example.rickandmorty.data.network.CharacterApi
-import com.example.rickandmorty.data.network.CharacterPagingSource
+import com.example.rickandmorty.domain.model.character.Character
+import com.example.rickandmorty.data.api.CharacterApi
+import com.example.rickandmorty.data.pagingSource.CharacterPagingSource
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted

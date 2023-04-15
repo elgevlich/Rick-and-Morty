@@ -2,8 +2,7 @@ package com.example.rickandmorty.presentation.fragments.locations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.rickandmorty.data.network.RepositoryLocations
-import com.example.rickandmorty.presentation.fragments.episodes.EpisodeViewModel
+import com.example.rickandmorty.domain.repository.RepositoryLocations
 
 class LocationViewModelFactory(private val repository: RepositoryLocations) : ViewModelProvider.Factory {
 
