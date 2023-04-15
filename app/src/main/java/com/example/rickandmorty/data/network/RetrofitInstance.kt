@@ -9,23 +9,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-	private const val URL = "https://rickandmortyapi.com/api/"
-
-	private val okHttpClient by lazy {
-		OkHttpClient.Builder()
-			.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-			.build()
-	}
 
 	private val retrofit by lazy {
+		val logging = HttpLoggingInterceptor()
+		logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+		val client = OkHttpClient.Builder()
+			.addInterceptor(logging)
+			.build()
 		Retrofit.Builder()
-			.client(okHttpClient)
-			.baseUrl(URL)
+			.baseUrl("https://rickandmortyapi.com/")
 			.addConverterFactory(GsonConverterFactory.create())
+			.client(client)
 			.build()
 	}
 
-	val Api: ApiService by lazy {
-		retrofit.create(ApiService::class.java)
+	val episodeApi: EpisodeApi by lazy {
+		retrofit.create(EpisodeApi::class.java)
 	}
+
+	val characterApi: CharacterApi by lazy {
+		RetrofitInstance.retrofit.create(CharacterApi::class.java)
+	}
+
+	val locationApi: LocationApi by lazy {
+		RetrofitInstance.retrofit.create(LocationApi::class.java)
+	}
+
 }

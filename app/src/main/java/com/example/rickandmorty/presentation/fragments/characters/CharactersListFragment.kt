@@ -30,91 +30,90 @@ import kotlinx.coroutines.launch
 
 class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
 
-	private lateinit var binding: FragmentCharactersListBinding
-	private lateinit var viewModel: CharacterViewModel
-	private lateinit var navigator: Navigator
-	private val adapter = CharacterAdapter(this)
-	private var isPull = false
-
-	private var status = ""
-	private var gender = ""
-
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setFragmentResultListener("requestKey") { _, bundle ->
-			status = bundle.getString("status") ?: ""
-			gender = bundle.getString("gender") ?: ""
-			lifecycleScope.launch {
-				viewModel.load(name, status, gender)
-				viewModel.characterFlow.collectLatest(adapter::submitData)
-			}
-		}
-	}
-
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		binding = FragmentCharactersListBinding.inflate(inflater)
-		navigator = requireActivity() as Navigator
-		viewModel =
-			ViewModelProvider(
-				this,
-				CharacterViewModelFactory(RetrofitInstance.characterApi)
-			)[CharacterViewModel::class.java]
-		return binding.root
-	}
-
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-
-		binding.charactersList.adapter = adapter
-
-		binding.btnFilter.setOnClickListener {
-			navigator.replaceFragment(CharacterFilterFragment.newInstance(), "Filter")
-		}
+    private lateinit var binding: FragmentCharactersListBinding
+    private lateinit var viewModel: CharacterViewModel
+    private lateinit var navigator: Navigator
+    private val adapter = CharacterAdapter(this)
+    private var isPull = false
+    private var name = ""
+    private var status = ""
+    private var gender = ""
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener("requestKey") { _, bundle ->
+            name = bundle.getString("name") ?: ""
+            status = bundle.getString("status") ?: ""
+            gender = bundle.getString("gender") ?: ""
+            lifecycleScope.launch {
+                viewModel.load(name, status, gender)
+                viewModel.characterFlow.collectLatest(adapter::submitData)
+            }
+        }
+    }
 
-		binding.swipeRefresh.setOnRefreshListener {
-			isPull = true
-			adapter.refresh()
-		}
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentCharactersListBinding.inflate(inflater)
+        navigator = requireActivity() as Navigator
+        viewModel =
+            ViewModelProvider(
+                this,
+                CharacterViewModelFactory(RetrofitInstance.characterApi)
+            )[CharacterViewModel::class.java]
+        return binding.root
+    }
 
-		lifecycleScope.launch {
-			viewModel.characters.collectLatest { pagingData ->
-				adapter.submitData(pagingData)
-				binding.swipeRefresh.isRefreshing = false
-			}
-		}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.charactersList.adapter = adapter
+
+        binding.btnFilter.setOnClickListener {
+            navigator.replaceFragment(CharacterFilterFragment.newInstance(), "Filter")
+        }
 
 
-		adapter.withLoadStateHeaderAndFooter(
-			header = CharacterLoadingStateAdapter(),
-			footer = CharacterLoadingStateAdapter()
-		)
 
-		adapter.addLoadStateListener { state: CombinedLoadStates ->
-			if (!isPull) {
-				binding.charactersList.isVisible = state.refresh != LoadState.Loading
-				binding.progress.isVisible = state.refresh == LoadState.Loading
-			}
-		}
+        binding.swipeRefresh.setOnRefreshListener {
+            isPull = true
+            adapter.refresh()
+        }
 
-	}
+        lifecycleScope.launch {
+            viewModel.load(name, status, gender)
+            viewModel.characterFlow.collectLatest(adapter::submitData)
+        }
 
-	companion object {
 
-		@JvmStatic
-		fun newInstance() = CharactersListFragment()
+        adapter.withLoadStateHeaderAndFooter(
+            header = CharacterLoadingStateAdapter(),
+            footer = CharacterLoadingStateAdapter()
+        )
 
-	}
+        adapter.addLoadStateListener { state: CombinedLoadStates ->
+            if (!isPull) {
+                binding.charactersList.isVisible = state.refresh != LoadState.Loading
+                binding.progress.isVisible = state.refresh == LoadState.Loading
+            }
+        }
 
-	override fun onClick(character: Character) {
-		viewModel.dataCharacter.value = character
-		navigator.replaceFragment(CharacterDetailFragment.newInstance(), "Character Details")
-	}
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance() = CharactersListFragment()
+
+    }
+
+    override fun onClick(character: Character) {
+        viewModel.dataCharacter.value = character
+        navigator.replaceFragment(CharacterDetailFragment.newInstance(), "Character Details")
+    }
 
 }
 
