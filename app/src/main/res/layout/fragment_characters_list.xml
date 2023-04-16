@@ -1,78 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:padding="@dimen/space_small"
-	>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/space_small_x">
 
-	<androidx.appcompat.widget.SearchView
-		android:id="@+id/character_search"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/space_small_x"
-		android:layout_marginTop="@dimen/space_medium_x"
-		android:layout_marginEnd="@dimen/space_small_x"
-		android:layout_marginBottom="@dimen/space_small_3x"
-		android:background="@drawable/background_yellow"
-		android:elevation="@dimen/elevation"
-		android:textCursorDrawable="@null"
-		app:iconifiedByDefault="false"
-		app:layout_constraintBottom_toTopOf="@id/swipe_refresh"
-		app:layout_constraintEnd_toStartOf="@id/btn_filter"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:queryBackground="@null"
-		app:queryHint="@string/search_hint"
-		/>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-	<ImageButton
-		android:id="@+id/btn_filter"
-		android:layout_width="50dp"
-		android:layout_height="50dp"
-		android:layout_margin="@dimen/space_small_3x"
-		android:background="@drawable/background_blue"
-		android:src="@drawable/ic_filter_button"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/character_search"
-		app:layout_constraintTop_toTopOf="parent"
-		/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/characters_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:context=".presentation.fragments.characters.CharactersListFragment"
+            tools:listitem="@layout/item_character" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:id="@+id/swipe_refresh"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/space_small_x"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/character_search"
-		>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_small"
+        android:elevation="@dimen/elevation"
+        android:src="@drawable/ic_filter_button"
+        app:backgroundTint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/quite_white" />
 
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/characters_list"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-			app:spanCount="2"
-			tools:context=".presentation.fragments.characters.CharactersListFragment"
-			tools:listitem="@layout/item_character"
-			/>
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-	<ProgressBar
-		android:id="@+id/progress"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		/>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

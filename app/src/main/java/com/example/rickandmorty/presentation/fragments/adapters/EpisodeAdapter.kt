@@ -3,7 +3,7 @@ package com.example.rickandmorty.presentation.fragments.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rickandmorty.data.model.Episode
+import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.databinding.ItemEpisodeBinding
 
 class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {

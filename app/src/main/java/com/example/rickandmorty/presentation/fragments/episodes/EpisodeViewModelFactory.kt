@@ -2,7 +2,7 @@ package com.example.rickandmorty.presentation.fragments.episodes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.rickandmorty.data.network.RepositoryEpisodes
+import com.example.rickandmorty.domain.repository.RepositoryEpisodes
 
 class EpisodeViewModelFactory(private val repository: RepositoryEpisodes) : ViewModelProvider.Factory {
 

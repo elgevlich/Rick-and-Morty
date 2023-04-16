@@ -4,8 +4,8 @@ package com.example.rickandmorty.presentation.fragments.locations
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmorty.data.model.Location
-import com.example.rickandmorty.data.network.RepositoryLocations
+import com.example.rickandmorty.domain.model.location.Location
+import com.example.rickandmorty.domain.repository.RepositoryLocations
 import kotlinx.coroutines.launch
 
 class LocationViewModel(private val repository: RepositoryLocations) : ViewModel() {

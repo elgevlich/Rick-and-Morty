@@ -4,9 +4,9 @@ import androidx.lifecycle.*
 
 import androidx.lifecycle.viewModelScope
 
-import com.example.rickandmorty.data.model.Episode
+import com.example.rickandmorty.domain.model.episode.Episode
 
-import com.example.rickandmorty.data.network.RepositoryEpisodes
+import com.example.rickandmorty.domain.repository.RepositoryEpisodes
 import kotlinx.coroutines.launch
 
 

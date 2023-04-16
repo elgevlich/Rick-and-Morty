@@ -8,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 
-import com.example.rickandmorty.data.network.RepositoryLocations
+import com.example.rickandmorty.domain.repository.RepositoryLocations
 import com.example.rickandmorty.databinding.FragmentLocationListBinding
 import com.example.rickandmorty.presentation.fragments.adapters.LocationAdapter
 

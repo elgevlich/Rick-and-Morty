@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
-import com.example.rickandmorty.data.model.Character
+import com.example.rickandmorty.domain.model.character.Character
 
 class CharacterAdapter(private val listener: Listener) :
 	PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator) {

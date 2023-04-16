@@ -3,10 +3,7 @@ package com.example.rickandmorty.presentation.fragments.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.rickandmorty.databinding.ItemCharacterBinding
-import com.example.rickandmorty.data.model.Character
-import com.example.rickandmorty.data.model.Location
+import com.example.rickandmorty.domain.model.location.Location
 import com.example.rickandmorty.databinding.ItemLocationBinding
 
 class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
