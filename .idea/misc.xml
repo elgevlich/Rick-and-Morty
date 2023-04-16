@@ -12,7 +12,11 @@
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_character_details.xml" value="0.20697463768115942" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_character_filter.xml" value="0.19157608695652173" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_characters_list.xml" value="0.264" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_episodes_list.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/fragment_location_list.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/item_character.xml" value="1.6" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/item_episode.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/layout/item_episode_horizontal.xml" value="0.4" />
         <entry key="..\:/Users/elgev/AndroidStudioProjects/RickandMorty/app/src/main/res/menu/nav_bar_menu.xml" value="0.25416666666666665" />
       </map>
     </option>

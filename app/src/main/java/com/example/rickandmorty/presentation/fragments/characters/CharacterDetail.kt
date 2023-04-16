@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import com.example.rickandmorty.databinding.FragmentCharacterDetailsBinding
 import com.example.rickandmorty.presentation.Navigator
 
-class CharacterDetailFragment : Fragment() {
+class CharacterDetail : Fragment() {
 
 	private lateinit var binding: FragmentCharacterDetailsBinding
-
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +31,11 @@ class CharacterDetailFragment : Fragment() {
 			}
 		}
 		activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
-
-
 	}
 
 	companion object {
 
 		@JvmStatic
-		fun newInstance() = CharacterDetailFragment()
+		fun newInstance() = CharacterDetail()
 	}
 }

@@ -17,5 +17,8 @@ interface CharacterApi {
 		@Query("gender") gender: String
 	): Response<CharacterPagedResponse<Character>>
 
-
+	@GET("api/character/")
+	suspend fun getCharacterEpisodes(
+		@Query("id") id: Int
+	): Character
 }

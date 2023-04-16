@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -12,14 +11,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import com.example.rickandmorty.R
 import com.example.rickandmorty.domain.model.character.Character
 import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
 import com.example.rickandmorty.presentation.Navigator
 import com.example.rickandmorty.presentation.fragments.adapters.CharacterAdapter
+import com.example.rickandmorty.presentation.fragments.characters.CharacterDetail.Companion.newInstance
 import com.example.rickandmorty.presentation.fragments.characters.filter.CharacterFilterFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.xml.datatype.DatatypeFactory.newInstance
 
 
 class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
@@ -96,7 +98,15 @@ class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
 
     override fun onClick(character: Character) {
         viewModel.dataCharacter.value = character
-        navigator.replaceFragment(CharacterDetailFragment.newInstance(), "Character Details")
+        navigator.replaceFragment(
+            CharacterDetailFragment.newInstance(character.name,
+                character.status,
+                character.gender,
+                character.species,
+                character.origin.name,
+                character.image),
+            "Character"
+        )
     }
 
     companion object {
@@ -104,8 +114,6 @@ class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
         fun newInstance() = CharactersListFragment()
     }
 }
-
-
 
 
 
