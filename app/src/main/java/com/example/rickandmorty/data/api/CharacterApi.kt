@@ -1,7 +1,7 @@
 package com.example.rickandmorty.data.api
 
-import com.example.rickandmorty.domain.model.character.CharacterPagedResponse
 import com.example.rickandmorty.domain.model.character.Character
+import com.example.rickandmorty.domain.model.character.CharacterPagedResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

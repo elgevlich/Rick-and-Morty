@@ -3,39 +3,30 @@ package com.example.rickandmorty.presentation.fragments.episodes
 import androidx.lifecycle.*
 
 import androidx.lifecycle.viewModelScope
-
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.rickandmorty.data.api.EpisodeApi
+import com.example.rickandmorty.data.pagingSource.EpisodePagingSource
 import com.example.rickandmorty.domain.model.episode.Episode
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.stateIn
 
-import com.example.rickandmorty.domain.repository.RepositoryEpisodes
-import kotlinx.coroutines.launch
 
+class EpisodeViewModel(private val api: EpisodeApi) : ViewModel() {
 
-class EpisodeViewModel(private val repository: RepositoryEpisodes) : ViewModel() {
+	val dataEpisode = MutableLiveData<Episode>()
 
-	var listEpisodes = MutableLiveData<List<Episode>>()
-	var filterValue = MutableLiveData<Array<Int>>()
-	var isFilter = MutableLiveData<Boolean>()
+	var episodeFlow: Flow<PagingData<Episode>> = emptyFlow()
 
-	init {
-		filterValue.value = arrayOf(0, 0)
-		isFilter.value = false
+	fun load(name: String, episode: String) {
+		episodeFlow = Pager(PagingConfig(pageSize = 1)) {
+			EpisodePagingSource(name, episode, api)
+		}.flow.cachedIn(viewModelScope)
+			.stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 	}
-
-	fun getEpisodes(page: Int) {
-		viewModelScope.launch {
-			val characters = repository.getEpisodes(page)
-			listEpisodes.value = characters.results
-			isFilter.value = false
-		}
-	}
-
-	fun getEpisodesByName(name: String) {
-		viewModelScope.launch {
-			val characters = repository.getEpisodesByName(name)
-			listEpisodes.value = characters.results
-			isFilter.value = true
-		}
-	}
-
 
 }
