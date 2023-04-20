@@ -2,6 +2,8 @@ package com.example.rickandmorty.data.api
 
 import com.example.rickandmorty.domain.model.character.Character
 import com.example.rickandmorty.domain.model.character.CharacterPagedResponse
+import com.example.rickandmorty.domain.model.episode.EpisodeResponse
+import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -19,6 +21,6 @@ interface CharacterApi {
 
 	@GET("api/character/")
 	suspend fun getCharacterEpisodes(
-		@Query("id") id: Int
-	): Character
+		@Query("id") id: String
+	): Single<EpisodeResponse>
 }

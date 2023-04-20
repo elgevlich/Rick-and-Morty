@@ -23,7 +23,7 @@ object RetrofitInstance {
 			.build()
 	}
 
-	val episodeApi: EpisodeApi by lazy {
+   val episodeApi: EpisodeApi by lazy {
 		retrofit.create(EpisodeApi::class.java)
 	}
 

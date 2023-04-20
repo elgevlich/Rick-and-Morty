@@ -101,7 +101,7 @@ class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
 				character.gender,
 				character.species,
 				character.origin.name,
-				character.image
+				character.image,
 			),
 			"Character"
 		)

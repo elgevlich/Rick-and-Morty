@@ -19,7 +19,7 @@
     <string name="search">Search by name…</string>
     <string name="title_btn_apply">Apply</string>
     <string name="title_reset">Reset</string>
-    <string name="title_episode_code">Episode number</string>
+    <string name="title_episode_code">Episode or season number</string>
     <string name="search_episode">Search by episode number…</string>
     <string name="search_episode_name">Search by episode name…</string>
 	<string name="title_filter_episodes">What you wanna watch?</string>
