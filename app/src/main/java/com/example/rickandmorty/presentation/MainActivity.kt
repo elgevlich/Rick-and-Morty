@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
-import com.example.rickandmorty.presentation.fragments.characters.CharactersListFragment
+import com.example.rickandmorty.presentation.fragments.characters.list.CharactersListFragment
 import com.example.rickandmorty.presentation.fragments.episodes.EpisodesListFragment
 import com.example.rickandmorty.presentation.fragments.locations.LocationListFragment
 

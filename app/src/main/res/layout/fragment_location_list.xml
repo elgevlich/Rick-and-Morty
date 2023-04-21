@@ -45,7 +45,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/location_search"
 		app:spanCount="2"
-		tools:context=".presentation.fragments.characters.CharactersListFragment"
+		tools:context=".presentation.fragments.characters.list.CharactersListFragment"
 		tools:listitem="@layout/item_location"
 		/>
 </androidx.constraintlayout.widget.ConstraintLayout>
