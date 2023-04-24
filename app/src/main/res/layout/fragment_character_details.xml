@@ -4,13 +4,11 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/quite_white"
-	>
+	android:background="@color/quite_white">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		>
+		android:layout_height="wrap_content">
 
 		<ImageView
 			android:id="@+id/image_character"
@@ -19,8 +17,7 @@
 			android:src="@drawable/ic_baseline_face_24"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			/>
+			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/name"
@@ -34,8 +31,7 @@
 			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/image_character"
-			tools:text="Name"
-			/>
+			tools:text="Name" />
 
 		<TextView
 			android:id="@+id/species"
@@ -46,8 +42,7 @@
 			android:textSize="@dimen/font_size_small"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/name"
-			tools:text="Species"
-			/>
+			tools:text="Species" />
 
 		<TextView
 			android:id="@+id/gender"
@@ -59,8 +54,7 @@
 			android:textSize="@dimen/font_size_small"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/species"
-			tools:text="Gender"
-			/>
+			tools:text="Gender" />
 
 		<TextView
 			android:id="@+id/origin"
@@ -72,8 +66,7 @@
 			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/gender"
-			tools:text="Origin"
-			/>
+			tools:text="Origin" />
 		<TextView
 			android:id="@+id/status"
 			android:layout_width="wrap_content"
@@ -85,20 +78,19 @@
 			android:textStyle="bold"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/origin"
-			tools:text="Status"
-			/>
+			tools:text="Status" />
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/episodes_list"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/space_small_x"
-			android:nestedScrollingEnabled="false"
 			android:visibility="visible"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/status"
+			android:nestedScrollingEnabled="false"
 			tools:listitem="@layout/item_episode_horizontal"
 			/>
 

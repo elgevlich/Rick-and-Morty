@@ -7,8 +7,20 @@
 	android:layout_margin="@dimen/space_small_2x"
 	android:background="@drawable/background_blue"
 	android:elevation="@dimen/elevation"
-	android:padding="@dimen/space_small"
+	android:padding="@dimen/space_small_x"
 	>
+
+	<TextView
+		android:id="@+id/ep_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/quite_white"
+		android:textSize="@dimen/font_size_small"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Number"
+		/>
 
 	<TextView
 		android:id="@+id/ep_name"
@@ -17,24 +29,9 @@
 		android:textColor="@color/yellow"
 		android:textSize="@dimen/font_size_small"
 		android:textStyle="bold"
-		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/ep_number"
 		tools:text="Name"
-		/>
-
-	<TextView
-		android:id="@+id/ep_number"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/space_small"
-		android:textColor="@color/quite_white"
-		android:textSize="@dimen/font_size_small_x"
-		android:textStyle="bold"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toEndOf="@id/ep_name"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:text="Number"
 		/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

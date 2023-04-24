@@ -24,7 +24,7 @@ class EpisodesListFragment : Fragment(), EpisodeAdapter.Listener {
 
 	private lateinit var binding: FragmentEpisodesListBinding
 	private val adapter = EpisodeAdapter(this)
-	private lateinit var viewModel: EpisodeViewModel
+	private lateinit var viewModel: EpisodesListViewModel
 	private lateinit var navigator: Navigator
 
 	private var name = ""
@@ -53,7 +53,7 @@ class EpisodesListFragment : Fragment(), EpisodeAdapter.Listener {
 			ViewModelProvider(
 				this,
 				EpisodeViewModelFactory(RetrofitInstance.episodeApi)
-			)[EpisodeViewModel::class.java]
+			)[EpisodesListViewModel::class.java]
 		return binding.root
 	}
 

@@ -9,8 +9,8 @@ class EpisodeViewModelFactory(private val api: EpisodeApi) :
 	ViewModelProvider.Factory {
 
 	override fun <T : ViewModel> create(modelClass: Class<T>): T {
-		if (modelClass.isAssignableFrom(EpisodeViewModel::class.java)) {
-			return EpisodeViewModel(api) as T
+		if (modelClass.isAssignableFrom(EpisodesListViewModel::class.java)) {
+			return EpisodesListViewModel(api) as T
 		}
 		throw IllegalArgumentException("Unknown ViewModel class")
 	}

@@ -1,6 +1,7 @@
 package com.example.rickandmorty.data.api
 
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,12 +19,13 @@ object RetrofitInstance {
 			.build()
 		Retrofit.Builder()
 			.baseUrl("https://rickandmortyapi.com/")
-			.addConverterFactory(GsonConverterFactory.create())
 			.client(client)
+			.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+			.addConverterFactory(GsonConverterFactory.create())
 			.build()
 	}
 
-   val episodeApi: EpisodeApi by lazy {
+	val episodeApi: EpisodeApi by lazy {
 		retrofit.create(EpisodeApi::class.java)
 	}
 

@@ -1,6 +1,7 @@
 package com.example.rickandmorty.presentation.fragments.characters;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,36 +17,22 @@ import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.data.api.CharacterApi;
 import com.example.rickandmorty.data.api.RetrofitInstance;
-import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.domain.model.episode.Episode;
-import com.example.rickandmorty.presentation.fragments.adapters.EpisodesAdapter;
+import com.example.rickandmorty.domain.model.character.Character;
+import com.example.rickandmorty.presentation.fragments.adapters.DetailsCharacterAdapter;
 
-import java.util.ArrayList;
 
+import java.util.List;
+
+import androidx.lifecycle.Observer;
+
+import org.jetbrains.annotations.NotNull;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class CharacterDetailFragment extends Fragment {
-
-
-	private Character character;
-	private ArrayList<Episode> episodesLis;
-	private EpisodesAdapter episodesAdapter;
-
-	private static final String NAME_KEY = "nameKey";
-	private static final String IMAGE_KEY = "imageKey";
-	private static final String STATUS_KEY = "statusKey";
-	private static final String SPECIES_KEY = "speciesKey";
-	private static final String GENDER_KEY = "genderKey";
-	private static final String ORIGIN_KEY = "originKey";
-
-
-	private String name;
-	private String image;
-	private String status;
-	private String species;
-	private String gender;
-	private String origin;
-
 
 	private ImageView characterImage;
 	private TextView characterName;
@@ -53,24 +40,23 @@ public class CharacterDetailFragment extends Fragment {
 	private TextView characterSpecies;
 	private TextView characterGender;
 	private TextView characterOrigin;
-	private RecyclerView recyclerViewEpisodes;
 
+	private final CharacterDetailViewModel detailCharacterViewModel;
 
-	private CharacterDetailViewModel characterDetailViewModel;
+	CompositeDisposable compositeDisposable = new CompositeDisposable();
+	RecyclerView rvListOfEpisodes;
+	CharacterApi api;
+
+	public CharacterDetailFragment(@NotNull CharacterDetailViewModel viewModelDetail) {
+		this.detailCharacterViewModel = viewModelDetail;
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			name = getArguments().getString(NAME_KEY);
-			status = getArguments().getString(STATUS_KEY);
-			species = getArguments().getString(SPECIES_KEY);
-			gender = getArguments().getString(GENDER_KEY);
-			origin = getArguments().getString(ORIGIN_KEY);
-			image = getArguments().getString(IMAGE_KEY);
-		}
 	}
 
+	@Nullable
 	@Override
 	public View onCreateView(
 		LayoutInflater inflater, ViewGroup container,
@@ -82,14 +68,9 @@ public class CharacterDetailFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		initViews(view);
-		episodesAdapter = new EpisodesAdapter();
-		recyclerViewEpisodes.setAdapter(episodesAdapter);
-
-	}
-
-
-	public void initViews(View view) {
+		rvListOfEpisodes = view.findViewById(R.id.episodes_list);
+		api = RetrofitInstance.INSTANCE.getCharacterApi();
+		rvListOfEpisodes.setHasFixedSize(true);
 
 		characterImage = view.findViewById(R.id.image_character);
 		characterName = view.findViewById(R.id.name);
@@ -98,28 +79,41 @@ public class CharacterDetailFragment extends Fragment {
 		characterGender = view.findViewById(R.id.gender);
 		characterOrigin = view.findViewById(R.id.origin);
 
-		characterName.setText(name);
-		characterStatus.setText(status);
-		characterSpecies.setText(species);
-		characterGender.setText(gender);
-		characterOrigin.setText(origin);
-		Glide.with(requireContext()).load(image).centerCrop().into(characterImage);
+		final Observer<Character> observer = character1 -> {
+			assert character1 != null;
+			Glide.with(requireContext())
+				.load(character1.getImage())
+				.into(characterImage);
+			characterName.setText(character1.getName());
+			characterSpecies.setText(character1.getSpecies());
+			characterGender.setText(character1.getGender());
+			characterStatus.setText(character1.getStatus());
+			characterOrigin.setText(character1.getOrigin().getName());
 
-		recyclerViewEpisodes = view.findViewById(R.id.episodes_list);
+		};
+		detailCharacterViewModel.getSelectedItemCharacter().observe(getViewLifecycleOwner(), observer);
 
+		detailCharacterViewModel.getEpisodes();
+		fetchData();
+		detailCharacterViewModel.clearListOfEpisodes();
 	}
 
-	public static CharacterDetailFragment newInstance(String name, String status, String species, String gender, String origin, String image) {
-		CharacterDetailFragment detailsFragment = new CharacterDetailFragment();
-		Bundle bundle = new Bundle();
-		bundle.putString(NAME_KEY, name);
-		bundle.putString(STATUS_KEY, status);
-		bundle.putString(SPECIES_KEY, species);
-		bundle.putString(GENDER_KEY, gender);
-		bundle.putString(ORIGIN_KEY, origin);
-		bundle.putString(IMAGE_KEY, image);
-		detailsFragment.setArguments(bundle);
-		return detailsFragment;
+	private void fetchData() {
+		compositeDisposable.add(api.getDetailEpisode(detailCharacterViewModel.episodesIds)
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe(this::displayData, throwable -> Log.d("tag", throwable.toString())));
+	}
+
+	private void displayData(List<Episode> posts) {
+		DetailsCharacterAdapter adapter = new DetailsCharacterAdapter(requireContext(), posts);
+		rvListOfEpisodes.setAdapter(adapter);
+	}
+
+	@Override
+	public void onStop() {
+		compositeDisposable.clear();
+		super.onStop();
 	}
 
 }

@@ -2,10 +2,11 @@ package com.example.rickandmorty.data.api
 
 import com.example.rickandmorty.domain.model.character.Character
 import com.example.rickandmorty.domain.model.character.CharacterPagedResponse
-import com.example.rickandmorty.domain.model.episode.EpisodeResponse
-import io.reactivex.Single
+import com.example.rickandmorty.domain.model.episode.Episode
+import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -20,7 +21,10 @@ interface CharacterApi {
 	): Response<CharacterPagedResponse<Character>>
 
 	@GET("api/character/")
-	suspend fun getCharacterEpisodes(
-		@Query("id") id: String
-	): Single<EpisodeResponse>
+	suspend fun getCharacter(
+		@Query("id") id: Int
+	): Response<Character>
+
+	@GET("api/episode/{id}")
+	fun getDetailEpisode(@Path("id") id: String): Observable<List<Episode>>
 }

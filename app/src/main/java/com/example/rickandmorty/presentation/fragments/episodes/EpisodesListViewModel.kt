@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.stateIn
 
 
-class EpisodeViewModel(private val api: EpisodeApi) : ViewModel() {
+class EpisodesListViewModel(private val api: EpisodeApi) : ViewModel() {
 
 	val dataEpisode = MutableLiveData<Episode>()
 

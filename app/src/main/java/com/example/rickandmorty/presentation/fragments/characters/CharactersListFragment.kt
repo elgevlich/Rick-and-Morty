@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,19 +15,19 @@ import androidx.paging.PagingData
 import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
 import com.example.rickandmorty.presentation.Navigator
-import com.example.rickandmorty.presentation.fragments.adapters.CharacterAdapter
+import com.example.rickandmorty.presentation.fragments.adapters.CharactersListAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import com.example.rickandmorty.domain.model.character.Character
 
 
-class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
+class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 
 	private lateinit var binding: FragmentCharactersListBinding
-	private lateinit var viewModel: CharacterViewModel
+	private lateinit var viewModel: CharactersListViewModel
 	private lateinit var navigator: Navigator
-	private val adapter = CharacterAdapter(this)
-
+	private val adapter = CharactersListAdapter(this)
+	private val viewModelDetail: CharacterDetailViewModel by activityViewModels()
 	private var name = ""
 	private var status = ""
 	private var gender = ""
@@ -54,7 +55,7 @@ class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
 			ViewModelProvider(
 				this,
 				CharacterViewModelFactory(RetrofitInstance.characterApi)
-			)[CharacterViewModel::class.java]
+			)[CharactersListViewModel::class.java]
 		return binding.root
 	}
 
@@ -93,16 +94,9 @@ class CharactersListFragment : Fragment(), CharacterAdapter.Listener {
 	}
 
 	override fun onClick(character: Character) {
-		viewModel.dataCharacter.value = character
+		viewModelDetail.onClickItemCharacter(character)
 		navigator.replaceFragment(
-			CharacterDetailFragment.newInstance(
-				character.name,
-				character.status,
-				character.gender,
-				character.species,
-				character.origin.name,
-				character.image,
-			),
+			CharacterDetailFragment(viewModelDetail),
 			"Character"
 		)
 	}

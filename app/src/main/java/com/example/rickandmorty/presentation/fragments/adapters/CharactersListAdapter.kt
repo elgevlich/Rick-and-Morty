@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 import com.example.rickandmorty.domain.model.character.Character
 
-class CharacterAdapter(private val listener: Listener) :
-	PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator) {
+class CharactersListAdapter(private val listener: Listener) :
+	PagingDataAdapter<Character, CharactersListAdapter.CharacterViewHolder>(CharacterComparator) {
 
 
 	class CharacterViewHolder(val binding: ItemCharacterBinding) :
@@ -22,7 +22,6 @@ class CharacterAdapter(private val listener: Listener) :
 			ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		)
 	}
-
 
 	override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
 		val characterPosition = getItem(position)

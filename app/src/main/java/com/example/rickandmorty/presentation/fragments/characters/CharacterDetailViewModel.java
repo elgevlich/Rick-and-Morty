@@ -1,6 +1,5 @@
 package com.example.rickandmorty.presentation.fragments.characters;
 
-import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.rickandmorty.domain.model.character.Character;
@@ -9,36 +8,36 @@ import java.util.List;
 
 public class CharacterDetailViewModel extends ViewModel {
 
-	public MutableLiveData<Character> characterLiveData  = new MutableLiveData<>();
-
+	public MutableLiveData<Character> selectedItemCharacter = new MutableLiveData<>();
 	public List<String> episodesList = new ArrayList<>();
-//	public String episodesIds;
-//
-//
-//	public void onClickItemCharacter(Character character) {
-//		selectedCharacter.setValue(character);
-//		episodesList
-//			.addAll(character
-//				.getEpisode());
-//
-//	}
-//
-//	public MutableLiveData<Character> getSelectedCharacter() {
-//		return selectedCharacter;
-//	}
-//
-//	public void getEpisodes() {
-//		String str1;
-//		String str2;
-//		String result = "";
-//		if (!episodesList.isEmpty()) {
-//			for (String episode : episodesList) {
-//				str1 = episode.substring(40);
-//				result = result + str1 + ",";
-//				Log.d("EpisodesResult", result);
-//			}
-//		}
-//		episodesIds = result;
-//	}
+	public String episodesIds;
+
+	public void clearListOfEpisodes(){
+		episodesList.clear();
+	}
+
+	public void onClickItemCharacter(Character character) {
+		selectedItemCharacter.setValue(character);
+		episodesList
+			.addAll(character
+				.getEpisode());
+
+	}
+
+	public MutableLiveData<Character> getSelectedItemCharacter() {
+		return selectedItemCharacter;
+	}
+
+	public void getEpisodes() {
+		String str1;
+		String result = "";
+		if (!episodesList.isEmpty()) {
+			for (String episode : episodesList) {
+				str1 = episode.substring(40);
+				result = result + str1 + ",";
+			}
+		}
+		episodesIds = result;
+	}
 
 }
