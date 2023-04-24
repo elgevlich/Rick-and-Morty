@@ -2,14 +2,15 @@ package com.example.rickandmorty.presentation.fragments.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.domain.model.location.Location
 import com.example.rickandmorty.databinding.ItemLocationBinding
 
-class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
+class LocationAdapter(private val listener: Listener) :
+	PagingDataAdapter<Location, LocationAdapter.LocationViewHolder>(LocationComparator) {
 
-
-	private var locationsList = emptyList<Location>()
 
 	class LocationViewHolder(val binding: ItemLocationBinding) :
 		RecyclerView.ViewHolder(binding.root)
@@ -20,18 +21,34 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
 		)
 	}
 
-	override fun getItemCount(): Int = locationsList.size
 
 	override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-		val item = locationsList[position]
-		holder.binding.locationName.text = item.name
-		holder.binding.locationType.text = item.type
-		holder.binding.locationDimension.text = item.dimension
+		val locationPosition = getItem(position)
+		if (locationPosition != null) {
+			holder.binding.locationName.text = locationPosition.name
+			holder.binding.locationType.text = locationPosition.type
+			holder.binding.locationDimension.text = locationPosition.dimension
+			holder.itemView.rootView.setOnClickListener {
+				listener.onClick(locationPosition)
+			}
+
+		}
 	}
 
-	fun setLocations(locations: List<Location>) {
-		locationsList = locations
-		notifyDataSetChanged()
+	object LocationComparator : DiffUtil.ItemCallback<Location>() {
+
+		override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean {
+			return oldItem.id == newItem.id
+		}
+
+		override fun areContentsTheSame(oldItem: Location, newItem: Location): Boolean {
+			return oldItem == newItem
+		}
+	}
+
+	interface Listener {
+
+		fun onClick(location: Location)
 	}
 
 }

@@ -1,10 +1,9 @@
-package com.example.rickandmorty.domain.model.character
+package com.example.rickandmorty.domain.model.location
 
 import com.example.rickandmorty.domain.model.PageInfo
 import com.google.gson.annotations.SerializedName
 
-
-data class CharacterPagedResponse<T>(
+data class LocationPagedResponse<T>(
 	@SerializedName("info") val pageInfo: PageInfo,
-	val results: List<Character> = listOf()
+	val results: List<Location> = listOf()
 )

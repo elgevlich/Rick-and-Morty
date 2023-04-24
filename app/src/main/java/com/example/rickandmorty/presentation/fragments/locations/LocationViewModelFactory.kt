@@ -2,13 +2,14 @@ package com.example.rickandmorty.presentation.fragments.locations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.rickandmorty.domain.repository.RepositoryLocations
+import com.example.rickandmorty.data.api.LocationApi
 
-class LocationViewModelFactory(private val repository: RepositoryLocations) : ViewModelProvider.Factory {
+class LocationViewModelFactory(private val api: LocationApi) :
+	ViewModelProvider.Factory {
 
 	override fun <T : ViewModel> create(modelClass: Class<T>): T {
 		if (modelClass.isAssignableFrom(LocationViewModel::class.java)) {
-			return LocationViewModel(repository) as T
+			return LocationViewModel(api) as T
 		}
 		throw IllegalArgumentException("Unknown ViewModel class")
 	}

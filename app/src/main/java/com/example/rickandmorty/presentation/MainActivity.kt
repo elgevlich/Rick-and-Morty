@@ -9,7 +9,7 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
 import com.example.rickandmorty.presentation.fragments.characters.CharactersListFragment
 import com.example.rickandmorty.presentation.fragments.episodes.EpisodesListFragment
-import com.example.rickandmorty.presentation.fragments.locations.LocationListFragment
+import com.example.rickandmorty.presentation.fragments.locations.LocationsListFragment
 
 
 class MainActivity : FragmentActivity(), Navigator {
@@ -28,7 +28,7 @@ class MainActivity : FragmentActivity(), Navigator {
 					true
 				}
 				R.id.locations -> {
-					addFragment(LocationListFragment.newInstance(), "Locations")
+					addFragment(LocationsListFragment.newInstance(), "Locations")
 					true
 				}
 				R.id.episodes -> {

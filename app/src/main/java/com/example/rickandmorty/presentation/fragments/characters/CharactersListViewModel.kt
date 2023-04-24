@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.stateIn
 
 
-class CharacterViewModel(private val api: CharacterApi) : ViewModel() {
+class CharactersListViewModel(private val api: CharacterApi) : ViewModel() {
 
     val dataCharacter = MutableLiveData<Character>()
 

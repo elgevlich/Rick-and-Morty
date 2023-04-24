@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.characters.filter
+package com.example.rickandmorty.presentation.fragments.characters
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -2,14 +2,16 @@ package com.example.rickandmorty.presentation.fragments.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.databinding.ItemEpisodeBinding
 
-class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
+class EpisodeAdapter(private val listener: Listener) :
 
 
-	private var episodeList = emptyList<Episode>()
+	PagingDataAdapter<Episode, EpisodeAdapter.EpisodeViewHolder>(EpisodeComparator) {
 
 	class EpisodeViewHolder(val binding: ItemEpisodeBinding) :
 		RecyclerView.ViewHolder(binding.root)
@@ -20,18 +22,32 @@ class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() 
 		)
 	}
 
-	override fun getItemCount(): Int = episodeList.size
-
 	override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-		val item = episodeList[position]
-		holder.binding.epName.text = item.name
-		holder.binding.epNumber.text = item.episode
-		holder.binding.epAirDate.text = item.air_date
+		val episodePosition = getItem(position)
+		if (episodePosition != null) {
+			holder.binding.epName.text = episodePosition.name
+			holder.binding.epNumber.text = episodePosition.episode
+			holder.binding.epAirDate.text = episodePosition.air_date
+			holder.itemView.rootView.setOnClickListener {
+				listener.onClick(episodePosition)
+			}
+		}
 	}
 
-	fun setEpisodes(episodes: List<Episode>) {
-		episodeList = episodes
-		notifyDataSetChanged()
+	object EpisodeComparator : DiffUtil.ItemCallback<Episode>() {
+
+		override fun areItemsTheSame(oldItem: Episode, newItem: Episode): Boolean {
+			return oldItem.id == newItem.id
+		}
+
+		override fun areContentsTheSame(oldItem: Episode, newItem: Episode): Boolean {
+			return oldItem == newItem
+		}
+	}
+
+	interface Listener {
+
+		fun onClick(episode: Episode)
 	}
 
 }
