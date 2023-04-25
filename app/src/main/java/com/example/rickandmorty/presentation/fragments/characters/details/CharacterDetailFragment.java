@@ -5,22 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.data.api.CharacterApi;
+import com.example.rickandmorty.data.api.EpisodeApi;
 import com.example.rickandmorty.data.api.RetrofitInstance;
 import com.example.rickandmorty.domain.model.episode.Episode;
 import com.example.rickandmorty.domain.model.character.Character;
-import com.example.rickandmorty.presentation.fragments.adapters.DetailsCharacterAdapter;
+import com.example.rickandmorty.presentation.Navigator;
 
 
 import java.util.List;
@@ -31,7 +31,6 @@ import org.jetbrains.annotations.NotNull;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CharacterDetailFragment extends Fragment {
@@ -42,12 +41,13 @@ public class CharacterDetailFragment extends Fragment {
     private TextView characterSpecies;
     private TextView characterGender;
     private TextView characterOrigin;
+    private ImageButton backButton;
 
-    private CharacterDetailViewModel detailCharacterViewModel;
+    private final CharacterDetailViewModel detailCharacterViewModel;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     RecyclerView rvListOfEpisodes;
-    CharacterApi api;
+    EpisodeApi api;
 
     public CharacterDetailFragment(@NotNull CharacterDetailViewModel viewModelDetail) {
         this.detailCharacterViewModel = viewModelDetail;
@@ -71,7 +71,7 @@ public class CharacterDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvListOfEpisodes = view.findViewById(R.id.episodes_list);
-        api = RetrofitInstance.INSTANCE.getCharacterApi();
+        api = RetrofitInstance.INSTANCE.getEpisodeApi();
         rvListOfEpisodes.setHasFixedSize(true);
 
         characterImage = view.findViewById(R.id.image_character);
@@ -80,6 +80,7 @@ public class CharacterDetailFragment extends Fragment {
         characterSpecies = view.findViewById(R.id.species);
         characterGender = view.findViewById(R.id.gender);
         characterOrigin = view.findViewById(R.id.origin);
+        backButton = view.findViewById(R.id.back_button);
 
         final Observer<Character> observer = character1 -> {
             assert character1 != null;
@@ -97,27 +98,26 @@ public class CharacterDetailFragment extends Fragment {
 
         detailCharacterViewModel.getEpisodes();
         fetchData();
+        detailCharacterViewModel.clearListOfEpisodes();
+
+        Navigator navigator = (Navigator) requireActivity();
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigator.popUpToBackStack("Characters");
+            }
+        });
     }
 
     private void fetchData() {
-        compositeDisposable.add(api.getDetailEpisode(detailCharacterViewModel.episodesIds)
+        compositeDisposable.add(api.getListOfEpisodesForDetails(detailCharacterViewModel.episodesIds)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Episode>>() {
-                    @Override
-                    public void accept(List<Episode> posts) throws Exception {
-                        displayData(posts);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.d("tag", throwable.toString());
-                    }
-                }));
+                .subscribe(this::displayData, throwable -> Log.d("tag", throwable.toString())));
     }
 
     private void displayData(List<Episode> posts) {
-        DetailsCharacterAdapter adapter = new DetailsCharacterAdapter(requireContext(), posts);
+        CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts);
         rvListOfEpisodes.setAdapter(adapter);
     }
 

@@ -8,8 +8,20 @@
     android:padding="@dimen/space_small">
 
 
+    <ImageButton
+        android:layout_marginStart="@dimen/space_small"
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_round_r20dp_grey"
+        android:elevation="@dimen/elevation"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/filter"
+        android:layout_marginTop="@dimen/space_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title_filter"
@@ -19,7 +31,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_button"
 
         />
 
@@ -45,18 +57,18 @@
         android:layout_marginStart="@dimen/space_small"
         android:layout_marginTop="@dimen/space_small"
         android:drawableStart="@drawable/search_24"
-        app:layout_constraintTop_toBottomOf="@id/name_search"
+        app:layout_constraintBottom_toTopOf="@id/status_txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/status_txt">
+        app:layout_constraintTop_toBottomOf="@id/name_search">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="name"
-            android:hint="@string/search"
             android:drawableStart="@drawable/search_24"
+            android:hint="@string/search"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>

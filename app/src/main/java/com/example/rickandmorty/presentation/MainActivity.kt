@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentActivity
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
 import com.example.rickandmorty.presentation.fragments.characters.list.CharactersListFragment
-import com.example.rickandmorty.presentation.fragments.episodes.EpisodesListFragment
-import com.example.rickandmorty.presentation.fragments.locations.LocationListFragment
+import com.example.rickandmorty.presentation.fragments.episodes.list.EpisodesListFragment
+import com.example.rickandmorty.presentation.fragments.locations.list.LocationsListFragment
 
 
 class MainActivity : FragmentActivity(), Navigator {
@@ -28,7 +28,7 @@ class MainActivity : FragmentActivity(), Navigator {
 					true
 				}
 				R.id.locations -> {
-					addFragment(LocationListFragment.newInstance(), "Locations")
+					addFragment(LocationsListFragment.newInstance(), "Locations")
 					true
 				}
 				R.id.episodes -> {
@@ -38,33 +38,32 @@ class MainActivity : FragmentActivity(), Navigator {
 				else -> false
 			}
 		}
-		binding.toolbar.setNavigationOnClickListener {
-			popUpToBackStack("Characters")
-		}
 	}
 
 
 	private fun visibilityBottomNavigation(fragmentTag: String) {
 		when (fragmentTag) {
 			"Characters" -> {
+				binding.toolbar.visibility = View.VISIBLE
 				binding.toolbar.title = fragmentTag
 				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
 				binding.toolbar.navigationIcon = null
 			}
 			"Locations" -> {
+				binding.toolbar.visibility = View.VISIBLE
 				binding.toolbar.title = fragmentTag
 				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
 				binding.toolbar.navigationIcon = null
 			}
 			"Episodes" -> {
+				binding.toolbar.visibility = View.VISIBLE
 				binding.toolbar.title = fragmentTag
 				binding.toolbar.navigationIcon = null
 				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
 			}
 			else -> {
-				binding.toolbar.title = fragmentTag
+				binding.toolbar.visibility = View.GONE
 				binding.contentLayout.bottomNavigation.visibility = View.GONE
-				binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 			}
 		}
 	}

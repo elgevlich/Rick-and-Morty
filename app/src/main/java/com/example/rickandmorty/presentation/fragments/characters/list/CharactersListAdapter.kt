@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.adapters
+package com.example.rickandmorty.presentation.fragments.characters.list
 
 
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 import com.example.rickandmorty.domain.model.character.Character
 
-class CharacterAdapter(private val listener: Listener) :
-	PagingDataAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator) {
+class CharactersListAdapter(private val listener: Listener) :
+	PagingDataAdapter<Character, CharactersListAdapter.CharacterViewHolder>(CharacterComparator) {
 
 
 	class CharacterViewHolder(val binding: ItemCharacterBinding) :
@@ -22,7 +22,6 @@ class CharacterAdapter(private val listener: Listener) :
 			ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		)
 	}
-
 
 	override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
 		val characterPosition = getItem(position)
@@ -38,7 +37,6 @@ class CharacterAdapter(private val listener: Listener) :
 			holder.itemView.rootView.setOnClickListener {
 				listener.onClick(characterPosition)
 			}
-
 		}
 	}
 
@@ -54,7 +52,6 @@ class CharacterAdapter(private val listener: Listener) :
 	}
 
 	interface Listener {
-
 		fun onClick(character: Character)
 	}
 

@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_small_2x"
-    android:background="@drawable/background_pink"
-    android:elevation="@dimen/elevation"
-    android:padding="@dimen/space_small">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="@dimen/space_small_2x"
+	android:background="@drawable/background_blue"
+	android:elevation="@dimen/elevation"
+	android:padding="@dimen/space_small_x"
+	>
 
+	<TextView
+		android:id="@+id/ep_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/quite_white"
+		android:textSize="@dimen/font_size_small"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Number"
+		/>
 
-    <TextView
-        android:id="@+id/ep_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/yellow"
-        android:textSize="@dimen/font_size_small"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Name" />
-
-    <TextView
-        android:id="@+id/ep_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_small"
-        android:textColor="@color/quite_white"
-        android:textSize="@dimen/font_size_small_x"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ep_name"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Number" />
-
+	<TextView
+		android:id="@+id/ep_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/yellow"
+		android:textSize="@dimen/font_size_small"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/ep_number"
+		tools:text="Name"
+		/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

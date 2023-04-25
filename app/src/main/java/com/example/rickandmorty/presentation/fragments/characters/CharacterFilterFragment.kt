@@ -1,10 +1,10 @@
-package com.example.rickandmorty.presentation.fragments.characters.list
+package com.example.rickandmorty.presentation.fragments.characters
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.example.rickandmorty.databinding.FragmentCharacterFilterBinding
@@ -36,12 +36,10 @@ class CharacterFilterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navigator = requireActivity() as Navigator
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                navigator.popUpToBackStack("Characters")
-            }
+
+        binding.backButton.setOnClickListener {
+            navigator.popUpToBackStack("Characters")
         }
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
         if (name.isNotEmpty()) binding.search.setText(name)
         when (status) {
