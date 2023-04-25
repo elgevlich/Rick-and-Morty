@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -18,8 +18,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/space_small"
 			android:layout_marginTop="@dimen/space_small"
-			android:layout_marginBottom="@dimen/space_small_x"
-			android:textColor="@color/yellow"
+			android:textColor="@color/jeans_blue"
 			android:textSize="@dimen/font_size_medium"
 			android:textStyle="bold"
 			app:layout_constraintBottom_toTopOf="@id/location_type"
@@ -33,7 +32,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/space_small"
-			android:textColor="@color/yellow"
+			android:textColor="@color/pink"
 			android:textSize="@dimen/font_size_small"
 			android:textStyle="bold"
 			app:layout_constraintBottom_toTopOf="@id/location_dimension"
@@ -46,8 +45,8 @@
 			android:id="@+id/location_dimension"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/space_small"
-			android:textColor="@color/yellow"
+			android:layout_marginStart="@dimen/space_small"
+			android:textColor="@color/pink"
 			android:textSize="@dimen/font_size_small"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/location_type"
@@ -66,7 +65,7 @@
 			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/location_dimension"
-			tools:text="Who's there?"
+			android:text="@string/title_listOfCharacters"
 			/>
 
 		<androidx.recyclerview.widget.RecyclerView
@@ -84,4 +83,4 @@
 			/>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

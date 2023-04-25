@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.episodes
+package com.example.rickandmorty.presentation.fragments.episodes.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.rickandmorty.databinding.FragmentEpisodeDetailBinding
 import com.example.rickandmorty.presentation.Navigator
-
 
 class EpisodeDetailFragment : Fragment() {
 
@@ -78,7 +77,7 @@ class EpisodeDetailFragment : Fragment() {
 			name: String?,
 			episode: String?,
 			airDate: String?,
-			): EpisodeDetailFragment {
+		): EpisodeDetailFragment {
 			val detailsFragment = EpisodeDetailFragment()
 			val bundle = Bundle()
 			bundle.putString(NAME_KEY, name)

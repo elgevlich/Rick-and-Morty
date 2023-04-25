@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
-import com.example.rickandmorty.presentation.fragments.characters.CharactersListFragment
-import com.example.rickandmorty.presentation.fragments.episodes.EpisodesListFragment
-import com.example.rickandmorty.presentation.fragments.locations.LocationsListFragment
+import com.example.rickandmorty.presentation.fragments.characters.list.CharactersListFragment
+import com.example.rickandmorty.presentation.fragments.episodes.list.EpisodesListFragment
+import com.example.rickandmorty.presentation.fragments.locations.list.LocationsListFragment
 
 
 class MainActivity : FragmentActivity(), Navigator {

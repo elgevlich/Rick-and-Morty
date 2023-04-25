@@ -35,6 +35,7 @@
 			android:layout_margin="@dimen/space_small"
 			android:textColor="@color/pink"
 			android:textSize="@dimen/font_size_small"
+			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/episode_name"
 			tools:text="Episode number"
@@ -48,6 +49,7 @@
 			android:layout_marginBottom="@dimen/space_small_2x"
 			android:textColor="@color/pink"
 			android:textSize="@dimen/font_size_small"
+			android:textStyle="italic"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/episode_number"
 			tools:text="Air date"
@@ -60,12 +62,12 @@
 			android:layout_marginStart="@dimen/space_small"
 			android:layout_marginTop="@dimen/space_small"
 			android:layout_marginEnd="@dimen/space_small"
+			android:text="@string/title_listOfCharactersInEpisode"
 			android:textColor="@color/jeans_blue"
 			android:textSize="@dimen/font_size_small_x"
 			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/episode_air_date"
-			tools:text="Characters in the Episode:"
 			/>
 
 		<androidx.recyclerview.widget.RecyclerView

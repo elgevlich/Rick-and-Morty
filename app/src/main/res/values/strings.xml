@@ -30,4 +30,7 @@
     <string name="search_location_dimension">Search by dimension…</string>
     <string name="title_location_type">Type</string>
     <string name="search_location_type">Search by type…</string>
+	<string name="title_listOfCharacters">Who\'s there?</string>
+	<string name="title_listOfCharactersInEpisode">Characters in the Episode:</string>
+	<string name="isNotEnoughCharactersFound">No characters!</string>
 </resources>

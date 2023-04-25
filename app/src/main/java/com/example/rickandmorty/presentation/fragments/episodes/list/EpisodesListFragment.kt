@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.episodes
+package com.example.rickandmorty.presentation.fragments.episodes.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,15 +15,16 @@ import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.databinding.FragmentEpisodesListBinding
 import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.presentation.Navigator
-import com.example.rickandmorty.presentation.fragments.adapters.EpisodeAdapter
+import com.example.rickandmorty.presentation.fragments.episodes.EpisodeFilterFragment
+import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class EpisodesListFragment : Fragment(), EpisodeAdapter.Listener {
+class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 
 	private lateinit var binding: FragmentEpisodesListBinding
-	private val adapter = EpisodeAdapter(this)
+	private val adapter = EpisodesListAdapter(this)
 	private lateinit var viewModel: EpisodesListViewModel
 	private lateinit var navigator: Navigator
 

@@ -1,32 +1,31 @@
-package com.example.rickandmorty.presentation.fragments.episodes
+package com.example.rickandmorty.presentation.fragments.episodes.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.domain.model.character.Character
-import com.example.rickandmorty.presentation.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class EpisodeDetailViewModel(private val repository: Repository) : ViewModel() {
+class EpisodeDetailViewModel : ViewModel() {
 
 	var episodeLiveData = MutableLiveData<Episode>()
 	var charactersListLiveData = MutableLiveData<List<Character>>()
 	var isLoading = MutableLiveData<Boolean>()
 	var isNoCharacters = MutableLiveData<Boolean>()
 	var isNotEnoughCharactersFound = MutableLiveData<Boolean>()
-	var isNoDataFound = MutableLiveData<Boolean>()
+	private val characterApi = RetrofitInstance.characterApi
+	private val episodeApi = RetrofitInstance.episodeApi
 
 	fun getEpisodeId(id: Int) {
 		isLoading.value = true
 		viewModelScope.launch(Dispatchers.IO) {
-			val result = repository.getEpisodeId(id)
+			val result = episodeApi.getEpisodeId(id)
 			launch(Dispatchers.Main) {
 				result?.let {
-					episodeLiveData.postValue(it)
-				}
-					?: run { isNoDataFound.value = true }
+					episodeLiveData.postValue(it)}
 				isLoading.value = false
 			}
 		}
@@ -35,16 +34,15 @@ class EpisodeDetailViewModel(private val repository: Repository) : ViewModel() {
 	fun getCharactersId(charactersUrlList: List<String>) {
 		if (charactersUrlList.isNullOrEmpty()) {
 			updateIsNoCharacters()
-		} else {
+		}else {
 			isLoading.value = true
 			viewModelScope.launch(Dispatchers.IO) {
 				val result = ArrayList<Character>()
 				for (characterUrl in charactersUrlList) {
 					val id = characterUrl.split("/").last().toInt()
-					val character = repository.getCharacterId(id)
+					val character = characterApi.getCharacterId(id)
 					character?.let {
-						result.add(it)
-					}
+						result.add(it) }
 				}
 				launch(Dispatchers.Main) {
 					updateCharactersListLiveData(result, charactersUrlList)
@@ -53,10 +51,8 @@ class EpisodeDetailViewModel(private val repository: Repository) : ViewModel() {
 		}
 	}
 
-	private fun updateCharactersListLiveData(
-		charactersList: List<Character>?,
-		charactersUrlList: List<String>
-	) {
+	private fun updateCharactersListLiveData(charactersList: List<Character>?,
+		charactersUrlList: List<String>) {
 		this.charactersListLiveData.value = charactersList
 		isLoading.value = false
 		if (charactersList != null) {

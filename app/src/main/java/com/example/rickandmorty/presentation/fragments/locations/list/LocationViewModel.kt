@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.locations
+package com.example.rickandmorty.presentation.fragments.locations.list
 
 
 import androidx.lifecycle.MutableLiveData

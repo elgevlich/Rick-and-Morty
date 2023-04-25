@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.characters
+package com.example.rickandmorty.presentation.fragments.characters.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,10 +15,12 @@ import androidx.paging.PagingData
 import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
 import com.example.rickandmorty.presentation.Navigator
-import com.example.rickandmorty.presentation.fragments.adapters.CharactersListAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import com.example.rickandmorty.domain.model.character.Character
+import com.example.rickandmorty.presentation.fragments.characters.CharacterFilterFragment
+import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailFragment
+import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailViewModel
 
 
 class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
@@ -107,10 +109,3 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 		fun newInstance() = CharactersListFragment()
 	}
 }
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.adapters
+package com.example.rickandmorty.presentation.fragments.locations.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.domain.model.location.Location
 import com.example.rickandmorty.databinding.ItemLocationBinding
 
-class LocationAdapter(private val listener: Listener) :
-	PagingDataAdapter<Location, LocationAdapter.LocationViewHolder>(LocationComparator) {
+class LocationsListAdapter(private val listener: Listener) :
+	PagingDataAdapter<Location, LocationsListAdapter.LocationViewHolder>(LocationComparator) {
 
 
 	class LocationViewHolder(val binding: ItemLocationBinding) :

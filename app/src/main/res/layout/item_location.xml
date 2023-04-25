@@ -6,49 +6,43 @@
 	android:layout_height="wrap_content"
 	android:layout_margin="@dimen/space_small_2x"
 	android:background="@drawable/background_yellow"
-	android:padding="@dimen/space_small"
+	android:padding="@dimen/space_small_x"
 	app:cardElevation="@dimen/space_small_2x"
 	>
-	<LinearLayout
-		android:id="@+id/location_info"
+	<TextView
+		android:id="@+id/location_name"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginEnd="@dimen/space_small_2x"
-		android:orientation="vertical"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
+		android:layout_marginBottom="@dimen/space_small_x"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small"
+		android:textStyle="bold"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		>
+		tools:text="Location"
+		/>
 
-		<TextView
-			android:id="@+id/location_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="@dimen/space_small_x"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small"
-			android:textStyle="bold"
-			tools:text="Location"
-			/>
-
-		<TextView
-			android:id="@+id/location_type"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/pink"
-			android:textSize="@dimen/font_size_small_x"
-			android:textStyle="bold"
-			tools:text="Type"
-			/>
-		<TextView
-			android:id="@+id/location_dimension"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/pink"
-			android:textSize="@dimen/font_size_small_x"
-			tools:text="Dimension"
-			/>
-	</LinearLayout>
+	<TextView
+		android:id="@+id/location_type"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/space_small_2x"
+		android:textColor="@color/pink"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/location_name"
+		tools:text="Type"
+		/>
+	<TextView
+		android:id="@+id/location_dimension"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/pink"
+		android:textSize="@dimen/font_size_small_x"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/location_type"
+		tools:text="Dimension"
+		/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

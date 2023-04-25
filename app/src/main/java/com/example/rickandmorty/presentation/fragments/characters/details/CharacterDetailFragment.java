@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.characters;
+package com.example.rickandmorty.presentation.fragments.characters.details;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.data.api.CharacterApi;
+import com.example.rickandmorty.data.api.EpisodeApi;
 import com.example.rickandmorty.data.api.RetrofitInstance;
 import com.example.rickandmorty.domain.model.episode.Episode;
 import com.example.rickandmorty.domain.model.character.Character;
-import com.example.rickandmorty.presentation.fragments.adapters.DetailsCharacterAdapter;
 
 
 import java.util.List;
@@ -45,7 +44,7 @@ public class CharacterDetailFragment extends Fragment {
 
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
 	RecyclerView rvListOfEpisodes;
-	CharacterApi api;
+	EpisodeApi api;
 
 	public CharacterDetailFragment(@NotNull CharacterDetailViewModel viewModelDetail) {
 		this.detailCharacterViewModel = viewModelDetail;
@@ -69,7 +68,7 @@ public class CharacterDetailFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		rvListOfEpisodes = view.findViewById(R.id.episodes_list);
-		api = RetrofitInstance.INSTANCE.getCharacterApi();
+		api = RetrofitInstance.INSTANCE.getEpisodeApi();
 		rvListOfEpisodes.setHasFixedSize(true);
 
 		characterImage = view.findViewById(R.id.image_character);
@@ -99,14 +98,14 @@ public class CharacterDetailFragment extends Fragment {
 	}
 
 	private void fetchData() {
-		compositeDisposable.add(api.getDetailEpisode(detailCharacterViewModel.episodesIds)
+		compositeDisposable.add(api.getListOfEpisodesForDetails(detailCharacterViewModel.episodesIds)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(this::displayData, throwable -> Log.d("tag", throwable.toString())));
 	}
 
 	private void displayData(List<Episode> posts) {
-		DetailsCharacterAdapter adapter = new DetailsCharacterAdapter(requireContext(), posts);
+		CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts);
 		rvListOfEpisodes.setAdapter(adapter);
 	}
 
