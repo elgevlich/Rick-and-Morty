@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.presentation.Navigator
 import com.example.rickandmorty.presentation.fragments.episodes.EpisodeFilterFragment
 import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailFragment
+import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -26,6 +28,7 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 	private lateinit var binding: FragmentEpisodesListBinding
 	private val adapter = EpisodesListAdapter(this)
 	private lateinit var viewModel: EpisodesListViewModel
+	private val viewModelDetail: EpisodeDetailViewModel by activityViewModels()
 	private lateinit var navigator: Navigator
 
 	private var name = ""
@@ -94,12 +97,9 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 
 	override fun onClick(episode: Episode) {
 		viewModel.dataEpisode.value = episode
+		viewModelDetail.onClickItemEpisode(episode)
 		navigator.replaceFragment(
-			EpisodeDetailFragment.newInstance(
-				episode.name,
-				episode.episode,
-				episode.air_date,
-			),
+			EpisodeDetailFragment.newInstance(viewModelDetail),
 			"Episode"
 		)
 	}

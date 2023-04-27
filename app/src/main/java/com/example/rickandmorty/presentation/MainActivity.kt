@@ -81,7 +81,7 @@ class MainActivity : FragmentActivity(), Navigator {
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.container, fragment)
-			.addToBackStack(null)
+			.addToBackStack(tag)
 			.commit()
 	}
 

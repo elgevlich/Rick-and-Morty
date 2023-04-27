@@ -74,6 +74,7 @@ public class LocationDetailFragment extends Fragment {
 		clickListener = (character, position) -> {
 			viewModelDetail = new CharacterDetailViewModel();
 			viewModelDetail.onClickItemCharacter(character);
+
 			navigator = (Navigator)requireActivity();
 			navigator.replaceFragment(new CharacterDetailFragment(viewModelDetail), "Character");
 		};
@@ -89,6 +90,7 @@ public class LocationDetailFragment extends Fragment {
 			locationType.setText(location1.getType());
 			locationDimension.setText(location1.getDimension());
 		};
+
 		detailLocationViewModel.getSelectedItemLocation().observe(getViewLifecycleOwner(), observer);
 		detailLocationViewModel.getCharacters();
 		fetchData();

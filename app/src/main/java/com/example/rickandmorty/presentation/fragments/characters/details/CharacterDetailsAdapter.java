@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
+import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.domain.model.episode.Episode;
+import com.example.rickandmorty.presentation.fragments.locations.details.LocationDetailsAdapter;
 
 import java.util.List;
 
@@ -17,10 +19,12 @@ public class CharacterDetailsAdapter extends RecyclerView.Adapter<EpisodeViewHol
 
 	Context context;
 	List<Episode> postsList;
+	private OnClickListener onClickListener;
 
-	public CharacterDetailsAdapter(Context context, List<Episode> postsList) {
+	public CharacterDetailsAdapter(Context context, List<Episode> postsList, OnClickListener onClickListener) {
 		this.context = context;
 		this.postsList = postsList;
+		this.onClickListener = onClickListener;
 	}
 
 	@NonNull
@@ -40,6 +44,10 @@ public class CharacterDetailsAdapter extends RecyclerView.Adapter<EpisodeViewHol
 	@Override
 	public int getItemCount() {
 		return postsList.size();
+	}
+
+	public interface OnClickListener {
+		void onClick(Episode episode, int position);
 	}
 
 }

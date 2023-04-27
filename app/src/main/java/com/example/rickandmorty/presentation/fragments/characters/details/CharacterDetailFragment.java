@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.example.rickandmorty.data.api.RetrofitInstance;
 import com.example.rickandmorty.domain.model.episode.Episode;
 import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.presentation.Navigator;
+import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailViewModel;
 
 
 import java.util.List;
@@ -44,6 +46,9 @@ public class CharacterDetailFragment extends Fragment {
     private ImageButton backButton;
 
     private final CharacterDetailViewModel detailCharacterViewModel;
+    Navigator navigator;
+    private EpisodeDetailViewModel viewModelDetail;
+    CharacterDetailsAdapter.OnClickListener clickListener;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     RecyclerView rvListOfEpisodes;
@@ -73,6 +78,11 @@ public class CharacterDetailFragment extends Fragment {
         rvListOfEpisodes = view.findViewById(R.id.episodes_list);
         api = RetrofitInstance.INSTANCE.getEpisodeApi();
         rvListOfEpisodes.setHasFixedSize(true);
+
+        clickListener = (episode, position) -> {
+
+                Toast.makeText(requireContext(), "TO DO!", Toast.LENGTH_SHORT).show();
+                    };
 
         characterImage = view.findViewById(R.id.image_character);
         characterName = view.findViewById(R.id.name);
@@ -117,7 +127,7 @@ public class CharacterDetailFragment extends Fragment {
     }
 
     private void displayData(List<Episode> posts) {
-        CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts);
+        CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts, clickListener);
         rvListOfEpisodes.setAdapter(adapter);
     }
 
