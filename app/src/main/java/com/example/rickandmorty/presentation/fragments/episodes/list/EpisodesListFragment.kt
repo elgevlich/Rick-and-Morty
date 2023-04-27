@@ -96,16 +96,15 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 	}
 
 	override fun onClick(episode: Episode) {
-		viewModel.dataEpisode.value = episode
+//		viewModel.dataEpisode.value = episode
 		viewModelDetail.onClickItemEpisode(episode)
 		navigator.replaceFragment(
-			EpisodeDetailFragment.newInstance(viewModelDetail),
+			EpisodeDetailFragment.newInstance(),
 			"Episode", "Episodes"
 		)
 	}
 
 	companion object {
-
 		@JvmStatic
 		fun newInstance() = EpisodesListFragment()
 	}
