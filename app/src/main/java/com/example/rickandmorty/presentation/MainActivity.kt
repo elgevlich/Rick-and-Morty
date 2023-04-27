@@ -76,12 +76,12 @@ class MainActivity : FragmentActivity(), Navigator {
 			.commit()
 	}
 
-	override fun replaceFragment(fragment: Fragment, tag: String) {
-		visibilityBottomNavigation(tag)
+	override fun replaceFragment(fragment: Fragment, tagNext: String, tagCurrent: String) {
+		visibilityBottomNavigation(tagNext)
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.container, fragment)
-			.addToBackStack(tag)
+			.addToBackStack(tagCurrent)
 			.commit()
 	}
 

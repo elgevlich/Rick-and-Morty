@@ -37,13 +37,12 @@ public class LocationDetailFragment extends Fragment {
 	private TextView locationType;
 	private TextView locationDimension;
 	private ImageButton backButton;
+	private RecyclerView rvListOfCharacters;
 
 	private final LocationDetailViewModel detailLocationViewModel;
-	LocationDetailsAdapter adapter;
 	private CharacterDetailViewModel viewModelDetail;
 	LocationDetailsAdapter.OnClickListener clickListener;
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
-	RecyclerView rvListOfCharacters;
 	CharacterApi api;
 	Navigator navigator;
 
@@ -54,6 +53,7 @@ public class LocationDetailFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override
@@ -67,22 +67,9 @@ public class LocationDetailFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		rvListOfCharacters = view.findViewById(R.id.characters_list);
+		initViews(view);
+		navigator = (Navigator)requireActivity();
 		api = RetrofitInstance.INSTANCE.getCharacterApi();
-		rvListOfCharacters.setHasFixedSize(true);
-
-		clickListener = (character, position) -> {
-			viewModelDetail = new CharacterDetailViewModel();
-			viewModelDetail.onClickItemCharacter(character);
-
-			navigator = (Navigator)requireActivity();
-			navigator.replaceFragment(new CharacterDetailFragment(viewModelDetail), "Character");
-		};
-
-		locationName = view.findViewById(R.id.location_name);
-		locationType = view.findViewById(R.id.location_type);
-		locationDimension = view.findViewById(R.id.location_dimension);
-		backButton = view.findViewById(R.id.back_button);
 
 		final Observer<Location> observer = location1 -> {
 			assert location1 != null;
@@ -90,19 +77,22 @@ public class LocationDetailFragment extends Fragment {
 			locationType.setText(location1.getType());
 			locationDimension.setText(location1.getDimension());
 		};
-
 		detailLocationViewModel.getSelectedItemLocation().observe(getViewLifecycleOwner(), observer);
 		detailLocationViewModel.getCharacters();
 		fetchData();
-		detailLocationViewModel.clearListOfCharacters();
 
-		Navigator navigator = (Navigator) requireActivity();
-		backButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		backButton.setOnClickListener(v -> {
 				navigator.popUpToBackStack("Locations");
+				detailLocationViewModel.clearListOfCharacters();
 			}
-		});
+		);
+
+		clickListener = (character, position) -> {
+			viewModelDetail = new CharacterDetailViewModel();
+			viewModelDetail.onClickItemCharacter(character);
+			navigator = (Navigator)requireActivity();
+			navigator.replaceFragment(new CharacterDetailFragment(viewModelDetail), "Character", "Location");
+		};
 	}
 
 	private void fetchData() {
@@ -117,10 +107,18 @@ public class LocationDetailFragment extends Fragment {
 		rvListOfCharacters.setAdapter(adapter);
 	}
 
+	private void initViews(View view) {
+		locationName = view.findViewById(R.id.location_name);
+		locationType = view.findViewById(R.id.location_type);
+		locationDimension = view.findViewById(R.id.location_dimension);
+		backButton = view.findViewById(R.id.back_button);
+		rvListOfCharacters = view.findViewById(R.id.characters_list);
+		rvListOfCharacters.setHasFixedSize(true);
+	}
+
 	@Override
 	public void onStop() {
 		compositeDisposable.clear();
 		super.onStop();
 	}
-
 }

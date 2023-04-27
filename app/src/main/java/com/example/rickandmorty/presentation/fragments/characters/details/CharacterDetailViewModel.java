@@ -21,7 +21,6 @@ public class CharacterDetailViewModel extends ViewModel {
 		episodesList
 			.addAll(character
 				.getEpisode());
-
 	}
 
 	public MutableLiveData<Character> getSelectedItemCharacter() {
@@ -39,5 +38,4 @@ public class CharacterDetailViewModel extends ViewModel {
 		}
 		episodesIds = result;
 	}
-
 }

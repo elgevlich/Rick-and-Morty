@@ -67,7 +67,7 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 		binding.btnFilter.setOnClickListener {
 			navigator.replaceFragment(
 				CharacterFilterFragment.newInstance(name, status, gender),
-				"Filter"
+				"Filter", "Characters"
 			)
 		}
 		loadCharacters()
@@ -99,7 +99,7 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 		viewModelDetail.onClickItemCharacter(character)
 		navigator.replaceFragment(
 			CharacterDetailFragment(viewModelDetail),
-			"Character"
+			"Character", "Characters"
 		)
 	}
 

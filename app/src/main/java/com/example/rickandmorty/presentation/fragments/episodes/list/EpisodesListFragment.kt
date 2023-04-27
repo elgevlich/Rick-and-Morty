@@ -67,7 +67,7 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 		binding.btnFilter.setOnClickListener {
 			navigator.replaceFragment(
 				EpisodeFilterFragment.newInstance(name, episode),
-				"Filter"
+				"Filter", "Episodes"
 			)
 		}
 		loadEpisodes()
@@ -100,7 +100,7 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 		viewModelDetail.onClickItemEpisode(episode)
 		navigator.replaceFragment(
 			EpisodeDetailFragment.newInstance(viewModelDetail),
-			"Episode"
+			"Episode", "Episodes"
 		)
 	}
 

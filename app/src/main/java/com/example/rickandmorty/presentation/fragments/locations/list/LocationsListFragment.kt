@@ -68,7 +68,7 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 		binding.btnFilter.setOnClickListener {
 			navigator.replaceFragment(
 				LocationFilterFragment.newInstance(name, type, dimension),
-				"Filter"
+				"Filter", "Locations"
 			)
 		}
 		loadLocations()
@@ -103,7 +103,7 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 			LocationDetailFragment(
 				viewModelDetail
 			),
-			"Location"
+			"Location", "Locations"
 		)
 	}
 

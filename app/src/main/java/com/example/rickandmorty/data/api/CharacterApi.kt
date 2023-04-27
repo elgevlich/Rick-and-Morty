@@ -21,9 +21,4 @@ interface CharacterApi {
 
 	@GET("api/character/{id}")
 	fun getListOfCharactersForDetails(@Path("id") id: String): Observable<List<Character>>
-
-	@GET("api/character/{id}")
-	fun getCharacterId(
-		@Path("id") id : Int
-	): Character
 }
