@@ -4,14 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.domain.model.episode.Episode;
-import com.example.rickandmorty.presentation.fragments.locations.details.LocationDetailsAdapter;
 
 import java.util.List;
 
@@ -19,7 +15,7 @@ public class CharacterDetailsAdapter extends RecyclerView.Adapter<EpisodeViewHol
 
 	Context context;
 	List<Episode> postsList;
-	private OnClickListener onClickListener;
+	private final OnClickListener onClickListener;
 
 	public CharacterDetailsAdapter(Context context, List<Episode> postsList, OnClickListener onClickListener) {
 		this.context = context;
@@ -39,6 +35,12 @@ public class CharacterDetailsAdapter extends RecyclerView.Adapter<EpisodeViewHol
 	public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
 		holder.tvNameEpisode.setText((postsList.get(position).getName()));
 		holder.tvNumberEpisode.setText((postsList.get(position).getEpisode()));
+		holder.tvAirDateEpisode.setText(postsList.get(position).getAir_date());
+		holder.itemView.setOnClickListener(view -> {
+			if (onClickListener != null) {
+				onClickListener.onClick(postsList.get(position));
+			}
+		});
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class CharacterDetailsAdapter extends RecyclerView.Adapter<EpisodeViewHol
 	}
 
 	public interface OnClickListener {
-		void onClick(Episode episode, int position);
+		void onClick(Episode episode);
 	}
 
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,10 +22,12 @@ import com.example.rickandmorty.data.api.RetrofitInstance;
 import com.example.rickandmorty.domain.model.episode.Episode;
 import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.presentation.Navigator;
+import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailFragment;
 import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailViewModel;
+import com.example.rickandmorty.presentation.fragments.locations.details.LocationDetailFragment;
+import com.example.rickandmorty.presentation.fragments.locations.details.LocationDetailViewModel;
 
 import java.util.List;
-import java.util.Objects;
 
 import androidx.lifecycle.Observer;
 
@@ -35,7 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CharacterDetailFragment extends Fragment {
+public class CharacterDetailFragment extends Fragment implements CharacterDetailsAdapter.OnClickListener {
 
 	private ImageView characterImage;
 	private TextView characterName;
@@ -43,19 +45,20 @@ public class CharacterDetailFragment extends Fragment {
 	private TextView characterSpecies;
 	private TextView characterGender;
 	private TextView characterOrigin;
+	private TextView characterLocation;
 	private ImageButton backButton;
 	private RecyclerView rvListOfEpisodes;
 
-	private final CharacterDetailViewModel detailCharacterViewModel;
-	private EpisodeDetailViewModel viewModelDetail;
+	private final CharacterDetailViewModel characterDetailViewModel;
+	private EpisodeDetailViewModel episodeDetailViewModel;
+	private LocationDetailViewModel locationDetailViewModel;
 	EpisodeApi api;
-	CharacterDetailsAdapter.OnClickListener clickListener;
 	Navigator navigator;
 
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 	public CharacterDetailFragment(@NotNull CharacterDetailViewModel viewModelDetail) {
-		this.detailCharacterViewModel = viewModelDetail;
+		this.characterDetailViewModel = viewModelDetail;
 	}
 
 	@Override
@@ -69,6 +72,8 @@ public class CharacterDetailFragment extends Fragment {
 		LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState
 	) {
+		locationDetailViewModel = new ViewModelProvider(this).get(LocationDetailViewModel.class);
+		episodeDetailViewModel = new ViewModelProvider(this).get(EpisodeDetailViewModel.class);
 		return inflater.inflate(R.layout.fragment_character_details, container, false);
 	}
 
@@ -78,49 +83,48 @@ public class CharacterDetailFragment extends Fragment {
 		initViews(view);
 		navigator = (Navigator)requireActivity();
 		api = RetrofitInstance.INSTANCE.getEpisodeApi();
-
-		final Observer<Character> observer = character1 -> {
-			assert character1 != null;
+		navigator.hideBottomNav();
+		final Observer<Character> observer = character -> {
+			assert character != null;
 			Glide.with(requireContext())
-				.load(character1.getImage())
+				.load(character.getImage())
 				.into(characterImage);
-			characterName.setText(character1.getName());
-			characterSpecies.setText(character1.getSpecies());
-			characterGender.setText(character1.getGender());
-			characterStatus.setText(character1.getStatus());
-			characterOrigin.setText(character1.getOrigin().getName());
+			characterName.setText(character.getName());
+			characterSpecies.setText(character.getSpecies());
+			characterGender.setText(character.getGender());
+			characterStatus.setText(character.getStatus());
+			characterOrigin.setText(character.getOrigin().getName());
+			characterLocation.setText(character.getLocation().getName());
+
+			characterOrigin.setOnClickListener(v -> {
+				locationDetailViewModel.setLocationName(character.getOrigin().getName());
+				navigator.replaceFragment(new LocationDetailFragment(locationDetailViewModel));
+			});
+			characterLocation.setOnClickListener(v -> {
+				locationDetailViewModel.setLocationName(character.getOrigin().getName());
+				navigator.replaceFragment(new LocationDetailFragment(locationDetailViewModel));
+			});
 		};
-		detailCharacterViewModel.getSelectedItemCharacter().observe(getViewLifecycleOwner(), observer);
-		detailCharacterViewModel.getEpisodes();
+
+		characterDetailViewModel.getSelectedItemCharacter().observe(getViewLifecycleOwner(), observer);
+		characterDetailViewModel.getEpisodes();
 		fetchData();
-		detailCharacterViewModel.clearListOfEpisodes();
 
-		clickListener = (episode, position) -> {
-			//TODO!!
-		};
-
-		int index = requireActivity().getFragmentManager().getBackStackEntryCount();
-		assert getFragmentManager() != null;
-		FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index);
-		String tag = backEntry.getName();
 		backButton.setOnClickListener(v -> {
-			if (Objects.equals(tag, "Characters")) {
-				navigator.popUpToBackStack("Characters");
-			} else {
-				navigator.popUpToBackStack("Location");
-			}
+			navigator.popUpToBackStack();
+			characterDetailViewModel.clearListOfEpisodes();
 		});
 	}
 
 	private void fetchData() {
-		compositeDisposable.add(api.getListOfEpisodesForDetails(detailCharacterViewModel.episodesIds)
+		compositeDisposable.add(api.getListOfEpisodesForDetails(characterDetailViewModel.episodesIds)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(this::displayData, throwable -> Log.d("tag", throwable.toString())));
 	}
 
 	private void displayData(List<Episode> posts) {
-		CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts, clickListener);
+		CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts, this);
 		rvListOfEpisodes.setAdapter(adapter);
 	}
 
@@ -132,7 +136,8 @@ public class CharacterDetailFragment extends Fragment {
 		characterSpecies = view.findViewById(R.id.species);
 		characterGender = view.findViewById(R.id.gender);
 		characterOrigin = view.findViewById(R.id.origin);
-		backButton = view.findViewById(R.id.back_button);
+		characterLocation = view.findViewById(R.id.location);
+				backButton = view.findViewById(R.id.back_button);
 		rvListOfEpisodes.setHasFixedSize(true);
 	}
 
@@ -140,6 +145,12 @@ public class CharacterDetailFragment extends Fragment {
 	public void onStop() {
 		compositeDisposable.clear();
 		super.onStop();
+	}
+
+	@Override public void onClick(Episode episode) {
+		episodeDetailViewModel.onClickItemEpisode(episode);
+		navigator = (Navigator)requireActivity();
+		navigator.replaceFragment(new EpisodeDetailFragment(episodeDetailViewModel));
 	}
 
 }

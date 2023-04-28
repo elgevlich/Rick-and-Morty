@@ -34,4 +34,16 @@
 		tools:text="Name"
 		/>
 
+	<TextView
+		android:id="@+id/ep_air_date"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/quite_white"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="italic"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Air date"
+		/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

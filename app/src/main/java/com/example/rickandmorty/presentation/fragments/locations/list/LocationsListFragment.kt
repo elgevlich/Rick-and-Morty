@@ -54,6 +54,7 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 	): View {
 		binding = FragmentLocationsListBinding.inflate(inflater)
 		navigator = requireActivity() as Navigator
+		navigator.showBottomNav("Locations")
 		viewModel =
 			ViewModelProvider(
 				this,
@@ -68,7 +69,6 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 		binding.btnFilter.setOnClickListener {
 			navigator.replaceFragment(
 				LocationFilterFragment.newInstance(name, type, dimension),
-				"Filter", "Locations"
 			)
 		}
 		loadLocations()
@@ -103,7 +103,6 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 			LocationDetailFragment(
 				viewModelDetail
 			),
-			"Location", "Locations"
 		)
 	}
 

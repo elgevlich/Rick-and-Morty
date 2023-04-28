@@ -1,7 +1,7 @@
 package com.example.rickandmorty.presentation.fragments.locations.details;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.data.api.CharacterApi;
-import com.example.rickandmorty.data.api.RetrofitInstance;
 import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.domain.model.location.Location;
 import com.example.rickandmorty.presentation.Navigator;
@@ -27,11 +26,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
-public class LocationDetailFragment extends Fragment {
+public class LocationDetailFragment extends Fragment implements LocationDetailsAdapter.OnClickListener {
 
 	private TextView locationName;
 	private TextView locationType;
@@ -40,10 +37,9 @@ public class LocationDetailFragment extends Fragment {
 	private RecyclerView rvListOfCharacters;
 
 	private final LocationDetailViewModel detailLocationViewModel;
-	private CharacterDetailViewModel viewModelDetail;
+	private CharacterDetailViewModel characterDetailViewModel;
 	LocationDetailsAdapter.OnClickListener clickListener;
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
-	CharacterApi api;
 	Navigator navigator;
 
 	public LocationDetailFragment(@NotNull LocationDetailViewModel viewModelDetail) {
@@ -53,7 +49,6 @@ public class LocationDetailFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
 	@Override
@@ -61,7 +56,8 @@ public class LocationDetailFragment extends Fragment {
 		LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState
 	) {
-		return inflater.inflate(R.layout.fragment_location_detail, container, false);
+		characterDetailViewModel = new ViewModelProvider(this).get(CharacterDetailViewModel.class);
+		return inflater.inflate(R.layout.fragment_location_details, container, false);
 	}
 
 	@Override
@@ -69,42 +65,36 @@ public class LocationDetailFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		initViews(view);
 		navigator = (Navigator)requireActivity();
-		api = RetrofitInstance.INSTANCE.getCharacterApi();
+		navigator.hideBottomNav();
 
-		final Observer<Location> observer = location1 -> {
-			assert location1 != null;
-			locationName.setText(location1.getName());
-			locationType.setText(location1.getType());
-			locationDimension.setText(location1.getDimension());
+		final Observer<Location> observer = location -> {
+			assert location != null;
+			locationName.setText(location.getName());
+			locationType.setText(location.getType());
+			locationDimension.setText(location.getDimension());
+			detailLocationViewModel.setListOfCharacters(location);
 		};
+
 		detailLocationViewModel.getSelectedItemLocation().observe(getViewLifecycleOwner(), observer);
 		detailLocationViewModel.getCharacters();
-		fetchData();
+		detailLocationViewModel.fetchData();
+		displayData();
 
 		backButton.setOnClickListener(v -> {
-				navigator.popUpToBackStack("Locations");
+				navigator.popUpToBackStack();
 				detailLocationViewModel.clearListOfCharacters();
 			}
 		);
+	}
 
-		clickListener = (character, position) -> {
-			viewModelDetail = new CharacterDetailViewModel();
-			viewModelDetail.onClickItemCharacter(character);
-			navigator = (Navigator)requireActivity();
-			navigator.replaceFragment(new CharacterDetailFragment(viewModelDetail), "Character", "Location");
+	private void displayData() {
+		@SuppressLint("NotifyDataSetChanged") final Observer<List<Character>> observer = listOfCharacters -> {
+			assert listOfCharacters != null;
+			LocationDetailsAdapter adapter = new LocationDetailsAdapter(requireContext(), listOfCharacters, clickListener);
+			rvListOfCharacters.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 		};
-	}
-
-	private void fetchData() {
-		compositeDisposable.add(api.getListOfCharactersForDetails(detailLocationViewModel.charactersIds)
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(this::displayData, throwable -> Log.d("tag", throwable.toString())));
-	}
-
-	private void displayData(List<Character> posts) {
-		LocationDetailsAdapter adapter = new LocationDetailsAdapter(requireContext(), posts, clickListener);
-		rvListOfCharacters.setAdapter(adapter);
+		detailLocationViewModel.responseCharacters.observe(getViewLifecycleOwner(), observer);
 	}
 
 	private void initViews(View view) {
@@ -121,4 +111,11 @@ public class LocationDetailFragment extends Fragment {
 		compositeDisposable.clear();
 		super.onStop();
 	}
+
+	@Override public void onClick(Character character, int position) {
+		characterDetailViewModel.onClickItemCharacter(character);
+		navigator = (Navigator)requireActivity();
+		navigator.replaceFragment(new CharacterDetailFragment(characterDetailViewModel));
+	}
+
 }

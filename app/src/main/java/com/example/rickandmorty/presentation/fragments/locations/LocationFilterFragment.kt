@@ -34,9 +34,9 @@ class LocationFilterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		val navigator = requireActivity() as Navigator
-
+		navigator.hideBottomNav()
 		binding.backButton.setOnClickListener {
-			navigator.popUpToBackStack("Locations")
+			navigator.popUpToBackStack()
 		}
 
 		if (name.isNotEmpty()) binding.nameLocationSearch.text = name
@@ -58,7 +58,7 @@ class LocationFilterFragment : Fragment() {
 					putString("dimension", dimension)
 				}
 			)
-			navigator.popUpToBackStack("Locations")
+			navigator.popUpToBackStack()
 		}
 	}
 

@@ -20,19 +20,19 @@ class MainActivity : FragmentActivity(), Navigator {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-		visibilityBottomNavigation("Characters")
+		showBottomNav("Characters")
 		binding.contentLayout.bottomNavigation.setOnItemSelectedListener { item ->
 			when (item.itemId) {
 				R.id.characters -> {
-					addFragment(CharactersListFragment.newInstance(), "Characters")
+					addFragment(CharactersListFragment.newInstance())
 					true
 				}
 				R.id.locations -> {
-					addFragment(LocationsListFragment.newInstance(), "Locations")
+					addFragment(LocationsListFragment.newInstance())
 					true
 				}
 				R.id.episodes -> {
-					addFragment(EpisodesListFragment.newInstance(), "Episodes")
+					addFragment(EpisodesListFragment.newInstance())
 					true
 				}
 				else -> false
@@ -40,61 +40,34 @@ class MainActivity : FragmentActivity(), Navigator {
 		}
 	}
 
-
-	private fun visibilityBottomNavigation(fragmentTag: String) {
-		when (fragmentTag) {
-			"Characters" -> {
-				binding.toolbar.visibility = View.VISIBLE
-				binding.toolbar.title = fragmentTag
-				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
-				binding.toolbar.navigationIcon = null
-			}
-			"Locations" -> {
-				binding.toolbar.visibility = View.VISIBLE
-				binding.toolbar.title = fragmentTag
-				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
-				binding.toolbar.navigationIcon = null
-			}
-			"Episodes" -> {
-				binding.toolbar.visibility = View.VISIBLE
-				binding.toolbar.title = fragmentTag
-				binding.toolbar.navigationIcon = null
-				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
-			}
-			else -> {
-				binding.toolbar.visibility = View.GONE
-				binding.contentLayout.bottomNavigation.visibility = View.GONE
-			}
-		}
-	}
-
-	private fun addFragment(fragment: Fragment, tag: String) {
-		visibilityBottomNavigation(tag)
+	private fun addFragment(fragment: Fragment) {
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.container, fragment, "$fragment")
 			.commit()
 	}
 
-	override fun replaceFragment(fragment: Fragment, tagNext: String, tagCurrent: String) {
-		visibilityBottomNavigation(tagNext)
+	override fun hideBottomNav() {
+		binding.toolbar.visibility = View.GONE
+		binding.contentLayout.bottomNavigation.visibility = View.GONE
+	}
+
+	override fun showBottomNav(fragmentTag: String) {
+		binding.toolbar.visibility = View.VISIBLE
+		binding.toolbar.title = fragmentTag
+		binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
+	}
+
+	override fun replaceFragment(fragment: Fragment) {
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.container, fragment)
-			.addToBackStack(tagCurrent)
+			.addToBackStack(null)
 			.commit()
 	}
 
-	override fun popUpToBackStack(tag: String) {
-		visibilityBottomNavigation(tag)
+	override fun popUpToBackStack() {
 		supportFragmentManager.popBackStack()
 	}
 
-	override fun removeFragment(fragment: Fragment, tag: String) {
-		visibilityBottomNavigation(tag)
-		supportFragmentManager
-			.beginTransaction()
-			.remove(fragment)
-			.commit()
-	}
 }

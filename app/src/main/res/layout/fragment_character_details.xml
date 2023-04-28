@@ -4,101 +4,146 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/quite_white">
+	android:background="@color/quite_white"
+	>
 
+	<ImageButton
+		android:id="@+id/back_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/space_small"
+		android:background="@drawable/background_round_r20dp_grey"
+		android:elevation="@dimen/elevation"
+		android:src="@drawable/icon_back"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		/>
 
-		<ImageButton
-			android:layout_margin="@dimen/space_small"
-			android:id="@+id/back_button"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:background="@drawable/background_round_r20dp_grey"
-			android:elevation="@dimen/elevation"
-			android:src="@drawable/icon_back"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+	<ImageView
+		android:id="@+id/image_character"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/space_large_4x"
+		android:src="@drawable/ic_baseline_face_24"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		/>
 
-		<ImageView
-			android:id="@+id/image_character"
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/space_large_3x"
-			android:src="@drawable/ic_baseline_face_24"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+	<TextView
+		android:id="@+id/name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:layout_marginTop="@dimen/space_small_2x"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_medium"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/image_character"
+		tools:text="Name"
+		/>
 
-		<TextView
-			android:id="@+id/name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/space_small"
-			android:layout_marginTop="@dimen/space_small_2x"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_medium"
-			android:textStyle="bold"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/image_character"
-			tools:text="Name" />
+	<TextView
+		android:id="@+id/species"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:layout_marginTop="@dimen/space_small_2x"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/name"
+		tools:text="Species"
+		/>
 
-		<TextView
-			android:id="@+id/species"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/space_small_2x"
-			android:layout_marginStart="@dimen/space_small"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/name"
-			tools:text="Species" />
+	<TextView
+		android:id="@+id/gender"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/species"
+		tools:text="Gender"
+		/>
 
-		<TextView
-			android:id="@+id/gender"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/space_small"
-			android:layout_marginBottom="@dimen/space_small_2x"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/species"
-			tools:text="Gender" />
+	<TextView
+		android:id="@+id/title_location"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:text="@string/title_location"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/gender"
+		/>
 
-		<TextView
-			android:id="@+id/origin"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/space_small"
-			android:textColor="@color/jeans_blue"
-			android:textSize="@dimen/font_size_small"
-			android:textStyle="bold"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/gender"
-			tools:text="Origin" />
-		<TextView
-			android:id="@+id/status"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/space_small_2x"
-			android:layout_marginEnd="@dimen/space_small"
-			android:textColor="@color/yellow"
-			android:textSize="@dimen/font_size_small_x"
-			android:textStyle="bold"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/origin"
-			tools:text="Status" />
+	<TextView
+		android:id="@+id/location"
+		android:layout_width="@dimen/space_large_2x"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small_2x"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toEndOf="@id/title_location"
+		app:layout_constraintTop_toBottomOf="@id/gender"
+		tools:text="Location"
+		/>
 
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/episodes_list"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/space_small_x"
-			android:visibility="visible"
-			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/status"
-			tools:listitem="@layout/item_episode_horizontal"
-			/>
+	<TextView
+		android:id="@+id/title_origin"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:text="@string/title_origin"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/location"
+		/>
+
+	<TextView
+		android:id="@+id/origin"
+		android:layout_width="@dimen/space_large_2x"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small_2x"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toEndOf="@id/title_origin"
+		app:layout_constraintTop_toBottomOf="@id/location"
+		tools:text="Origin"
+		/>
+
+	<TextView
+		android:id="@+id/status"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/space_small_2x"
+		android:layout_marginEnd="@dimen/space_small"
+		android:textColor="@color/yellow"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/origin"
+		tools:text="Status"
+		/>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/episodes_list"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_margin="@dimen/space_small_x"
+		android:visibility="visible"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/status"
+		tools:listitem="@layout/item_episode_horizontal"
+		/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

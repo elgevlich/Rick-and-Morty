@@ -33,9 +33,9 @@ class EpisodeFilterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		val navigator = requireActivity() as Navigator
-
+		navigator.hideBottomNav()
 		binding.backButton.setOnClickListener {
-			navigator.popUpToBackStack("Episodes")
+			navigator.popUpToBackStack()
 		}
 
 		if (name.isNotEmpty()) binding.searchByName.setText(name)
@@ -53,7 +53,7 @@ class EpisodeFilterFragment : Fragment() {
 					putString("episode", episode)
 				}
 			)
-			navigator.popUpToBackStack("Episodes")
+			navigator.popUpToBackStack()
 		}
 	}
 

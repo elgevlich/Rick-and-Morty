@@ -63,11 +63,11 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		navigator.showBottomNav("Characters")
 		binding.charactersList.adapter = adapter
 		binding.btnFilter.setOnClickListener {
 			navigator.replaceFragment(
 				CharacterFilterFragment.newInstance(name, status, gender),
-				"Filter", "Characters"
 			)
 		}
 		loadCharacters()
@@ -99,7 +99,6 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 		viewModelDetail.onClickItemCharacter(character)
 		navigator.replaceFragment(
 			CharacterDetailFragment(viewModelDetail),
-			"Character", "Characters"
 		)
 	}
 

@@ -46,13 +46,13 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 		}
 	}
 
-
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
 		binding = FragmentEpisodesListBinding.inflate(inflater)
 		navigator = requireActivity() as Navigator
+		navigator.showBottomNav("Episodes")
 		viewModel =
 			ViewModelProvider(
 				this,
@@ -67,7 +67,6 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 		binding.btnFilter.setOnClickListener {
 			navigator.replaceFragment(
 				EpisodeFilterFragment.newInstance(name, episode),
-				"Filter", "Episodes"
 			)
 		}
 		loadEpisodes()
@@ -96,11 +95,9 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 	}
 
 	override fun onClick(episode: Episode) {
-//		viewModel.dataEpisode.value = episode
 		viewModelDetail.onClickItemEpisode(episode)
 		navigator.replaceFragment(
-			EpisodeDetailFragment.newInstance(),
-			"Episode", "Episodes"
+			EpisodeDetailFragment(viewModelDetail),
 		)
 	}
 
