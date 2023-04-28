@@ -101,8 +101,9 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 				navigator.replaceFragment(new LocationDetailFragment(locationDetailViewModel));
 			});
 			characterLocation.setOnClickListener(v -> {
-				locationDetailViewModel.setLocationName(character.getOrigin().getName());
+				locationDetailViewModel.setLocationName(character.getLocation().getName());
 				navigator.replaceFragment(new LocationDetailFragment(locationDetailViewModel));
+
 			});
 		};
 
