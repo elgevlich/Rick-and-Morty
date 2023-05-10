@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.example.rickandmorty.databinding.FragmentLocationFilterBinding
@@ -35,17 +34,14 @@ class LocationFilterFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		val navigator = requireActivity() as Navigator
-		val callback = object : OnBackPressedCallback(true) {
-			override fun handleOnBackPressed() {
-				navigator.popUpToBackStack("Locations")
-			}
+		navigator.hideBottomNav()
+		binding.backButton.setOnClickListener {
+			navigator.popUpToBackStack()
 		}
-		activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
 		if (name.isNotEmpty()) binding.nameLocationSearch.text = name
 		if (type.isNotEmpty()) binding.typeLocationSearch.text = type
 		if (dimension.isNotEmpty()) binding.dimensionLocationSearch.text = type
-
 
 		binding.btnMakeFilter.setOnClickListener {
 			name = ""
@@ -62,7 +58,7 @@ class LocationFilterFragment : Fragment() {
 					putString("dimension", dimension)
 				}
 			)
-			navigator.popUpToBackStack("Locations")
+			navigator.popUpToBackStack()
 		}
 	}
 

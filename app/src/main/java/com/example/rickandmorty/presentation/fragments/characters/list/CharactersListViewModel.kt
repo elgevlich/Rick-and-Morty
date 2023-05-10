@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.characters
+package com.example.rickandmorty.presentation.fragments.characters.list
 
 import androidx.lifecycle.*
 

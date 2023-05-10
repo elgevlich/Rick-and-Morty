@@ -23,7 +23,7 @@
 			android:layout_height="match_parent"
 			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 			app:spanCount="2"
-			tools:context=".presentation.fragments.characters.CharactersListFragment"
+			tools:context=".presentation.fragments.characters.list.CharactersListFragment"
 			tools:listitem="@layout/item_location"
 			/>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

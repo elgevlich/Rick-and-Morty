@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.adapters
+package com.example.rickandmorty.presentation.fragments.episodes.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.databinding.ItemEpisodeBinding
 
-class EpisodeAdapter(private val listener: Listener) :
-
-
-	PagingDataAdapter<Episode, EpisodeAdapter.EpisodeViewHolder>(EpisodeComparator) {
+class EpisodesListAdapter(private val listener: Listener) :
+	PagingDataAdapter<Episode, EpisodesListAdapter.EpisodeViewHolder>(EpisodeComparator) {
 
 	class EpisodeViewHolder(val binding: ItemEpisodeBinding) :
 		RecyclerView.ViewHolder(binding.root)
@@ -46,8 +44,6 @@ class EpisodeAdapter(private val listener: Listener) :
 	}
 
 	interface Listener {
-
 		fun onClick(episode: Episode)
 	}
-
 }

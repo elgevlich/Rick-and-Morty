@@ -8,10 +8,22 @@
 	android:padding="@dimen/space_small"
 	>
 
+	<ImageButton
+		android:id="@+id/back_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/background_round_r20dp_grey"
+		android:elevation="@dimen/elevation"
+		android:src="@drawable/icon_back"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		/>
+
 	<TextView
 		android:id="@+id/filter_episode"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/space_small"
 		android:text="@string/title_filter_locations"
 		android:textAlignment="center"
 		android:textColor="@color/yellow"
@@ -19,7 +31,7 @@
 		android:textStyle="bold"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/back_button"
 
 		/>
 

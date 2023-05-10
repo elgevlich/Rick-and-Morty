@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
-import com.example.rickandmorty.presentation.fragments.characters.CharactersListFragment
-import com.example.rickandmorty.presentation.fragments.episodes.EpisodesListFragment
-import com.example.rickandmorty.presentation.fragments.locations.LocationsListFragment
+import com.example.rickandmorty.presentation.fragments.characters.list.CharactersListFragment
+import com.example.rickandmorty.presentation.fragments.episodes.list.EpisodesListFragment
+import com.example.rickandmorty.presentation.fragments.locations.list.LocationsListFragment
 
 
 class MainActivity : FragmentActivity(), Navigator {
@@ -20,65 +20,45 @@ class MainActivity : FragmentActivity(), Navigator {
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-		visibilityBottomNavigation("Characters")
+		showBottomNav("Characters")
 		binding.contentLayout.bottomNavigation.setOnItemSelectedListener { item ->
 			when (item.itemId) {
 				R.id.characters -> {
-					addFragment(CharactersListFragment.newInstance(), "Characters")
+					addFragment(CharactersListFragment.newInstance())
 					true
 				}
 				R.id.locations -> {
-					addFragment(LocationsListFragment.newInstance(), "Locations")
+					addFragment(LocationsListFragment.newInstance())
 					true
 				}
 				R.id.episodes -> {
-					addFragment(EpisodesListFragment.newInstance(), "Episodes")
+					addFragment(EpisodesListFragment.newInstance())
 					true
 				}
 				else -> false
 			}
 		}
-		binding.toolbar.setNavigationOnClickListener {
-			popUpToBackStack("Characters")
-		}
 	}
 
-
-	private fun visibilityBottomNavigation(fragmentTag: String) {
-		when (fragmentTag) {
-			"Characters" -> {
-				binding.toolbar.title = fragmentTag
-				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
-				binding.toolbar.navigationIcon = null
-			}
-			"Locations" -> {
-				binding.toolbar.title = fragmentTag
-				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
-				binding.toolbar.navigationIcon = null
-			}
-			"Episodes" -> {
-				binding.toolbar.title = fragmentTag
-				binding.toolbar.navigationIcon = null
-				binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
-			}
-			else -> {
-				binding.toolbar.title = fragmentTag
-				binding.contentLayout.bottomNavigation.visibility = View.GONE
-				binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
-			}
-		}
-	}
-
-	private fun addFragment(fragment: Fragment, tag: String) {
-		visibilityBottomNavigation(tag)
+	private fun addFragment(fragment: Fragment) {
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.container, fragment, "$fragment")
 			.commit()
 	}
 
-	override fun replaceFragment(fragment: Fragment, tag: String) {
-		visibilityBottomNavigation(tag)
+	override fun hideBottomNav() {
+		binding.toolbar.visibility = View.GONE
+		binding.contentLayout.bottomNavigation.visibility = View.GONE
+	}
+
+	override fun showBottomNav(fragmentTag: String) {
+		binding.toolbar.visibility = View.VISIBLE
+		binding.toolbar.title = fragmentTag
+		binding.contentLayout.bottomNavigation.visibility = View.VISIBLE
+	}
+
+	override fun replaceFragment(fragment: Fragment) {
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.container, fragment)
@@ -86,16 +66,8 @@ class MainActivity : FragmentActivity(), Navigator {
 			.commit()
 	}
 
-	override fun popUpToBackStack(tag: String) {
-		visibilityBottomNavigation(tag)
+	override fun popUpToBackStack() {
 		supportFragmentManager.popBackStack()
 	}
 
-	override fun removeFragment(fragment: Fragment, tag: String) {
-		visibilityBottomNavigation(tag)
-		supportFragmentManager
-			.beginTransaction()
-			.remove(fragment)
-			.commit()
-	}
 }

@@ -7,13 +7,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Character (
-	var id : Int,
-	var name: String,
-	var status : String,
-	var species: String,
-	var gender: String,
-	var origin : LocationData,
-	var location : LocationData,
-	var image : String,
-	var episode : List<String>
+	val id : Int,
+	val name: String,
+	val status : String,
+	val species: String,
+	val gender: String,
+	val origin : LocationData,
+	val location : LocationData,
+	val image : String,
+	val episode : List<String>
 ): Parcelable

@@ -1,4 +1,4 @@
-package com.example.rickandmorty.presentation.fragments.adapters
+package com.example.rickandmorty.presentation.fragments.characters.list
 
 
 import android.view.LayoutInflater
@@ -37,7 +37,6 @@ class CharactersListAdapter(private val listener: Listener) :
 			holder.itemView.rootView.setOnClickListener {
 				listener.onClick(characterPosition)
 			}
-
 		}
 	}
 
@@ -53,7 +52,6 @@ class CharactersListAdapter(private val listener: Listener) :
 	}
 
 	interface Listener {
-
 		fun onClick(character: Character)
 	}
 
