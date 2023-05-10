@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
+import com.example.rickandmorty.databinding.FragmentLocationDetailsBinding;
 import com.example.rickandmorty.domain.model.character.Character;
 import com.example.rickandmorty.domain.model.location.Location;
 import com.example.rickandmorty.presentation.Navigator;
@@ -36,6 +37,7 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 	private ImageButton backButton;
 	private RecyclerView rvListOfCharacters;
 
+	private FragmentLocationDetailsBinding binding;
 	private final LocationDetailViewModel detailLocationViewModel;
 	private CharacterDetailViewModel characterDetailViewModel;
 	LocationDetailsAdapter.OnClickListener clickListener;
@@ -46,18 +48,12 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 		this.detailLocationViewModel = viewModelDetail;
 	}
 
+	@Nullable
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	public View onCreateView(
-		LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState
-	) {
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		binding = FragmentLocationDetailsBinding.inflate(inflater);
 		characterDetailViewModel = new ViewModelProvider(this).get(CharacterDetailViewModel.class);
-		return inflater.inflate(R.layout.fragment_location_details, container, false);
+		return binding.getRoot();
 	}
 
 	@Override
@@ -72,12 +68,9 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 			locationName.setText(location.getName());
 			locationType.setText(location.getType());
 			locationDimension.setText(location.getDimension());
-			detailLocationViewModel.setListOfCharacters(location);
 		};
 
-		detailLocationViewModel.getSelectedItemLocation().observe(getViewLifecycleOwner(), observer);
-		detailLocationViewModel.getCharacters();
-		detailLocationViewModel.fetchData();
+		detailLocationViewModel.getSelectedItemCharacter().observe(getViewLifecycleOwner(), observer);
 		displayData();
 
 		backButton.setOnClickListener(v -> {
@@ -88,9 +81,8 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 	}
 
 	private void displayData() {
-		@SuppressLint("NotifyDataSetChanged") final Observer<List<Character>> observer = listOfCharacters -> {
-			assert listOfCharacters != null;
-			LocationDetailsAdapter adapter = new LocationDetailsAdapter(requireContext(), listOfCharacters, clickListener);
+		@SuppressLint("NotifyDataSetChanged") final Observer<List<Character>> observer = listOfCharacter -> {
+			LocationDetailsAdapter adapter = new LocationDetailsAdapter(requireContext(), listOfCharacter, this);
 			rvListOfCharacters.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 		};
@@ -112,7 +104,7 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 		super.onStop();
 	}
 
-	@Override public void onClick(Character character, int position) {
+	@Override public void onClick(Character character) {
 		characterDetailViewModel.onClickItemCharacter(character);
 		navigator = (Navigator)requireActivity();
 		navigator.replaceFragment(new CharacterDetailFragment(characterDetailViewModel));

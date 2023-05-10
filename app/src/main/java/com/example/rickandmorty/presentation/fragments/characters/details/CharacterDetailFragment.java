@@ -1,7 +1,7 @@
 package com.example.rickandmorty.presentation.fragments.characters.details;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +33,8 @@ import androidx.lifecycle.Observer;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+
 
 public class CharacterDetailFragment extends Fragment implements CharacterDetailsAdapter.OnClickListener {
 
@@ -109,7 +108,8 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 
 		characterDetailViewModel.getSelectedItemCharacter().observe(getViewLifecycleOwner(), observer);
 		characterDetailViewModel.getEpisodes();
-		fetchData();
+		characterDetailViewModel.fetchData();
+		displayData();
 
 		backButton.setOnClickListener(v -> {
 			navigator.popUpToBackStack();
@@ -117,16 +117,13 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 		});
 	}
 
-	private void fetchData() {
-		compositeDisposable.add(api.getListOfEpisodesForDetails(characterDetailViewModel.episodesIds)
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(this::displayData, throwable -> Log.d("tag", throwable.toString())));
-	}
-
-	private void displayData(List<Episode> posts) {
-		CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), posts, this);
-		rvListOfEpisodes.setAdapter(adapter);
+	private void displayData() {
+		@SuppressLint("NotifyDataSetChanged") final Observer<List<Episode>> observer = listOfEpisodes -> {
+			CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), listOfEpisodes, this);
+			rvListOfEpisodes.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
+		};
+		characterDetailViewModel.responseEpisodes.observe(getViewLifecycleOwner(), observer);
 	}
 
 	private void initViews(View view) {
@@ -138,7 +135,7 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 		characterGender = view.findViewById(R.id.gender);
 		characterOrigin = view.findViewById(R.id.origin);
 		characterLocation = view.findViewById(R.id.location);
-				backButton = view.findViewById(R.id.back_button);
+		backButton = view.findViewById(R.id.back_button);
 		rvListOfEpisodes.setHasFixedSize(true);
 	}
 

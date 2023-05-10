@@ -19,7 +19,7 @@ public class LocationDetailsAdapter extends RecyclerView.Adapter<CharacterViewHo
 
 	Context context;
 	List<Character> postsList;
-	private OnClickListener onClickListener;
+	private final OnClickListener onClickListener;
 
 	public LocationDetailsAdapter(Context context, List<Character> postsList, OnClickListener onClickListener) {
 		this.context = context;
@@ -37,27 +37,27 @@ public class LocationDetailsAdapter extends RecyclerView.Adapter<CharacterViewHo
 
 	@Override
 	public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-		holder.tvNameCharacter.setText((postsList.get(position).getName()));
-		holder.tvSpeciesCharacter.setText((postsList.get(position).getSpecies()));
-		holder.tvGenderCharacter.setText((postsList.get(position).getGender()));
-		holder.tvStatusCharacter.setText((postsList.get(position).getStatus()));
+		Character item = postsList.get(position);
 		Glide.with(holder.ivCharacter)
 			.load(postsList.get(position).getImage())
 			.centerCrop()
 			.into(holder.ivCharacter);
-		holder.itemView.setOnClickListener(view -> {
-			if (onClickListener != null) {
-				onClickListener.onClick(postsList.get(position), position);
-			}
-		});
+		holder.tvNameCharacter.setText(item.getName());
+		holder.tvGenderCharacter.setText(item.getGender());
+		holder.tvStatusCharacter.setText(item.getStatus());
+		holder.tvSpeciesCharacter.setText(item.getSpecies());
+		holder.itemView.getRootView().setOnClickListener(view -> onClickListener.onClick(item));
 	}
 
 	@Override
 	public int getItemCount() {
 		return postsList.size();
 	}
-		public interface OnClickListener {
-		void onClick(Character character, int position);
+
+	public interface OnClickListener {
+
+		void onClick(Character character);
+
 	}
 
 }

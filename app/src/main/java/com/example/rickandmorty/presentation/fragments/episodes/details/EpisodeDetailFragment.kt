@@ -39,10 +39,10 @@ class EpisodeDetailFragment(private val episodeViewModel: EpisodeDetailViewModel
 			binding.episodeNumber.text = it.episode
 			binding.episodeAirDate.text = it.air_date
 		}
-		binding.backButton.setOnClickListener(View.OnClickListener { v: View? ->
+		binding.backButton.setOnClickListener {
 			navigator.popUpToBackStack()
 			episodeViewModel.clearListOfCharacters()
-		})
+		}
 		episodeViewModel.getCharacters()
 		episodeViewModel.fetchData()
 		episodeViewModel.responseCharacters.observe(viewLifecycleOwner) {
@@ -51,7 +51,7 @@ class EpisodeDetailFragment(private val episodeViewModel: EpisodeDetailViewModel
 		}
 	}
 
-	override fun onClick(character: Character?, position: Int) {
+	override fun onClick(character: Character?) {
 		detailCharacterViewModel.onClickItemCharacter(character)
 		navigator = requireActivity() as Navigator
 		navigator.replaceFragment(

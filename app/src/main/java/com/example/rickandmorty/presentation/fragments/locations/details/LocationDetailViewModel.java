@@ -20,62 +20,56 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LocationDetailViewModel extends ViewModel {
 
+	public MutableLiveData<String> locationName = new MutableLiveData<>();
 	public MutableLiveData<Location> selectedItemLocation = new MutableLiveData<>();
 	public MutableLiveData<List<Character>> responseCharacters = new MutableLiveData<>();
-	public MutableLiveData<String> locationName = new MutableLiveData<>();
 
-	public List<String> listOfCharacters = new ArrayList<>();
-	public String charactersIds;
+	public List<String> listsOfCharacters = new ArrayList<>();
 
-	private final CharacterApi characterApi = RetrofitInstance.INSTANCE.getCharacterApi();
-	private final LocationApi locationApi = RetrofitInstance.INSTANCE.getLocationApi();
-
-
+	public String characterId;
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
+	public CharacterApi apiService = RetrofitInstance.INSTANCE.getCharacterApi();
+	public LocationApi locationApiService = RetrofitInstance.INSTANCE.getLocationApi();
 
 	public void onClickItemLocation(Location location) {
 		selectedItemLocation.setValue(location);
-		setListOfCharacters(location);
-	}
-
-	public void setListOfCharacters(Location location) {
-		listOfCharacters
-			.addAll(location
-				.getResidents());
+		listsOfCharacters.addAll(location.getResidents());
+		getCharacters();
+		fetchData();
 	}
 
 	public void setLocationName(String name) {
 		locationName.setValue(name);
-		fetchLocationData();
+		fetchDataLocation();
 	}
 
-	public void setResponseCharacter(List<Character> post) {
-		responseCharacters.setValue(post);
+	public void setResponse(List<Character> character) {
+		responseCharacters.setValue(character);
 	}
 
-	public void setResponseLocation(LocationResponse post) {
-		selectedItemLocation.setValue(post.getResults().get(0));
-		setListOfCharacters(post.getResults().get(0));
-	}
-
-	public MutableLiveData<Location> getSelectedItemLocation() {
+	public MutableLiveData<Location> getSelectedItemCharacter() {
 		return selectedItemLocation;
 	}
 
-	public void clearListOfCharacters() {
-		listOfCharacters.clear();
+	public void setResponseLocation(LocationResponse location) {
+		selectedItemLocation.setValue(location.getResults().get(0));
+		onClickItemLocation(location.getResults().get(0));
 	}
 
-	void fetchData() {
-		compositeDisposable.add(characterApi.getListOfCharactersForDetails(charactersIds)
+	public void clearListOfCharacters() {
+		listsOfCharacters.clear();
+	}
+
+	public void fetchData() {
+		compositeDisposable.add(apiService.getListOfCharactersForDetails(characterId)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(this::setResponseCharacter, throwable -> {
-			}));
+			.subscribe(this::setResponse, throwable -> {}
+			));
 	}
 
-	void fetchLocationData() {
-		compositeDisposable.add(locationApi.getLocation(locationName.getValue())
+	void fetchDataLocation() {
+		compositeDisposable.add(locationApiService.getLocation(locationName.getValue())
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(this::setResponseLocation, throwable -> {
@@ -86,13 +80,13 @@ public class LocationDetailViewModel extends ViewModel {
 	public void getCharacters() {
 		String str1;
 		String result = "";
-		if (!listOfCharacters.isEmpty()) {
-			for (String character : listOfCharacters) {
+		if (!listsOfCharacters.isEmpty()) {
+			for (String character : listsOfCharacters) {
 				str1 = character.substring(42);
 				result = result + str1 + ",";
 			}
 		}
-		charactersIds = result;
+		characterId = result;
 	}
 
 }
