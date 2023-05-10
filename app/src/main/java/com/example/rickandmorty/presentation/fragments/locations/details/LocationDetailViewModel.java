@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.rickandmorty.data.api.CharacterApi;
 import com.example.rickandmorty.data.api.LocationApi;
 import com.example.rickandmorty.data.api.RetrofitInstance;
-import com.example.rickandmorty.domain.model.location.Location;
+import com.example.rickandmorty.domain.model.location.LocationResult;
 import com.example.rickandmorty.domain.model.location.LocationResponse;
 import com.example.rickandmorty.domain.model.character.Character;
 
@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 public class LocationDetailViewModel extends ViewModel {
 
 	public MutableLiveData<String> locationName = new MutableLiveData<>();
-	public MutableLiveData<Location> selectedItemLocation = new MutableLiveData<>();
+	public MutableLiveData<LocationResult> selectedItemLocation = new MutableLiveData<>();
 	public MutableLiveData<List<Character>> responseCharacters = new MutableLiveData<>();
 
 	public List<String> listsOfCharacters = new ArrayList<>();
@@ -31,7 +31,7 @@ public class LocationDetailViewModel extends ViewModel {
 	public CharacterApi apiService = RetrofitInstance.INSTANCE.getCharacterApi();
 	public LocationApi locationApiService = RetrofitInstance.INSTANCE.getLocationApi();
 
-	public void onClickItemLocation(Location location) {
+	public void onClickItemLocation(LocationResult location) {
 		selectedItemLocation.setValue(location);
 		listsOfCharacters.addAll(location.getResidents());
 		getCharacters();
@@ -47,7 +47,7 @@ public class LocationDetailViewModel extends ViewModel {
 		responseCharacters.setValue(character);
 	}
 
-	public MutableLiveData<Location> getSelectedItemCharacter() {
+	public MutableLiveData<LocationResult> getSelectedItemCharacter() {
 		return selectedItemLocation;
 	}
 

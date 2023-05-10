@@ -1,13 +1,9 @@
 package com.example.rickandmorty.domain.model.episode
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.example.rickandmorty.domain.model.PageInfo
 
-@Parcelize
-data class Episode(
-	var id: Int,
-	var name: String,
-	var episode: String,
-	var air_date: String,
-	var characters: List<String>
-) : Parcelable
+
+data class Episode (
+	val info: PageInfo,
+	val results: List<EpisodeResult>
+)

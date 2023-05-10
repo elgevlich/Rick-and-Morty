@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.databinding.FragmentLocationDetailsBinding;
 import com.example.rickandmorty.domain.model.character.Character;
-import com.example.rickandmorty.domain.model.location.Location;
+import com.example.rickandmorty.domain.model.location.LocationResult;
 import com.example.rickandmorty.presentation.Navigator;
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailViewModel;
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailFragment;
@@ -63,7 +63,7 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 		navigator = (Navigator)requireActivity();
 		navigator.hideBottomNav();
 
-		final Observer<Location> observer = location -> {
+		final Observer<LocationResult> observer = location -> {
 			assert location != null;
 			locationName.setText(location.getName());
 			locationType.setText(location.getType());

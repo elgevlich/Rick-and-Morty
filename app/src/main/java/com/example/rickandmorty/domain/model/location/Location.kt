@@ -1,13 +1,8 @@
 package com.example.rickandmorty.domain.model.location
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.example.rickandmorty.domain.model.PageInfo
 
-@Parcelize
 data class Location(
-	var id: Int,
-	var name: String,
-	var type: String,
-	var dimension: String,
-	var residents: List<String>
-) : Parcelable
+	val info: PageInfo,
+	val results: List<LocationResult>
+)

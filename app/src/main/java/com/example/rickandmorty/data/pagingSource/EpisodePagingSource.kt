@@ -1,41 +1,53 @@
 package com.example.rickandmorty.data.pagingSource
 
-import android.net.Uri
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.rickandmorty.data.api.EpisodeApi
-import com.example.rickandmorty.domain.model.episode.Episode
+import com.example.rickandmorty.domain.model.episode.EpisodeResult
+import com.example.rickandmorty.domain.repository.EpisodeRepository
+import javax.inject.Inject
 
-class EpisodePagingSource(
+class EpisodePagingSource @Inject constructor(
+	private val repository: EpisodeRepository,
+	private val application: Application,
 	private val name: String,
-	private val episode: String,
-	private val service: EpisodeApi
-) :
-	PagingSource<Int, Episode>() {
-	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Episode> {
-		val pageNumber = params.key ?: 1
+	private val episode: String
+) : PagingSource<Int, EpisodeResult>() {
 
+	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EpisodeResult> {
 		return try {
-			val response = service.getEpisodes(pageNumber, name, episode)
-			val pagedResponse = response.body()
-			val data = pagedResponse?.results
-
-			var nextPageNumber: Int? = null
-			if (pagedResponse?.pageInfo?.next != null) {
-				val uri = Uri.parse(pagedResponse.pageInfo.next)
-				val nextPageQuery = uri.getQueryParameter("page")
-				nextPageNumber = nextPageQuery?.toInt()
+			val page = params.key ?: 1
+			var nextKey: Int? = 0
+			val responseData = arrayListOf<EpisodeResult>()
+			nextKey = if (hasConnected(application.applicationContext)) {
+				val response = repository.getEpisode(page, name, episode)
+				responseData.addAll(response.results)
+				if (response.info.next == null && responseData.isNotEmpty()) null else page + 1
+			} else {
+				val listLocations = repository.getListEpisodesDb()
+				responseData.addAll(listLocations)
+				if (responseData.isNotEmpty()) null else page + 1
 			}
-
-			LoadResult.Page(
-				data = data.orEmpty(),
-				prevKey = null,
-				nextKey = nextPageNumber
+			val prevKey = if (page == 1) null else page - 1
+			return LoadResult.Page(
+				data = responseData,
+				prevKey = prevKey,
+				nextKey = nextKey
 			)
 		} catch (e: Exception) {
-			LoadResult.Error(e)
+			return LoadResult.Error(e)
 		}
 	}
 
-	override fun getRefreshKey(state: PagingState<Int, Episode>): Int = 1
+	override fun getRefreshKey(state: PagingState<Int, EpisodeResult>): Int? {
+		return null
+	}
+
+	private fun hasConnected(context: Context): Boolean {
+		val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+		val network = manager.activeNetworkInfo
+		return network != null && network.isConnected
+	}
 }

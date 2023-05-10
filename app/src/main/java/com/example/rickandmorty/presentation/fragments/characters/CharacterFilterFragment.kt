@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import com.example.rickandmorty.app.App
 import com.example.rickandmorty.databinding.FragmentCharacterFilterBinding
 import com.example.rickandmorty.presentation.Navigator
 

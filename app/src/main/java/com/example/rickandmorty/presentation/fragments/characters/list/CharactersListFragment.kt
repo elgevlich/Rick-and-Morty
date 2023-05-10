@@ -14,6 +14,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
+import com.example.rickandmorty.di.ViewModelFactory
 import com.example.rickandmorty.presentation.Navigator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ import com.example.rickandmorty.domain.model.character.Character
 import com.example.rickandmorty.presentation.fragments.characters.CharacterFilterFragment
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailFragment
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailViewModel
+import javax.inject.Inject
 
 
 class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
@@ -33,6 +35,9 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 	private var name = ""
 	private var status = ""
 	private var gender = ""
+
+	@Inject
+	lateinit var viewModelFactory: ViewModelFactory
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

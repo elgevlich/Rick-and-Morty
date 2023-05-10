@@ -8,8 +8,8 @@ class LocationViewModelFactory(private val api: LocationApi) :
 	ViewModelProvider.Factory {
 
 	override fun <T : ViewModel> create(modelClass: Class<T>): T {
-		if (modelClass.isAssignableFrom(LocationViewModel::class.java)) {
-			return LocationViewModel(api) as T
+		if (modelClass.isAssignableFrom(LocationsListViewModel::class.java)) {
+			return LocationsListViewModel(api) as T
 		}
 		throw IllegalArgumentException("Unknown ViewModel class")
 	}

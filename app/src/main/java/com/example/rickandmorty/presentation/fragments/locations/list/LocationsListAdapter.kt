@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rickandmorty.domain.model.location.Location
+import com.example.rickandmorty.domain.model.location.LocationResult
 import com.example.rickandmorty.databinding.ItemLocationBinding
 
 class LocationsListAdapter(private val listener: Listener) :
-	PagingDataAdapter<Location, LocationsListAdapter.LocationViewHolder>(LocationComparator) {
+	PagingDataAdapter<LocationResult, LocationsListAdapter.LocationViewHolder>(LocationComparator) {
 
 
 	class LocationViewHolder(val binding: ItemLocationBinding) :
@@ -35,20 +35,20 @@ class LocationsListAdapter(private val listener: Listener) :
 		}
 	}
 
-	object LocationComparator : DiffUtil.ItemCallback<Location>() {
+	object LocationComparator : DiffUtil.ItemCallback<LocationResult>() {
 
-		override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean {
+		override fun areItemsTheSame(oldItem: LocationResult, newItem: LocationResult): Boolean {
 			return oldItem.id == newItem.id
 		}
 
-		override fun areContentsTheSame(oldItem: Location, newItem: Location): Boolean {
+		override fun areContentsTheSame(oldItem: LocationResult, newItem: LocationResult): Boolean {
 			return oldItem == newItem
 		}
 	}
 
 	interface Listener {
 
-		fun onClick(location: Location)
+		fun onClick(location: LocationResult)
 	}
 
 }
