@@ -17,7 +17,12 @@ class MainActivity : FragmentActivity(), Navigator {
 
 	private lateinit var binding: ActivityMainBinding
 
+	private val component by lazy {
+		(application as App).component
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
+		component.inject(this)
 		super.onCreate(savedInstanceState)
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)

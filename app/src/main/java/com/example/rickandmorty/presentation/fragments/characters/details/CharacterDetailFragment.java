@@ -19,8 +19,8 @@ import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.data.api.EpisodeApi;
 import com.example.rickandmorty.data.api.RetrofitInstance;
-import com.example.rickandmorty.domain.model.episode.Episode;
-import com.example.rickandmorty.domain.model.character.Character;
+import com.example.rickandmorty.domain.model.character.CharacterResult;
+import com.example.rickandmorty.domain.model.episode.EpisodeResult;
 import com.example.rickandmorty.presentation.Navigator;
 import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailFragment;
 import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailViewModel;
@@ -47,13 +47,11 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 	private TextView characterLocation;
 	private ImageButton backButton;
 	private RecyclerView rvListOfEpisodes;
-
 	private final CharacterDetailViewModel characterDetailViewModel;
 	private EpisodeDetailViewModel episodeDetailViewModel;
 	private LocationDetailViewModel locationDetailViewModel;
 	EpisodeApi api;
 	Navigator navigator;
-
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 	public CharacterDetailFragment(@NotNull CharacterDetailViewModel viewModelDetail) {
@@ -83,7 +81,8 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 		navigator = (Navigator)requireActivity();
 		api = RetrofitInstance.INSTANCE.getEpisodeApi();
 		navigator.hideBottomNav();
-		final Observer<Character> observer = character -> {
+
+		final Observer<CharacterResult> observer = character -> {
 			assert character != null;
 			Glide.with(requireContext())
 				.load(character.getImage())
@@ -94,7 +93,6 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 			characterStatus.setText(character.getStatus());
 			characterOrigin.setText(character.getOrigin().getName());
 			characterLocation.setText(character.getLocation().getName());
-
 			characterOrigin.setOnClickListener(v -> {
 				locationDetailViewModel.setLocationName(character.getOrigin().getName());
 				navigator.replaceFragment(new LocationDetailFragment(locationDetailViewModel));
@@ -102,23 +100,21 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 			characterLocation.setOnClickListener(v -> {
 				locationDetailViewModel.setLocationName(character.getLocation().getName());
 				navigator.replaceFragment(new LocationDetailFragment(locationDetailViewModel));
-
 			});
 		};
+		backButton.setOnClickListener(v -> {
+			navigator.popUpToBackStack();
+			characterDetailViewModel.clearListOfEpisodes();
+		});
 
 		characterDetailViewModel.getSelectedItemCharacter().observe(getViewLifecycleOwner(), observer);
 		characterDetailViewModel.getEpisodes();
 		characterDetailViewModel.fetchData();
 		displayData();
-
-		backButton.setOnClickListener(v -> {
-			navigator.popUpToBackStack();
-			characterDetailViewModel.clearListOfEpisodes();
-		});
 	}
 
 	private void displayData() {
-		@SuppressLint("NotifyDataSetChanged") final Observer<List<Episode>> observer = listOfEpisodes -> {
+		@SuppressLint("NotifyDataSetChanged") final Observer<List<EpisodeResult>> observer = listOfEpisodes -> {
 			CharacterDetailsAdapter adapter = new CharacterDetailsAdapter(requireContext(), listOfEpisodes, this);
 			rvListOfEpisodes.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
@@ -145,10 +141,9 @@ public class CharacterDetailFragment extends Fragment implements CharacterDetail
 		super.onStop();
 	}
 
-	@Override public void onClick(Episode episode) {
+	@Override public void onClick(EpisodeResult episode) {
 		episodeDetailViewModel.onClickItemEpisode(episode);
 		navigator = (Navigator)requireActivity();
 		navigator.replaceFragment(new EpisodeDetailFragment(episodeDetailViewModel));
 	}
-
 }

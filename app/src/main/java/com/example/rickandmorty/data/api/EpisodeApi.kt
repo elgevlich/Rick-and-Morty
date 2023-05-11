@@ -1,7 +1,6 @@
 package com.example.rickandmorty.data.api
 
 import com.example.rickandmorty.data.api.response.episode.EpisodeResponse
-import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.domain.model.episode.EpisodeResult
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -18,11 +17,6 @@ interface EpisodeApi {
 	): EpisodeResponse
 
 	@GET("api/episode/{id}")
-	fun getListOfEpisodesForDetails(@Path("id") id: String): Observable<List<Episode>>
-
-	@GET("api/episode/{id}")
-	fun getEpisodeId(
-		@Path("id") id: Int
-	): Episode
+	fun getListOfEpisodesForDetails(@Path("id") id: String): Observable<List<EpisodeResult>>
 
 }

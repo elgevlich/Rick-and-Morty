@@ -17,13 +17,7 @@ class CharacterRepositoryImpl @Inject constructor(
 	private val mapper: CharacterMapper
 ) : CharacterRepository {
 
-	override suspend fun getCharacter(
-		page: Int,
-		name: String,
-		status: String,
-		gender: String,
-		species: String
-	): CharacterModel {
+	override suspend fun getCharacter(page: Int, name: String, status: String, gender: String): CharacterModel {
 		val characterApi = apiService.getCharacters(page, name, status, gender)
 		val listCharacters = mapper.mapCharacterResponseForCharacter(characterApi)
 		characterDao.insertCharacter(mapper.mapListResultResponseForListDb(listCharacters.result))

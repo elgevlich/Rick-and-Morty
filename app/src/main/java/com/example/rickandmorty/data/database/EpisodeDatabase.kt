@@ -1,4 +1,4 @@
-package com.example.rickandmorty.data.database.entity
+package com.example.rickandmorty.data.database
 
 import android.content.Context
 import androidx.room.Database
@@ -15,7 +15,7 @@ abstract class EpisodeDatabase: RoomDatabase() {
 		private var database: EpisodeDatabase? = null
 		private val ANY = Any()
 
-		fun getMainDatabase(context: Context): EpisodeDatabase{
+		fun getMainDatabase(context: Context): EpisodeDatabase {
 			synchronized(ANY){
 				database?.let {
 					return it

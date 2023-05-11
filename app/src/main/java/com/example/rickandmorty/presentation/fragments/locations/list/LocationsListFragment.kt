@@ -1,5 +1,6 @@
 package com.example.rickandmorty.presentation.fragments.locations.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.example.rickandmorty.app.App
-import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.databinding.FragmentLocationsListBinding
 import com.example.rickandmorty.di.ViewModelFactory
 import com.example.rickandmorty.domain.model.location.LocationResult
@@ -40,8 +40,14 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 
 	@Inject
 	lateinit var viewModelFactory: ViewModelFactory
-	private val component by lazy{
+
+	private val component by lazy {
 		(requireActivity().application as App).component
+	}
+
+	override fun onAttach(context: Context) {
+		component.inject(this)
+		super.onAttach(context)
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,11 +70,7 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 		binding = FragmentLocationsListBinding.inflate(inflater)
 		navigator = requireActivity() as Navigator
 		navigator.showBottomNav("Locations")
-		viewModel =
-			ViewModelProvider(
-				this,
-				LocationViewModelFactory(RetrofitInstance.locationApi)
-			)[LocationsListViewModel::class.java]
+		viewModel = ViewModelProvider(this, viewModelFactory)[LocationsListViewModel::class.java]
 		return binding.root
 	}
 
@@ -106,7 +108,6 @@ class LocationsListFragment : Fragment(), LocationsListAdapter.Listener {
 	}
 
 	override fun onClick(location: LocationResult) {
-		viewModel.dataLocation.value = location
 		viewModelDetail.onClickItemLocation(location)
 		navigator.replaceFragment(
 			LocationDetailFragment(

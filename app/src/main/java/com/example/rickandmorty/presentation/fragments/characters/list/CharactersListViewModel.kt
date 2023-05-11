@@ -7,13 +7,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-
-import com.example.rickandmorty.domain.model.character.Character
-import com.example.rickandmorty.data.api.CharacterApi
-import com.example.rickandmorty.data.pagingSource.CharacterPagingSource
 import com.example.rickandmorty.domain.model.character.CharacterResult
 import com.example.rickandmorty.domain.usecases.character.GetCharacterUseCase
-
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.emptyFlow
@@ -26,7 +21,6 @@ class CharactersListViewModel @Inject constructor(
 ) : ViewModel() {
 
 	var characterFlow: Flow<PagingData<CharacterResult>> = emptyFlow()
-
 
 	fun load(name: String, status: String, gender: String) {
 		characterFlow = Pager(PagingConfig(pageSize = 1)) {

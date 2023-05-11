@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rickandmorty.databinding.ItemCharacterBinding
-import com.example.rickandmorty.domain.model.character.Character
+import com.example.rickandmorty.domain.model.character.CharacterResult
 
 class CharactersListAdapter(private val listener: Listener) :
-	PagingDataAdapter<Character, CharactersListAdapter.CharacterViewHolder>(CharacterComparator) {
-
+	PagingDataAdapter<CharacterResult, CharactersListAdapter.CharacterViewHolder>(CharacterComparator) {
 
 	class CharacterViewHolder(val binding: ItemCharacterBinding) :
 		RecyclerView.ViewHolder(binding.root)
@@ -40,19 +39,20 @@ class CharactersListAdapter(private val listener: Listener) :
 		}
 	}
 
-	object CharacterComparator : DiffUtil.ItemCallback<Character>() {
+	object CharacterComparator : DiffUtil.ItemCallback<CharacterResult>() {
 
-		override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
+		override fun areItemsTheSame(oldItem: CharacterResult, newItem: CharacterResult): Boolean {
 			return oldItem.id == newItem.id
 		}
 
-		override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
+		override fun areContentsTheSame(oldItem: CharacterResult, newItem: CharacterResult): Boolean {
 			return oldItem == newItem
 		}
 	}
 
 	interface Listener {
-		fun onClick(character: Character)
+
+		fun onClick(character: CharacterResult)
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.example.rickandmorty.data.api
 
 
+import com.example.rickandmorty.data.api.response.location.LocationResponse
+import com.example.rickandmorty.domain.model.location.Location
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,6 +20,6 @@ interface LocationApi {
 	@GET("api/location/")
 	fun getLocation(
 		@Query("name") name: String
-	): Observable<LocationResponse>
+	): Observable<Location>
 
 }

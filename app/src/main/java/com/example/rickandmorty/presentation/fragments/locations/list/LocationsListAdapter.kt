@@ -11,7 +11,6 @@ import com.example.rickandmorty.databinding.ItemLocationBinding
 class LocationsListAdapter(private val listener: Listener) :
 	PagingDataAdapter<LocationResult, LocationsListAdapter.LocationViewHolder>(LocationComparator) {
 
-
 	class LocationViewHolder(val binding: ItemLocationBinding) :
 		RecyclerView.ViewHolder(binding.root)
 
@@ -20,7 +19,6 @@ class LocationsListAdapter(private val listener: Listener) :
 			ItemLocationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		)
 	}
-
 
 	override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
 		val locationPosition = getItem(position)
@@ -31,7 +29,6 @@ class LocationsListAdapter(private val listener: Listener) :
 			holder.itemView.rootView.setOnClickListener {
 				listener.onClick(locationPosition)
 			}
-
 		}
 	}
 

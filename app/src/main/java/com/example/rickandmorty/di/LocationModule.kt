@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.example.rickandmorty.data.api.LocationApi
 import com.example.rickandmorty.data.api.RetrofitInstance
+import com.example.rickandmorty.data.database.LocationDatabase
 import com.example.rickandmorty.data.database.dao.LocationDao
-import com.example.rickandmorty.data.database.entity.LocationDatabase
 import com.example.rickandmorty.data.repository.LocationRepositoryImpl
 import com.example.rickandmorty.domain.repository.LocationRepository
 import com.example.rickandmorty.presentation.fragments.locations.list.LocationsListViewModel
@@ -25,9 +25,8 @@ interface LocationModule {
 	@ViewModelKey(LocationsListViewModel::class)
 	fun bindLocationViewModel(viewModel: LocationsListViewModel): ViewModel
 
-
-
 	companion object {
+
 		@Provides
 		fun provideApiService(): LocationApi {
 			return RetrofitInstance.locationApi

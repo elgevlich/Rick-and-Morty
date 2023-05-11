@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.domain.model.character.Character;
+import com.example.rickandmorty.domain.model.character.CharacterResult;
 
 
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 public class LocationDetailsAdapter extends RecyclerView.Adapter<CharacterViewHolder> {
 
 	Context context;
-	List<Character> postsList;
+	List<CharacterResult> postsList;
 	private final OnClickListener onClickListener;
 
-	public LocationDetailsAdapter(Context context, List<Character> postsList, OnClickListener onClickListener) {
+	public LocationDetailsAdapter(Context context, List<CharacterResult> postsList, OnClickListener onClickListener) {
 		this.context = context;
 		this.postsList = postsList;
 		this.onClickListener = onClickListener;
@@ -37,7 +37,7 @@ public class LocationDetailsAdapter extends RecyclerView.Adapter<CharacterViewHo
 
 	@Override
 	public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-		Character item = postsList.get(position);
+		CharacterResult item = postsList.get(position);
 		Glide.with(holder.ivCharacter)
 			.load(postsList.get(position).getImage())
 			.centerCrop()
@@ -56,7 +56,7 @@ public class LocationDetailsAdapter extends RecyclerView.Adapter<CharacterViewHo
 
 	public interface OnClickListener {
 
-		void onClick(Character character);
+		void onClick(CharacterResult character);
 
 	}
 

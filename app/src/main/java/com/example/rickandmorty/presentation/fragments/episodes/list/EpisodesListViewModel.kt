@@ -7,26 +7,25 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.rickandmorty.data.api.EpisodeApi
-import com.example.rickandmorty.data.pagingSource.EpisodePagingSource
-import com.example.rickandmorty.domain.model.episode.Episode
+import com.example.rickandmorty.domain.model.episode.EpisodeResult
+import com.example.rickandmorty.domain.usecases.episode.GetEpisodeUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
 
-class EpisodesListViewModel(private val api: EpisodeApi) : ViewModel() {
+class EpisodesListViewModel @Inject constructor(
+	private val getEpisodeUseCase: GetEpisodeUseCase
+) : ViewModel() {
 
-	val dataEpisode = MutableLiveData<Episode>()
-
-	var episodeFlow: Flow<PagingData<Episode>> = emptyFlow()
+	var episodeFlow: Flow<PagingData<EpisodeResult>> = emptyFlow()
 
 	fun load(name: String, episode: String) {
 		episodeFlow = Pager(PagingConfig(pageSize = 1)) {
-			EpisodePagingSource(name, episode, api)
+			getEpisodeUseCase.getEpisodes(name, episode)
 		}.flow.cachedIn(viewModelScope)
 			.stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 	}
-
 }

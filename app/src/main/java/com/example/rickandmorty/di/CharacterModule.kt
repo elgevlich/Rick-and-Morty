@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.rickandmorty.data.api.CharacterApi
 import com.example.rickandmorty.data.api.RetrofitInstance
 import com.example.rickandmorty.data.database.dao.CharacterDao
-import com.example.rickandmorty.data.database.entity.CharacterDatabase
+import com.example.rickandmorty.data.database.CharacterDatabase
 import com.example.rickandmorty.data.repository.CharacterRepositoryImpl
 import com.example.rickandmorty.domain.repository.CharacterRepository
 import com.example.rickandmorty.presentation.fragments.characters.list.CharactersListViewModel

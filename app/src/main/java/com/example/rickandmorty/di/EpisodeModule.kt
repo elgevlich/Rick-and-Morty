@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.example.rickandmorty.data.api.EpisodeApi
 import com.example.rickandmorty.data.api.RetrofitInstance
+import com.example.rickandmorty.data.database.EpisodeDatabase
 import com.example.rickandmorty.data.database.dao.EpisodeDao
-import com.example.rickandmorty.data.database.entity.EpisodeDatabase
 import com.example.rickandmorty.data.repository.EpisodeRepositoryImpl
 import com.example.rickandmorty.domain.repository.EpisodeRepository
 import com.example.rickandmorty.presentation.fragments.episodes.list.EpisodesListViewModel
@@ -27,6 +27,7 @@ interface EpisodeModule {
 
 
 	companion object {
+
 		@Provides
 		fun provideApiService(): EpisodeApi {
 			return RetrofitInstance.episodeApi

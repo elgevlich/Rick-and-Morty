@@ -1,6 +1,7 @@
 package com.example.rickandmorty.presentation.fragments.characters
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,19 @@ import com.example.rickandmorty.presentation.Navigator
 class CharacterFilterFragment : Fragment() {
 
 	private lateinit var binding: FragmentCharacterFilterBinding
+
 	var name = ""
 	var status = ""
 	var gender = ""
+
+	private val component by lazy {
+		(requireActivity().application as App).component
+	}
+
+	override fun onAttach(context: Context) {
+		component.inject(this)
+		super.onAttach(context)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.rickandmorty.databinding.FragmentEpisodeDetailsBinding
-import com.example.rickandmorty.domain.model.character.Character
+import com.example.rickandmorty.domain.model.character.CharacterResult
 import com.example.rickandmorty.presentation.Navigator
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailFragment
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailViewModel
@@ -51,7 +51,7 @@ class EpisodeDetailFragment(private val episodeViewModel: EpisodeDetailViewModel
 		}
 	}
 
-	override fun onClick(character: Character?) {
+	override fun onClick(character: CharacterResult?) {
 		detailCharacterViewModel.onClickItemCharacter(character)
 		navigator = requireActivity() as Navigator
 		navigator.replaceFragment(
