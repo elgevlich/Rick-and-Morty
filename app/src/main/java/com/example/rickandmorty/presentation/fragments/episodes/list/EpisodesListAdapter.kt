@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rickandmorty.domain.model.episode.Episode
 import com.example.rickandmorty.databinding.ItemEpisodeBinding
+import com.example.rickandmorty.domain.model.episode.EpisodeResult
 
 class EpisodesListAdapter(private val listener: Listener) :
-	PagingDataAdapter<Episode, EpisodesListAdapter.EpisodeViewHolder>(EpisodeComparator) {
+	PagingDataAdapter<EpisodeResult, EpisodesListAdapter.EpisodeViewHolder>(EpisodeComparator) {
 
 	class EpisodeViewHolder(val binding: ItemEpisodeBinding) :
 		RecyclerView.ViewHolder(binding.root)
@@ -32,18 +32,19 @@ class EpisodesListAdapter(private val listener: Listener) :
 		}
 	}
 
-	object EpisodeComparator : DiffUtil.ItemCallback<Episode>() {
+	object EpisodeComparator : DiffUtil.ItemCallback<EpisodeResult>() {
 
-		override fun areItemsTheSame(oldItem: Episode, newItem: Episode): Boolean {
+		override fun areItemsTheSame(oldItem: EpisodeResult, newItem: EpisodeResult): Boolean {
 			return oldItem.id == newItem.id
 		}
 
-		override fun areContentsTheSame(oldItem: Episode, newItem: Episode): Boolean {
+		override fun areContentsTheSame(oldItem: EpisodeResult, newItem: EpisodeResult): Boolean {
 			return oldItem == newItem
 		}
 	}
 
 	interface Listener {
-		fun onClick(episode: Episode)
+
+		fun onClick(episode: EpisodeResult)
 	}
 }

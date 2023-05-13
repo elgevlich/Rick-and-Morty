@@ -1,11 +1,13 @@
 package com.example.rickandmorty.presentation.fragments.episodes
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import com.example.rickandmorty.app.App
 import com.example.rickandmorty.databinding.FragmentEpisodeFilterBinding
 import com.example.rickandmorty.presentation.Navigator
 
@@ -15,6 +17,15 @@ class EpisodeFilterFragment : Fragment() {
 
 	var name = ""
 	var episode = ""
+
+	private val component by lazy {
+		(requireActivity().application as App).component
+	}
+
+	override fun onAttach(context: Context) {
+		component.inject(this)
+		super.onAttach(context)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -69,5 +80,4 @@ class EpisodeFilterFragment : Fragment() {
 			}
 		}
 	}
-
 }

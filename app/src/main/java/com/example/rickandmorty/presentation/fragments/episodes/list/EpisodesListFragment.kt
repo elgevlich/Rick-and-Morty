@@ -1,5 +1,6 @@
 package com.example.rickandmorty.presentation.fragments.episodes.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +13,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import com.example.rickandmorty.data.api.RetrofitInstance
+import com.example.rickandmorty.app.App
 import com.example.rickandmorty.databinding.FragmentEpisodesListBinding
-import com.example.rickandmorty.domain.model.episode.Episode
+import com.example.rickandmorty.di.ViewModelFactory
+import com.example.rickandmorty.domain.model.episode.EpisodeResult
 import com.example.rickandmorty.presentation.Navigator
 import com.example.rickandmorty.presentation.fragments.episodes.EpisodeFilterFragment
 import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailFragment
 import com.example.rickandmorty.presentation.fragments.episodes.details.EpisodeDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
@@ -33,6 +36,18 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 
 	private var name = ""
 	private var episode = ""
+
+	@Inject
+	lateinit var viewModelFactory: ViewModelFactory
+
+	private val component by lazy {
+		(requireActivity().application as App).component
+	}
+
+	override fun onAttach(context: Context) {
+		component.inject(this)
+		super.onAttach(context)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -53,11 +68,7 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 		binding = FragmentEpisodesListBinding.inflate(inflater)
 		navigator = requireActivity() as Navigator
 		navigator.showBottomNav("Episodes")
-		viewModel =
-			ViewModelProvider(
-				this,
-				EpisodeViewModelFactory(RetrofitInstance.episodeApi)
-			)[EpisodesListViewModel::class.java]
+		viewModel = ViewModelProvider(this, viewModelFactory)[EpisodesListViewModel::class.java]
 		return binding.root
 	}
 
@@ -94,7 +105,7 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 		}
 	}
 
-	override fun onClick(episode: Episode) {
+	override fun onClick(episode: EpisodeResult) {
 		viewModelDetail.onClickItemEpisode(episode)
 		navigator.replaceFragment(
 			EpisodeDetailFragment(viewModelDetail),
@@ -102,6 +113,7 @@ class EpisodesListFragment : Fragment(), EpisodesListAdapter.Listener {
 	}
 
 	companion object {
+
 		@JvmStatic
 		fun newInstance() = EpisodesListFragment()
 	}

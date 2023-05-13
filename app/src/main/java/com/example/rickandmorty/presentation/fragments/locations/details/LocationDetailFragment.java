@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.databinding.FragmentLocationDetailsBinding;
-import com.example.rickandmorty.domain.model.character.Character;
-import com.example.rickandmorty.domain.model.location.Location;
+import com.example.rickandmorty.domain.model.character.CharacterResult;
+import com.example.rickandmorty.domain.model.location.LocationResult;
 import com.example.rickandmorty.presentation.Navigator;
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailViewModel;
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailFragment;
@@ -40,7 +40,6 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 	private FragmentLocationDetailsBinding binding;
 	private final LocationDetailViewModel detailLocationViewModel;
 	private CharacterDetailViewModel characterDetailViewModel;
-	LocationDetailsAdapter.OnClickListener clickListener;
 	CompositeDisposable compositeDisposable = new CompositeDisposable();
 	Navigator navigator;
 
@@ -63,7 +62,7 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 		navigator = (Navigator)requireActivity();
 		navigator.hideBottomNav();
 
-		final Observer<Location> observer = location -> {
+		final Observer<LocationResult> observer = location -> {
 			assert location != null;
 			locationName.setText(location.getName());
 			locationType.setText(location.getType());
@@ -80,8 +79,20 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 		);
 	}
 
+	@Override
+	public void onStop() {
+		compositeDisposable.clear();
+		super.onStop();
+	}
+
+	@Override public void onClick(CharacterResult character) {
+		characterDetailViewModel.onClickItemCharacter(character);
+		navigator = (Navigator)requireActivity();
+		navigator.replaceFragment(new CharacterDetailFragment(characterDetailViewModel));
+	}
+
 	private void displayData() {
-		@SuppressLint("NotifyDataSetChanged") final Observer<List<Character>> observer = listOfCharacter -> {
+		@SuppressLint("NotifyDataSetChanged") final Observer<List<CharacterResult>> observer = listOfCharacter -> {
 			LocationDetailsAdapter adapter = new LocationDetailsAdapter(requireContext(), listOfCharacter, this);
 			rvListOfCharacters.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
@@ -96,18 +107,6 @@ public class LocationDetailFragment extends Fragment implements LocationDetailsA
 		backButton = view.findViewById(R.id.back_button);
 		rvListOfCharacters = view.findViewById(R.id.characters_list);
 		rvListOfCharacters.setHasFixedSize(true);
-	}
-
-	@Override
-	public void onStop() {
-		compositeDisposable.clear();
-		super.onStop();
-	}
-
-	@Override public void onClick(Character character) {
-		characterDetailViewModel.onClickItemCharacter(character);
-		navigator = (Navigator)requireActivity();
-		navigator.replaceFragment(new CharacterDetailFragment(characterDetailViewModel));
 	}
 
 }

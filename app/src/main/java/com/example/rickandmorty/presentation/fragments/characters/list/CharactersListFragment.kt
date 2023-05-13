@@ -1,5 +1,6 @@
 package com.example.rickandmorty.presentation.fragments.characters.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +13,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import com.example.rickandmorty.data.api.RetrofitInstance
+import com.example.rickandmorty.app.App
 import com.example.rickandmorty.databinding.FragmentCharactersListBinding
+import com.example.rickandmorty.di.ViewModelFactory
 import com.example.rickandmorty.presentation.Navigator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import com.example.rickandmorty.domain.model.character.Character
+import com.example.rickandmorty.domain.model.character.CharacterResult
 import com.example.rickandmorty.presentation.fragments.characters.CharacterFilterFragment
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailFragment
 import com.example.rickandmorty.presentation.fragments.characters.details.CharacterDetailViewModel
+import javax.inject.Inject
 
 
 class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
@@ -33,6 +36,18 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 	private var name = ""
 	private var status = ""
 	private var gender = ""
+
+	@Inject
+	lateinit var viewModelFactory: ViewModelFactory
+
+	private val component by lazy {
+		(requireActivity().application as App).component
+	}
+
+	override fun onAttach(context: Context) {
+		component.inject(this)
+		super.onAttach(context)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -53,11 +68,8 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 	): View {
 		binding = FragmentCharactersListBinding.inflate(inflater)
 		navigator = requireActivity() as Navigator
-		viewModel =
-			ViewModelProvider(
-				this,
-				CharacterViewModelFactory(RetrofitInstance.characterApi)
-			)[CharactersListViewModel::class.java]
+		viewModel = ViewModelProvider(this, viewModelFactory)[CharactersListViewModel::class.java]
+		viewModel.load(name, status, gender)
 		return binding.root
 	}
 
@@ -95,7 +107,7 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 		}
 	}
 
-	override fun onClick(character: Character) {
+	override fun onClick(character: CharacterResult) {
 		viewModelDetail.onClickItemCharacter(character)
 		navigator.replaceFragment(
 			CharacterDetailFragment(viewModelDetail),
@@ -103,6 +115,7 @@ class CharactersListFragment : Fragment(), CharactersListAdapter.Listener {
 	}
 
 	companion object {
+
 		@JvmStatic
 		fun newInstance() = CharactersListFragment()
 	}
