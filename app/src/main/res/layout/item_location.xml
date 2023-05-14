@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="@dimen/space_small_2x"
+	android:background="@drawable/background_yellow"
+	android:padding="@dimen/space_small_x"
+	app:cardElevation="@dimen/space_small_2x"
+	>
+	<TextView
+		android:id="@+id/location_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/space_small_x"
+		android:textColor="@color/jeans_blue"
+		android:textSize="@dimen/font_size_small"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Location"
+		/>
+
+	<TextView
+		android:id="@+id/location_type"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/space_small_2x"
+		android:textColor="@color/pink"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/location_name"
+		tools:text="Type"
+		/>
+	<TextView
+		android:id="@+id/location_dimension"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/pink"
+		android:textSize="@dimen/font_size_small_x"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/location_type"
+		tools:text="Dimension"
+		/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

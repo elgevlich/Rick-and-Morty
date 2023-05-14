@@ -2,6 +2,23 @@
 <resources>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
-        <item name="cornerSize">10%</item>
+        <item name="cornerSize">2%</item>
     </style>
+
+    <style name="CustomChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipStrokeColor">@color/jeans_blue</item>
+        <item name="android:textColor">@color/jeans_blue</item>
+        <item name="chipCornerRadius">@dimen/space_small</item>
+        <item name="chipStrokeWidth">@dimen/space_small_3x</item>
+        <item name="chipBackgroundColor">@color/grey</item>
+    </style>
+
+    <style name="CustomRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:layout_marginStart">12dp</item>
+    </style>
+
 </resources>

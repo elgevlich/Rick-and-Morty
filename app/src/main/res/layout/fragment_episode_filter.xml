@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="@dimen/space_small"
+	>
+
+	<ImageButton
+		android:id="@+id/back_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/background_round_r20dp_grey"
+		android:elevation="@dimen/elevation"
+		android:src="@drawable/icon_back"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		/>
+
+	<TextView
+		android:id="@+id/filter_episode"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/space_small"
+		android:text="@string/title_filter_episodes"
+		android:textAlignment="center"
+		android:textColor="@color/pink"
+		android:textSize="@dimen/font_size_medium"
+		android:textStyle="bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/back_button"
+
+		/>
+
+	<TextView
+		android:id="@+id/name_episode_search"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:layout_marginTop="@dimen/space_small"
+		android:text="@string/title_episode_name"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/filter_episode"
+		tools:textColor="@color/pink"
+		/>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/searchLayoutName"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:layout_marginTop="@dimen/space_small"
+		android:drawableStart="@drawable/search_24"
+		app:layout_constraintBottom_toTopOf="@id/code_episode_search"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/name_episode_search"
+		>
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/search_by_name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:autofillHints="name"
+			android:drawableStart="@drawable/search_24"
+			android:hint="@string/search_episode_name"
+			android:inputType="textPersonName"
+			/>
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<TextView
+		android:id="@+id/code_episode_search"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:layout_marginTop="@dimen/space_small"
+		android:text="@string/title_episode_code"
+		android:textSize="@dimen/font_size_small_x"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/searchLayoutName"
+		tools:textColor="@color/pink"
+		/>
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/searchLayoutCode"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/space_small"
+		android:layout_marginTop="@dimen/space_small"
+		android:drawableStart="@drawable/search_24"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/code_episode_search"
+		>
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/search_by_code"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:autofillHints="name"
+			android:drawableStart="@drawable/search_24"
+			android:hint="@string/search_episode"
+			android:inputType="textPersonName"
+			/>
+
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/btn_make_filter"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_margin="@dimen/space_medium"
+		android:background="@drawable/background_pink"
+		android:text="@string/title_btn_apply"
+		android:textColor="@color/quite_white"
+		app:backgroundTint="@null"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/searchLayoutCode"
+		/>
+</androidx.constraintlayout.widget.ConstraintLayout>
