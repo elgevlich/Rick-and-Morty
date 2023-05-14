@@ -22,7 +22,7 @@ class CharacterMapper @Inject constructor() {
 		url = locationResponse?.url ?: EMPTY_STRING
 	)
 
-	private fun mapResultResponseForResult(resultResponse: CharacterResultResponse?) = CharacterResult(
+	fun mapResultResponseForResult(resultResponse: CharacterResultResponse?) = CharacterResult(
 		id = resultResponse?.id ?: ZERO_NUMBER,
 		created = resultResponse?.created ?: EMPTY_STRING,
 		episode = resultResponse?.episode ?: emptyList(),
@@ -57,7 +57,7 @@ class CharacterMapper @Inject constructor() {
 		url = location.url ?: EMPTY_STRING
 	)
 
-	private fun mapCharacterResultResponseForCharacterResultDb(characterResult: CharacterResult): CharacterDbModel {
+	fun mapCharacterResultResponseForCharacterResultDb(characterResult: CharacterResult): CharacterDbModel {
 		return CharacterDbModel(
 			id = characterResult.id,
 			name = characterResult.name,

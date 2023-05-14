@@ -18,7 +18,7 @@ class LocationMapper @Inject constructor() {
 		prev = infoResponse?.prev ?: EMPTY_STRING,
 	)
 
-	private fun mapResultsResponseForResults(resultResponse: LocationResultResponse?) = LocationResult(
+	fun mapResultsResponseForResults(resultResponse: LocationResultResponse?) = LocationResult(
 		created = resultResponse?.created ?: EMPTY_STRING,
 		dimension = resultResponse?.dimension ?: EMPTY_STRING,
 		id = resultResponse?.id ?: ZERO_NUMBER,
@@ -37,7 +37,7 @@ class LocationMapper @Inject constructor() {
 		results = mapListResultsResponseForListResults(locationResponse.results)
 	)
 
-	private fun mapLocationResultResponseForLocationResultDb(locationResult: LocationResult): LocationDbModel {
+	fun mapLocationResultResponseForLocationResultDb(locationResult: LocationResult): LocationDbModel {
 		return LocationDbModel(
 			created = locationResult.created,
 			dimension = locationResult.dimension,
