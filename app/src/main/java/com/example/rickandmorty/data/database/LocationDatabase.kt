@@ -7,27 +7,27 @@ import androidx.room.RoomDatabase
 import com.example.rickandmorty.data.database.dao.LocationDao
 import com.example.rickandmorty.data.database.entity.location.LocationDbModel
 
-@Database(entities = [LocationDbModel::class], version = 2)
-abstract class LocationDatabase: RoomDatabase() {
-	abstract fun getLocationDao(): LocationDao
+@Database(entities = [LocationDbModel::class], version = 3, exportSchema = false)
+abstract class LocationDatabase : RoomDatabase() {
+    abstract fun getLocationDao(): LocationDao
 
-	companion object{
-		private var database: LocationDatabase? = null
-		private val ANY = Any()
+    companion object {
+        private var database: LocationDatabase? = null
+        private val ANY = Any()
 
-		fun getMainDatabase(context: Context): LocationDatabase {
-			synchronized(ANY){
-				database?.let {
-					return it
-				}
-				val instance = Room.databaseBuilder(
-					context.applicationContext,
-					LocationDatabase::class.java,
-					"locationDb"
-				).build()
-				database = instance
-				return instance
-			}
-		}
-	}
+        fun getMainDatabase(context: Context): LocationDatabase {
+            synchronized(ANY) {
+                database?.let {
+                    return it
+                }
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    LocationDatabase::class.java,
+                    "locationDb"
+                ).build()
+                database = instance
+                return instance
+            }
+        }
+    }
 }

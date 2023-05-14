@@ -17,15 +17,19 @@ import javax.inject.Inject
 
 
 class CharactersListViewModel @Inject constructor(
-	private val getCharacterUseCase: GetCharacterUseCase
+    private val characterUseCase: GetCharacterUseCase
 ) : ViewModel() {
+    val errorMessage = MutableLiveData<String>()
 
-	var characterFlow: Flow<PagingData<CharacterResult>> = emptyFlow()
+    var characterFlow: Flow<PagingData<CharacterResult>> = emptyFlow()
 
-	fun load(name: String, status: String, gender: String) {
-		characterFlow = Pager(PagingConfig(pageSize = 1)) {
-			getCharacterUseCase.getCharacter(name, status, gender)
-		}.flow.cachedIn(viewModelScope)
-			.stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
-	}
+    fun load(name: String, status: String, gender: String) {
+        characterFlow =
+            Pager(PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 20)) {
+                characterUseCase.getCharacter(name, status, gender)
+            }.flow.cachedIn(viewModelScope)
+                .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
+
+    }
+
 }
